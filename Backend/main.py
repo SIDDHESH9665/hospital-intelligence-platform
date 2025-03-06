@@ -11,6 +11,7 @@ import socket
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -86,16 +87,23 @@ async def get_favicon():
 
 # Load dataset
 try:
-    excel_path = "hospital_data_v1.xlsx"
-    logging.info(f"Attempting to load Excel file from: {os.path.abspath(excel_path)}")
+    # Get the absolute path to the Excel file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    excel_path = os.path.join(current_dir, "hospital_data_v1.xlsx")
+    logger.info(f"Attempting to load Excel file from: {excel_path}")
     
     if not os.path.exists(excel_path):
-        raise FileNotFoundError(f"Excel file not found at: {os.path.abspath(excel_path)}")
+        alternative_path = "Backend/hospital_data_v1.xlsx"
+        if os.path.exists(alternative_path):
+            excel_path = alternative_path
+            logger.info(f"Using alternative path: {excel_path}")
+        else:
+            raise FileNotFoundError(f"Excel file not found at either {excel_path} or {alternative_path}")
     
     df = pd.read_excel(excel_path)
-    logging.info(f"Successfully loaded Excel file with shape: {df.shape}")
-    logging.info(f"DataFrame columns: {df.columns.tolist()}")
-    logging.info(f"Available Partner IDs: {df['PARTNER_ID'].unique().tolist()}")
+    logger.info(f"Successfully loaded Excel file with shape: {df.shape}")
+    logger.info(f"DataFrame columns: {df.columns.tolist()}")
+    logger.info(f"Available Partner IDs: {df['PARTNER_ID'].unique().tolist()}")
     
     # Verify required columns
     required_columns = ['PARTNER_ID', 'HOSPITAL', 'HOSP_TYPE', 'CITY', 'STATE', 'PIN']
@@ -116,42 +124,36 @@ except Exception as e:
 # Add a test endpoint to verify API is working
 @app.get("/api/test")
 async def test_endpoint():
-    return {"status": "ok", "message": "API is working"}
+    if df is None:
+        return {"status": "error", "message": "Dataset not loaded"}
+    return {"status": "ok", "message": "API is working", "data_loaded": True}
 
 @app.get("/api/claims-analysis/{partner_id}")
 async def claims_analysis(partner_id: int):
     try:
-        # Log the incoming request
-        logging.info(f"Received request for partner_id: {partner_id}")
+        if df is None:
+            raise HTTPException(status_code=500, detail="Dataset not loaded")
+            
+        logger.info(f"Received request for partner_id: {partner_id}")
         
-        # Check if 'PARTNER_ID' column exists
         if 'PARTNER_ID' not in df.columns:
-            logging.error("PARTNER_ID column not found in DataFrame")
-            raise KeyError("Column 'PARTNER_ID' does not exist in the DataFrame")
+            raise HTTPException(status_code=500, detail="PARTNER_ID column not found in dataset")
 
-        # Log available partner IDs
         available_ids = df['PARTNER_ID'].unique().tolist()
-        logging.debug(f"Available Partner IDs: {available_ids}")
+        logger.debug(f"Available Partner IDs: {available_ids}")
 
-        # Check if the partner_id exists in the DataFrame
         if partner_id not in available_ids:
-            logging.error(f"Partner ID {partner_id} not found in available IDs")
             raise HTTPException(
-                status_code=404, 
-                detail=f"Hospital with Partner ID {partner_id} not found. Available IDs: {available_ids[:5]}"
+                status_code=404,
+                detail=f"Hospital with Partner ID {partner_id} not found"
             )
 
-        # Log the data for the requested partner_id
         partner_data = df[df['PARTNER_ID'] == partner_id]
-        logging.debug(f"Found {len(partner_data)} records for partner_id {partner_id}")
-        logging.debug(f"Partner data columns: {partner_data.columns.tolist()}")
-
+        logger.debug(f"Found {len(partner_data)} records for partner_id {partner_id}")
+        
         results = analyze_hospital_claims(df, partner_id)
         
-        # Get basic hospital info
         hospital_data = partner_data.iloc[0]
-        
-        # Create hospital info with default tier and formatted address
         hospital_info = {
             'HOSPITAL': str(hospital_data['HOSPITAL']),
             'TIER': str(hospital_data['HOSP_TYPE']),
@@ -160,24 +162,20 @@ async def claims_analysis(partner_id: int):
             'INFRA_SCORE': round(float(np.random.uniform(3.5, 5.0)), 1)
         }
         
-        # Log the response structure
-        logging.debug(f"Response structure: {list(results.keys())}")
-        
-        # Convert DataFrames to dict and handle NaN values
         response = {
             'hospital_info': hospital_info,
             **{key: handle_nan_values(value.to_dict(orient="records")) for key, value in results.items()}
         }
         
         return response
+        
     except HTTPException as he:
-        logging.error(f"HTTP Exception: {he.detail}")
+        logger.error(f"HTTP Exception: {he.detail}")
         raise he
     except Exception as e:
-        logging.error(f"Error processing claims analysis for partner_id {partner_id}: {str(e)}")
-        logging.error(f"Error type: {type(e)}")
+        logger.error(f"Error processing claims analysis: {str(e)}")
         import traceback
-        logging.error(f"Traceback: {traceback.format_exc()}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # Mount static files with error handling
