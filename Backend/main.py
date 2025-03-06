@@ -50,7 +50,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
+    expose_headers=["*"],
+    max_age=3600  # Cache preflight requests for 1 hour
 )
 
 # Add endpoint to get server IP
@@ -58,16 +59,20 @@ app.add_middleware(
 async def get_server_info(request: Request):
     # Get the client's host
     client_host = request.headers.get("host", "").split(":")[0]
-    if client_host == "localhost":
-        base_url = f"http://localhost:5002"
+    
+    # Determine if we're in production
+    is_production = client_host != "localhost"
+    
+    if is_production:
+        base_url = f"https://{client_host}"
     else:
-        base_url = f"http://{SERVER_IP}:5002"
+        base_url = f"http://localhost:5002"
     
     return {
         "ip": SERVER_IP,
         "port": 5002,
         "base_url": base_url,
-        "network": "local"
+        "network": "production" if is_production else "local"
     }
 
 # Add favicon endpoint

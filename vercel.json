@@ -16,11 +16,22 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "Backend/main.py"
+      "dest": "Backend/main.py",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "Frontend/HospIntel/dist/$1"
+      "dest": "Frontend/HospIntel/dist/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
     }
-  ]
+  ],
+  "env": {
+    "PYTHONPATH": "Backend"
+  }
 } 

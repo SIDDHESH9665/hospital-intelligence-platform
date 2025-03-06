@@ -7,9 +7,16 @@ export const initializeAPI = async () => {
     // Try to fetch server info from the backend
     console.log('Initializing API...');
     
-    // First try to get the server IP from the current hostname
+    // Check if we're in production
+    const isProduction = window.location.hostname !== 'localhost';
+    
+    // Use the current hostname for API calls
     const currentHost = window.location.hostname;
-    const serverUrl = currentHost === 'localhost' ? 'http://localhost:5002' : `http://${currentHost}:5002`;
+    const serverUrl = isProduction 
+      ? `https://${currentHost}`  // Use HTTPS in production
+      : 'http://localhost:5002';  // Use localhost in development
+    
+    console.log('Using server URL:', serverUrl);
     
     const response = await fetch(`${serverUrl}/api/server-info`);
     if (!response.ok) {
@@ -35,7 +42,9 @@ export const initializeAPI = async () => {
     console.error('Error initializing API:', error);
     // Fallback to using the current hostname
     const currentHost = window.location.hostname;
-    API_BASE_URL = currentHost === 'localhost' ? 'http://localhost:5002' : `http://${currentHost}:5002`;
+    API_BASE_URL = currentHost === 'localhost' 
+      ? 'http://localhost:5002' 
+      : `https://${currentHost}`;
     return API_BASE_URL;
   }
 };
