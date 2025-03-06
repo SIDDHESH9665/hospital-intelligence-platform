@@ -3,14 +3,18 @@
   "builds": [
     {
       "src": "Backend/main.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.9"
+      }
     },
     {
       "src": "Frontend/HospIntel/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist",
-        "buildCommand": "npm run build"
+        "buildCommand": "cd Frontend/HospIntel && npm install && npm run build"
       }
     }
   ],
