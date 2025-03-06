@@ -13,7 +13,7 @@
       "src": "Frontend/HospIntel/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "Frontend/HospIntel/dist",
+        "outputDirectory": "Frontend/HospIntel/dist",
         "buildCommand": "cd Frontend/HospIntel && npm install && npm run build"
       }
     }
