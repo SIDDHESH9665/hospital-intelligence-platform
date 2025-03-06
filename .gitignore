@@ -45,3 +45,4 @@ yarn-error.log*
 Backend/hospital_data_v1.xlsx
 Frontend/HospIntel/dist/
 Frontend/HospIntel/.env
+.vercel
