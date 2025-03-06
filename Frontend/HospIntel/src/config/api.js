@@ -7,28 +7,21 @@ export const initializeAPI = async () => {
     // Try to fetch server info from the backend
     console.log('Initializing API...');
     
-    // Check if we're in production
-    const isProduction = window.location.hostname !== 'localhost';
-    
-    // Use the current hostname for API calls
+    // Check if we're accessing from localhost or local network
     const currentHost = window.location.hostname;
-    const serverUrl = isProduction 
-      ? `https://${currentHost}`  // Use HTTPS in production
-      : 'http://localhost:5002';  // Use localhost in development
+    const isLocalhost = currentHost === 'localhost' || currentHost === '127.0.0.1';
+    const isLocalNetwork = /^192\.168\./.test(currentHost);
     
-    console.log('Using server URL:', serverUrl);
-    
-    const response = await fetch(`${serverUrl}/api/server-info`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch server info: ${response.status}`);
+    // Use appropriate URL based on the access method
+    if (isLocalhost) {
+      API_BASE_URL = 'http://localhost:5002';
+    } else if (isLocalNetwork) {
+      API_BASE_URL = `http://${currentHost}:5002`;
+    } else {
+      API_BASE_URL = `https://${currentHost}`;  // For production
     }
     
-    const data = await response.json();
-    console.log('Server info:', data);
-    
-    // Use the server's base URL
-    API_BASE_URL = data.base_url;
-    console.log('API Base URL initialized:', API_BASE_URL);
+    console.log('Using server URL:', API_BASE_URL);
     
     // Test the API connection
     const testResponse = await fetch(`${API_BASE_URL}/api/test`);
@@ -40,11 +33,16 @@ export const initializeAPI = async () => {
     return API_BASE_URL;
   } catch (error) {
     console.error('Error initializing API:', error);
-    // Fallback to using the current hostname
+    // Fallback based on the current hostname
     const currentHost = window.location.hostname;
-    API_BASE_URL = currentHost === 'localhost' 
-      ? 'http://localhost:5002' 
-      : `https://${currentHost}`;
+    const isLocalhost = currentHost === 'localhost' || currentHost === '127.0.0.1';
+    const isLocalNetwork = /^192\.168\./.test(currentHost);
+    
+    API_BASE_URL = isLocalhost 
+      ? 'http://localhost:5002'
+      : isLocalNetwork 
+        ? `http://${currentHost}:5002`
+        : `https://${currentHost}`;
     return API_BASE_URL;
   }
 };

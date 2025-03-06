@@ -8,7 +8,7 @@ import { MedicalVsSurgical } from './components/MedicalVsSurgical';
 import { RoomCategoryDistribution } from './components/RoomCategoryDistribution';
 import { TopDiagnoses } from './components/TopDiagnoses';
 import { ClaimsSummary } from './components/ClaimsSummary';
-import { API_ENDPOINTS, initializeAPI } from '@/config/api';
+import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
 import { useNavigate } from 'react-router-dom';
 
 const HospitalDashboard = ({ partnerId = 65458106 }) => {
@@ -21,23 +21,6 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const [alternativeHospitals, setAlternativeHospitals] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [apiInitialized, setApiInitialized] = useState(false);
-
-  // Initialize API when component mounts
-  useEffect(() => {
-    const initAPI = async () => {
-      await initializeAPI();
-      setApiInitialized(true);
-      // Fetch data after API is initialized
-      fetchData();
-    };
-    initAPI();
-  }, []);
-
-  useEffect(() => {
-    if (apiInitialized) {
-      fetchData();
-    }
-  }, [currentPartnerId, apiInitialized]);
 
   const fetchData = async () => {
     if (!apiInitialized) return;
@@ -65,8 +48,24 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
     }
   };
 
+  // Initialize API when component mounts
   useEffect(() => {
-    // Check if the data has Similar_Hospitals and transform it
+    const initAPI = async () => {
+      await initializeAPI();
+      setApiInitialized(true);
+      // Fetch data after API is initialized
+      fetchData();
+    };
+    initAPI();
+  }, []);
+
+  useEffect(() => {
+    if (apiInitialized) {
+      fetchData();
+    }
+  }, [currentPartnerId, apiInitialized]);
+
+  useEffect(() => {
     if (data?.Similar_Hospitals) {
       const transformedHospitals = data.Similar_Hospitals.map(hospital => ({
         name: hospital.name,

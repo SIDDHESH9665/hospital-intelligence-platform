@@ -113,13 +113,20 @@ export function Navbar({ brandName, routes, action }) {
       shadow={false}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold text-2xl text-inherit">
-            {brandName}
-          </Typography>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/img/logo.png"
+              alt="Logo"
+              className="h-10 w-auto block md:hidden"
+            />
+            <Typography className="cursor-pointer py-1.5 mt-[-8px] font-bold text-xl md:text-2xl text-inherit">
+              {brandName}
+            </Typography>
+          </Link>
+        </div>
         <div className="hidden lg:block">{navList}</div>
-        <div className="hidden gap-2 lg:flex items-center">
+        <div className="hidden md:flex gap-2 items-center">
           <img
             src="/img/logo.png"
             alt="Logo"
@@ -140,7 +147,7 @@ export function Navbar({ brandName, routes, action }) {
         </IconButton>
       </div>
       <MobileNav
-        className="rounded-xl px-4 pt-2 pb-4 bg-transparent"
+        className="rounded-xl px-4 pt-2 pb-4 bg-transparent backdrop-blur-sm"
         open={openNav}
       >
         <div className="container mx-auto">
