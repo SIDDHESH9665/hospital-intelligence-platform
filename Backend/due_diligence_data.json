@@ -44,7 +44,7 @@
       },
       "accreditation_status": {
           "jci": {
-              "status": "Not Available",
+              "status": "Accredited",
               "label": "JCI"
           },
           "nabh": {
@@ -52,7 +52,7 @@
               "label": "NABH"
           },
           "rohini": {
-              "status": "Not Available",
+              "status": "Not Accredited",
               "label": "ROHINI"
           },
           "none": false
