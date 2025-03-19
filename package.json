@@ -1,0 +1,11 @@
+{
+  "name": "hospital-intelligence-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "./vercel-build.sh"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "hospitals": [
+    {
+      "id": "HP-2024-001",
+      "name": "Ruby Hall Clinic",
+      "location": {
+        "address": "40, Sassoon Road",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411001",
+        "coordinates": {
+          "lat": 18.5204,
+          "lng": 73.8567
+        }
+      },
+      "details": {
+        "type": "Multi-Specialty Hospital",
+        "established": 1959,
+        "beds": 750,
+        "doctorsCount": 300,
+        "accreditation": ["NABH", "JCI", "NABL"]
+      },
+      "rating": 4.5,
+      "patientStories": 2450,
+      "keyServices": [
+        "Cardiology",
+        "Neurology",
+        "Oncology",
+        "Orthopedics",
+        "Pediatrics",
+        "Nephrology",
+        "Gastroenterology",
+        "Urology"
+      ]
+    },
+    {
+      "id": "HP-2024-002",
+      "name": "Jehangir Hospital",
+      "location": {
+        "address": "32, Sassoon Road",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411001",
+        "coordinates": {
+          "lat": 18.5238,
+          "lng": 73.8728
+        }
+      },
+      "details": {
+        "type": "Multi-Specialty Hospital",
+        "established": 1946,
+        "beds": 350,
+        "doctorsCount": 200,
+        "accreditation": ["NABH", "NABL"]
+      },
+      "rating": 4.3,
+      "patientStories": 1850,
+      "keyServices": [
+        "Cardiology",
+        "Neurology",
+        "Orthopedics",
+        "Internal Medicine",
+        "Gynecology",
+        "ENT"
+      ]
+    },
+    {
+      "id": "HP-2024-003",
+      "name": "Deenanath Mangeshkar Hospital",
+      "location": {
+        "address": "Erandwane",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "pincode": "411004",
+        "coordinates": {
+          "lat": 18.5089,
+          "lng": 73.8259
+        }
+      },
+      "details": {
+        "type": "Multi-Specialty Hospital",
+        "established": 2001,
+        "beds": 800,
+        "doctorsCount": 250,
+        "accreditation": ["NABH", "NABL"]
+      },
+      "rating": 4.6,
+      "patientStories": 2100,
+      "keyServices": [
+        "Cardiology",
+        "Neurology",
+        "Oncology",
+        "Orthopedics",
+        "Pediatrics",
+        "Critical Care"
+      ]
+    }
+  ]
+} 

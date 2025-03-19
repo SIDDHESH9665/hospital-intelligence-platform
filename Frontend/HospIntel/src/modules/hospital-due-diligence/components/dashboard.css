@@ -1,0 +1,468 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+html,
+body {
+  color: black;
+  background-color: #f9f9f9;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.container {
+  max-width: 100%;
+  width: 100vw;
+  margin: 0 auto;
+}
+
+header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  position: relative;
+  height: 120px;
+  display: flex;
+  background-color: #2C2C2C;
+  overflow: hidden;
+}
+
+.bajaj-logo img {
+  filter: brightness(0) invert(1);
+  z-index: 1;
+  max-height: 75px;
+  width: auto;
+}
+.header-content {
+  position: relative;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  text-align: end;
+}
+.back-arrow {
+  margin-right: 10px; 
+  cursor: pointer; 
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border: 0.5px solid;
+}
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("navbg.jpeg"); 
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px); 
+  z-index: 0;
+}
+.hero-content {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 1.0rem;
+}
+
+main {
+  padding: 10px;
+}
+
+main h3 {
+  color: black;
+  margin: 0 0 10px 10px;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hospital-info {
+  display: flex;
+  min-height: 100px;
+  width: 80%;
+}
+
+.hospital {
+  padding-left: 10px;
+}
+
+.search-bar {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-bar input {
+  font-size: 18px;
+  color: black;
+  width: 70%;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+.section1 {
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 150px;
+  box-shadow: #2d3748;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.text-gray-600 {
+  color: #718096;
+}
+
+.hospital-info {
+  display: flex;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+.hospital-info img {
+  width: 8rem;
+  height: 8rem;
+  margin-right: 1rem;
+}
+
+.hospital-info h4 {
+  color: black;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.hospital-info p {
+  color: rgb(32, 32, 32);
+}
+
+
+
+.search-bar {
+  height: 100px;
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.search-bar input {
+  height: 40px;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem 0 0 0.375rem;
+  padding: 0.5rem 1rem;
+  width: 300px;
+  outline: none;
+}
+
+.search-bar button {
+  height: 40px;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0.375rem 0.375rem 0;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 991px) {
+  .hospital-info {
+    width: 70%;
+  }
+
+  .search-bar {
+    width: 30%;
+  }
+}
+
+@media (max-width: 767px) {
+  .info-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hospital-info {
+    width: 100%;
+  }
+
+  .search-bar {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .search-bar input {
+    width: 80%;
+  }
+}
+
+.card {
+  height: 400px;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  min-height: 200px;
+}
+
+.card h3 {
+  font-weight: bolder;
+  color: black;
+  font-size: 30px;
+}
+
+.card h4 {
+  color: #2d3748;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.card p {
+  color: #718096;
+}
+
+.card img {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.card .score {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.score-container {
+  height: 100px;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.score-description {
+  color: #333;
+  font-size: 1rem;
+}
+
+.gauge-container {
+  margin-top: 30px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  position: relative;
+}
+
+.score-text {
+  position: absolute;
+  bottom: 60px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.financial-container {
+  padding: 0px;
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.financial-container,
+.accreditation-container,
+.negative-container h3 {
+  text-align: start;
+  margin: 0;
+}
+.financial-container h3{
+  margin: 0;
+  text-align: start;
+}
+.financial-container p{
+  color: black;
+}
+.accreditation-container h3{
+  margin: 0;
+}
+.accreditation-container p{
+  color: black;
+}
+.financial-row,
+.negative-row,
+.accreditation-row {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 60px;
+  height: 150px;
+}
+
+.financial-item {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.negative-item,
+.financial-item,
+.accreditation-item p {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.accreditation-item {
+  height: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo-rohini{
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.negative-container {
+  text-align: center;
+}
+
+.negative-logo,
+.financial-logo,
+.accreditation-logo {
+  width: auto;
+  height: 50px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.negative-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.negative-row flex {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;   
+}
+.flex{
+  width: 100%;
+}
+.negative-img img {
+  height: auto;
+  width: 90px;
+}
+.negative-img {
+  margin-top: 0px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.negative-img h3 {
+  text-align: start;
+  margin: 0px;
+  display: inline-block;
+  width: 300px;
+}
+.supplementary-strip {
+  width: 100%;
+  margin-top: 25px;
+  padding: 10px;
+}
+
+.supplementary-card {
+  border: none; 
+  margin: 0;
+  border-radius: 0; 
+  box-shadow: none;
+  cursor: pointer;
+  padding: 10px; 
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.supplementary-card:hover {
+  background-color: #f0f0f0; 
+}
+
+.supplementary-card.selected {
+  background-color: #e0e0e0; 
+  outline: none; 
+  box-shadow: none; 
+}
+
+.supplementary-card h6 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.supplementary-card p {
+  font-size: 0.8rem; 
+  color: #666;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  padding: 1rem 0;
+  text-align: center;
+  color: black;
+  
+}

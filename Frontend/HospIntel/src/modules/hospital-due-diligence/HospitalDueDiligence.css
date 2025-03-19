@@ -1,0 +1,377 @@
+.hospital-due-diligence-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.hospital-due-diligence-header {
+  background: #ffffff;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-due-diligence-logo {
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.hospital-due-diligence-search {
+  position: relative;
+  width: 400px;
+}
+
+.hospital-due-diligence-search input {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #333;
+}
+
+.hospital-due-diligence-search input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.hospital-due-diligence-search-button {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  min-width: unset !important;
+  padding: 4px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.hospital-due-diligence-search-button:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.hospital-due-diligence-hero {
+  position: relative;
+  background: linear-gradient(to right, #1976d2, #1565c0);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.hospital-due-diligence-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/img/navbg.jpeg') center/cover;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.hospital-due-diligence-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.hospital-due-diligence-main {
+  padding: 0.5rem;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.hospital-due-diligence-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.hospital-due-diligence-hospital-info {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.hospital-due-diligence-hospital-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.hospital-due-diligence-hospital-details {
+  flex: 1;
+}
+
+.hospital-due-diligence-hospital-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.hospital-due-diligence-hospital-address {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.hospital-due-diligence-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.hospital-due-diligence-badge-category {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.hospital-due-diligence-badge-tier {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.due-diligence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.due-diligence-grid-item {
+  height: 100%;
+  min-height: 300px;
+  margin: 0;
+  width: 100%;
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .due-diligence-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .due-diligence-grid-item {
+    min-height: 300px;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .due-diligence-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .due-diligence-grid-item {
+    min-height: 280px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 767px) {
+  .hospital-due-diligence-header {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .hospital-due-diligence-logo {
+    height: 40px;
+    width: auto;
+  }
+
+  .hospital-due-diligence-search {
+    width: 180px;
+    min-width: 180px;
+  }
+
+  .hospital-due-diligence-search input {
+    padding: 6px 32px 6px 8px;
+    font-size: 0.875rem;
+  }
+
+  .hospital-due-diligence-main {
+    padding: 0.5rem;
+  }
+
+  .due-diligence-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .due-diligence-grid-item {
+    min-height: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hospital-due-diligence-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75rem;
+  }
+
+  .hospital-due-diligence-logo {
+    height: 40px;
+  }
+
+  .hospital-due-diligence-search {
+    width: 150px;
+    min-width: 150px;
+  }
+}
+
+/* Component Cards Styling */
+.hospital-score-container,
+.financial-assessment-container,
+.negative-legal-container,
+.accreditation-status-container {
+  height: 100%;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Component Title Styling */
+.hospital-score-title,
+.financial-assessment-title,
+.negative-legal-title,
+.accreditation-status-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+  color: #333;
+}
+
+/* Component Content Styling */
+.hospital-score-content,
+.financial-assessment-content,
+.negative-legal-content,
+.accreditation-status-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .hospital-score-container,
+  .financial-assessment-container,
+  .negative-legal-container,
+  .accreditation-status-container {
+    padding: 0.75rem;
+  }
+}
+
+.hospital-due-diligence-footer {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  margin-top: 2rem;
+}
+
+.hospital-due-diligence-report-generator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Remove the old grid styles */
+.hospital-due-diligence-grid {
+  display: none;
+}
+
+.hospital-due-diligence-grid-item {
+  display: none;
+}
+
+/* Supplementary styles */
+.supplementary-strip {
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.supplementary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.supplementary-card {
+  margin: 0 !important;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.supplementary-card.selected {
+  border: 2px solid #1976d2;
+  background-color: #f5f9ff;
+}
+
+.supplementary-card .MuiCardContent-root {
+  padding: 1rem !important;
+}
+
+.supplementary-card .MuiSvgIcon-root {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1976d2;
+}
+
+.supplementary-card:nth-child(1) .MuiSvgIcon-root { color: #2196F3; }
+.supplementary-card:nth-child(2) .MuiSvgIcon-root { color: #4CAF50; }
+.supplementary-card:nth-child(3) .MuiSvgIcon-root { color: #FF9800; }
+.supplementary-card:nth-child(4) .MuiSvgIcon-root { color: #9C27B0; }
+
+@media (max-width: 1024px) {
+  .supplementary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .supplementary-grid {
+    grid-template-columns: 1fr;
+    padding: 0 0.25rem;
+  }
+  
+  .supplementary-card {
+    margin-bottom: 0.5rem !important;
+  }
+} 

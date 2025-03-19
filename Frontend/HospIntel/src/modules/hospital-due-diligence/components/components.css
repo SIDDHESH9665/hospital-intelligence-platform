@@ -1,0 +1,1051 @@
+/* Accreditation Status */
+.accreditation-container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accreditation-container .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.accreditation-container .subtitle {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.accreditation-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.accreditation-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  min-width: 150px;
+}
+
+.accreditation-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.logo-rohini {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.item-label {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.accredited {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.not-accredited {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* Financial Assessment */
+.financial-assessment-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.financial-assessment-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #1a1a1a;
+  margin-bottom: 8px !important;
+  text-align: center !important;
+}
+
+.financial-assessment-subtitle {
+  color: #666;
+  margin-bottom: 24px !important;
+}
+
+.financial-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.financial-metric {
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.financial-metric-logo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.financial-metric-content {
+  flex: 1;
+  min-width: 0;
+  padding-right: 0.5rem;
+}
+
+.financial-metric-label {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #666;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.financial-metric-value {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hospital Score */
+.score-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #1a1a1a;
+  margin-bottom: 1rem !important;
+  text-align: center;
+}
+
+.score-description {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  max-width: 80%;
+}
+
+.gauge-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px;
+  margin-top: -10px;
+  transform: scale(1.1);
+  overflow: visible;
+}
+
+.score-value {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 12px 16px;
+  border-radius: 12px;
+  min-width: 120px;
+}
+
+.score-label {
+  color: #666;
+  font-size: 0.375rem;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.score-number {
+  color: #1a1a1a;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Card Grid Layout */
+.due-diligence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 0;
+  margin: 16px 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.due-diligence-grid-item {
+  min-height: 320px;
+  display: flex;
+  width: 100%;
+}
+
+.due-diligence-grid-item .MuiCard-root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  overflow: visible;
+}
+
+.due-diligence-grid-item .MuiCardContent-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px !important;
+  overflow: visible;
+}
+
+.score-container,
+.financial-assessment-container,
+.negative-legal-container,
+.accreditation-status-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  overflow: visible;
+  width: 100%;
+}
+
+.score-title,
+.financial-assessment-title,
+.negative-legal-title,
+.accreditation-status-title {
+  text-align: center;
+  margin-bottom: 8px !important;
+  color: #1a1a1a;
+}
+
+.score-description,
+.financial-assessment-description,
+.negative-legal-description,
+.accreditation-status-description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 16px !important;
+}
+
+/* Component Title Styling */
+.score-title,
+.financial-assessment-title,
+.negative-legal-title,
+.accreditation-status-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+  color: #333;
+  text-align: center !important;
+  width: 100%;
+}
+
+/* Component Content Styling */
+.score-content,
+.financial-assessment-content,
+.negative-legal-content,
+.accreditation-status-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: visible;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+/* Negative Legal Styling */
+.negative-legal-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.negative-legal-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.negative-legal-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #333;
+  margin-bottom: 0.5rem !important;
+}
+
+.negative-legal-description {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.negative-legal-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  height: auto;
+}
+
+.negative-legal-item {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 100px;
+}
+
+.negative-legal-item-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.negative-legal-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.negative-legal-logo.pmjay-logo {
+  width: 60px;
+  height: 60px;
+}
+
+.negative-legal-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.negative-legal-item-title {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #333;
+  margin-bottom: 0.25rem !important;
+  text-align: left;
+}
+
+.negative-legal-count,
+.negative-legal-severity,
+.negative-legal-status-text {
+  font-size: 0.875rem !important;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  text-align: left;
+  width: 100%;
+}
+
+.negative-legal-details-box {
+  background: rgba(244, 67, 54, 0.08);
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.negative-legal-details-box.warning {
+  background: rgba(255, 165, 0, 0.08);
+}
+
+.negative-legal-detail-text {
+  font-size: 0.813rem !important;
+  color: #666;
+  margin-bottom: 0.375rem !important;
+  line-height: 1.4 !important;
+}
+
+.negative-legal-detail-text:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Accreditation Status */
+.accreditation-status-container {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accreditation-status-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #1a1a1a;
+  margin-bottom: 8px !important;
+  text-align: center !important;
+}
+
+.accreditation-status-description {
+  color: #666;
+  margin-bottom: 24px !important;
+  text-align: center !important;
+}
+
+.accreditation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.accreditation-item {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 8px;
+  text-align: center;
+  border: none;
+  box-shadow: none;
+}
+
+.accreditation-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px auto;
+  display: block;
+  object-fit: contain;
+}
+
+.accreditation-label {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a;
+  margin-bottom: 8px !important;
+  text-align: center !important;
+  width: 100%;
+}
+
+.accreditation-status {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  width: 100%;
+  color: #666;
+}
+
+.status-accredited {
+  color: #4CAF50;
+}
+
+.status-not-accredited {
+  color: #f44336;
+}
+
+.status-pending {
+  color: #757575;
+}
+
+/* Supplementary */
+.supplementary-container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.supplementary-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.supplementary-content {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Shared Component Styles */
+.component-container {
+  height: 100%;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.component-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+  color: #333;
+}
+
+.component-subtitle {
+  font-size: 0.875rem !important;
+  color: #666;
+  margin-bottom: 1rem !important;
+}
+
+.component-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.component-item {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.component-label {
+  font-size: 0.875rem !important;
+  color: #666;
+  margin-bottom: 0.25rem !important;
+}
+
+.component-value {
+  font-size: 1rem !important;
+  color: #333;
+  font-weight: 500 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1199px) {
+  .due-diligence-grid {
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .due-diligence-grid-item {
+    min-height: 300px;
+  }
+
+  .score-container,
+  .financial-assessment-container,
+  .negative-legal-container,
+  .accreditation-status-container {
+    padding: 12px;
+  }
+
+  .score-container {
+    padding: 1.5rem;
+  }
+
+  .score-title {
+    font-size: 1.25rem !important;
+  }
+
+  .score-description {
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .gauge-container {
+    height: 180px;
+    min-height: 180px;
+    max-width: 300px;
+  }
+
+  .score-value {
+    padding: 0.4rem;
+  }
+
+  .score-label {
+    font-size: 1rem;
+  }
+
+  .score-number {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .due-diligence-grid {
+    gap: 10px;
+    margin: 10px 0;
+  }
+
+  .due-diligence-grid-item {
+    min-height: 280px;
+  }
+
+  .score-container,
+  .financial-assessment-container,
+  .negative-legal-container,
+  .accreditation-status-container {
+    padding: 12px;
+  }
+
+  .score-container {
+    padding: 1.5rem;
+  }
+
+  .score-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .score-description {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    max-width: 100%;
+  }
+
+  .gauge-container {
+    height: 180px;
+    min-height: 160px;
+    max-width: 250px;
+  }
+
+  .score-value {
+    padding: 0.35rem;
+    transform: translate(-50%, -30%);
+  }
+
+  .score-label {
+    font-size: 0.813rem;
+  }
+
+  .score-number {
+    font-size: 1.125rem;
+  }
+
+  .negative-legal-logo {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .negative-legal-logo.pmjay-logo {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .negative-legal-item {
+    padding: 0.875rem;
+    min-height: 110px;
+  }
+}
+
+@media (max-width: 767px) {
+  .due-diligence-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 0 8px;
+  }
+
+  .due-diligence-grid-item {
+    min-height: auto;
+  }
+
+  .score-container,
+  .financial-assessment-container,
+  .negative-legal-container,
+  .accreditation-status-container {
+    padding: 12px;
+    min-height: 260px;
+  }
+
+  .score-content,
+  .financial-assessment-content,
+  .negative-legal-content,
+  .accreditation-status-content {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .negative-legal-content {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .negative-legal-logo {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .negative-legal-logo.pmjay-logo {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .negative-legal-item {
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+
+  .financial-metrics-grid,
+  .accreditation-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .financial-metric {
+    padding: 0.625rem;
+  }
+
+  .financial-metric-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .financial-metric-content {
+    padding-right: 0.25rem;
+  }
+
+  .gauge-container {
+    height: 200px;
+    transform: scale(0.95);
+  }
+
+  /* Card content spacing */
+  .score-content,
+  .financial-assessment-content,
+  .negative-legal-content,
+  .accreditation-status-content {
+    gap: 0.5rem;
+  }
+
+  /* Text sizes */
+  .financial-metric-label,
+  .negative-legal-item-content,
+  .accreditation-label {
+    font-size: 0.813rem !important;
+  }
+
+  .financial-metric-value,
+  .negative-legal-item-title,
+  .accreditation-status {
+    font-size: 0.875rem !important;
+  }
+
+  /* Accreditation grid adjustment */
+  .accreditation-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .accreditation-item {
+    padding: 0.625rem;
+  }
+
+  .accreditation-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+
+  .score-number {
+    font-size: 1.125rem;
+  }
+
+  .score-value {
+    padding: 8px 12px;
+    min-width: 90px;
+  }
+
+  .MuiDialog-paper {
+    margin: 8px !important;
+    max-height: calc(100% - 16px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .due-diligence-grid {
+    gap: 10px;
+    margin: 10px 0;
+    padding: 0 4px;
+  }
+
+  .score-container,
+  .financial-assessment-container,
+  .negative-legal-container,
+  .accreditation-status-container {
+    padding: 10px;
+    min-height: 240px;
+  }
+
+  .financial-metric {
+    padding: 0.5rem;
+  }
+
+  .financial-metric-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .financial-metric-content {
+    padding-right: 0.125rem;
+  }
+
+  .gauge-container {
+    height: 160px;
+    transform: scale(0.9);
+  }
+
+  .score-number {
+    font-size: 1rem;
+  }
+
+  .score-value {
+    padding: 6px 10px;
+    min-width: 80px;
+  }
+
+  .accreditation-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+  }
+
+  .negative-legal-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .negative-legal-logo.pmjay-logo {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .negative-legal-item {
+    padding: 0.75rem;
+    min-height: 90px;
+  }
+  
+  .negative-legal-item-title {
+    font-size: 0.813rem !important;
+  }
+  
+  .negative-legal-item-content {
+    font-size: 0.75rem;
+  }
+}
+
+/* Ensure consistent spacing in all components */
+.component-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.component-item {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin: 0;
+}
+
+/* Status colors */
+.status-high {
+  color: #d32f2f;
+}
+
+.status-moderate {
+  color: #f57c00;
+}
+
+.status-low {
+  color: #388e3c;
+}
+
+/* Chip styles */
+.MuiChip-root {
+  height: 24px !important;
+  font-size: 0.813rem !important;
+}
+
+.MuiChip-icon {
+  font-size: 1rem !important;
+  margin-left: 0.25rem !important;
+}
+
+/* Ensure no margins on grid items */
+.due-diligence-grid-item > div {
+  margin: 0 !important;
+}
+
+/* Ensure items within grids are centered */
+.financial-metric,
+.negative-legal-item,
+.accreditation-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+/* Center content within items */
+.financial-metric-content,
+.negative-legal-item-content,
+.accreditation-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.05);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid rgba(211, 47, 47, 0.1);
+}
+
+.error-message-title {
+  font-weight: 600;
+  font-size: 1.5rem !important;
+  color: #d32f2f;
+  margin-bottom: 0.5rem !important;
+}
+
+.error-message-details {
+  color: #666;
+  font-size: 1rem !important;
+  line-height: 1.6;
+}
+
+/* Submit Button Styling */
+.submit-button {
+  background-color: var(--primary-color, #2196f3) !important;
+  color: white !important;
+  padding: 0.75rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  min-width: 180px !important;
+}
+
+.submit-button:hover {
+  background-color: var(--primary-dark, #1976d2) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.submit-button:disabled {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.26) !important;
+}
+
+.score-description,
+.financial-assessment-description,
+.negative-legal-description,
+.accreditation-status-description {
+  color: #666;
+  margin-bottom: 16px !important;
+  text-align: center !important;
+}
+
+/* Component items without shadows */
+.financial-metric,
+.negative-legal-item,
+.accreditation-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px;
+  /* border: 1px solid rgba(0, 0, 0, 0.08); */
+  box-shadow: none;
+}
+
+/* PDF Viewer Dialog Styles */
+.MuiDialog-paper {
+  margin: 16px !important;
+  max-height: calc(100% - 32px) !important;
+  height: calc(100% - 32px) !important;
+}
+
+.MuiDialogContent-root {
+  padding: 8px !important;
+  height: calc(100% - 64px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* PDF Viewer iframe styles */
+.react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.react-pdf__Page {
+  max-width: 100%;
+  height: auto !important;
+} 

@@ -1,0 +1,69 @@
+.negative-legal-container {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.negative-legal-title {
+  color: #333;
+  margin-bottom: 24px !important;
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+}
+
+.negative-legal-subtitle {
+  color: #666;
+  font-size: 0.875rem !important;
+  margin-bottom: 24px !important;
+}
+
+.negative-legal-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.negative-legal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  justify-content: center;
+}
+
+.negative-legal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.negative-legal-label {
+  color: #666;
+  font-size: 0.9rem !important;
+  margin-bottom: 8px !important;
+  font-weight: 500 !important;
+}
+
+.negative-legal-value {
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
+
+.negative-legal-value.high {
+  color: #F44336;
+}
+
+.negative-legal-value.moderate {
+  color: #FFA500;
+}
+
+.negative-legal-value.low {
+  color: #4CAF50;
+} 
