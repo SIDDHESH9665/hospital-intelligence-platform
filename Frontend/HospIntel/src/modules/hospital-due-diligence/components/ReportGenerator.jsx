@@ -527,17 +527,20 @@ const ReportDocument = ({ hospital, images }) => {
       }
     },
     accreditation_status: {
-      nabh: { 
-        status: 'invalid', 
-        observations: 'NABH accreditation status pending. National quality standard verification required.' 
-      },
       jci: { 
-        status: 'invalid', 
-        observations: 'JCI accreditation status pending. International quality standard verification needed.' 
+        status: 'Not Available', 
+        label: 'JCI',
+        observations: 'JCI accreditation status not available.' 
+      },
+      nabh: { 
+        status: 'Not Available', 
+        label: 'NABH',
+        observations: 'NABH accreditation status not available.' 
       },
       rohini: { 
-        status: 'invalid', 
-        observations: 'ROHINI registration status pending. Required for healthcare facility registration.' 
+        status: 'Not Available', 
+        label: 'ROHINI',
+        observations: 'ROHINI registration status not available.' 
       }
     }
   };
@@ -738,6 +741,12 @@ const ReportDocument = ({ hospital, images }) => {
     );
   };
 
+  const getStatusStyle = (status) => {
+    if (status === 'valid') return styles.validStatus;
+    if (status === 'Not Available') return { backgroundColor: '#f3f4f6', color: '#6b7280' };
+    return styles.invalidStatus;
+  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -892,9 +901,9 @@ const ReportDocument = ({ hospital, images }) => {
                 <Text style={styles.itemTitle}>NABH Status</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.accreditation_status.nabh.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  getStatusStyle(safeHospital.accreditation_status.nabh.status)
                 ]}>
-                  {safeHospital.accreditation_status.nabh.status.toUpperCase()}
+                  {safeHospital.accreditation_status.nabh.status}
                 </Text>
                 <Text style={styles.observationText}>{safeHospital.accreditation_status.nabh.observations}</Text>
               </View>
@@ -905,9 +914,9 @@ const ReportDocument = ({ hospital, images }) => {
                 <Text style={styles.itemTitle}>ROHINI Status</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.accreditation_status.rohini.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  getStatusStyle(safeHospital.accreditation_status.rohini.status)
                 ]}>
-                  {safeHospital.accreditation_status.rohini.status.toUpperCase()}
+                  {safeHospital.accreditation_status.rohini.status}
                 </Text>
                 <Text style={styles.observationText}>{safeHospital.accreditation_status.rohini.observations}</Text>
               </View>
@@ -918,9 +927,9 @@ const ReportDocument = ({ hospital, images }) => {
                 <Text style={styles.itemTitle}>JCI Status</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.accreditation_status.jci.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  getStatusStyle(safeHospital.accreditation_status.jci.status)
                 ]}>
-                  {safeHospital.accreditation_status.jci.status.toUpperCase()}
+                  {safeHospital.accreditation_status.jci.status}
                 </Text>
               </View>
             </View>

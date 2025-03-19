@@ -3,11 +3,16 @@ let API_BASE_URL = '';
 
 export const initializeAPI = async () => {
   try {
-    // In development, the API calls will be proxied through Vite
-    API_BASE_URL = '';
+    // In production (Vercel), use the deployment URL
+    if (import.meta.env.PROD) {
+      API_BASE_URL = window.location.origin;
+    } else {
+      // In development, the API calls will be proxied through Vite
+      API_BASE_URL = '';
+    }
     
     // Test the API connection
-    const response = await fetch('/api/test');
+    const response = await fetch(`${API_BASE_URL}/api/test`);
     const data = await response.json();
     console.log('API Test Response:', data);
     

@@ -1,12 +1,12 @@
 [
   {
-      "hospital_info": {
-          "ID": 11111111,
-          "HOSPITAL": "Test Hospital",
-          "ADDRESS": "123 Test Street, Test City - 123456",
+        "hospital_info": {
+          "ID": 12345678,
+          "HOSPITAL": "APOLLO SPECTRA HOSPITALS (A UNIT OF APOLLO SPECIALTY HOSPITALS PVT LTD) - Kailash Colony, New Delhi",
+          "ADDRESS": "NEW DELHI, DELHI - 110048",
           "CATEGORY": "Multi-Specialty",
-          "TIER": "Tier 1",
-          "INFRA_SCORE": 4.5
+          "INFRA_SCORE": 3.7,
+          "TIER": "Primary"
       },
       "hospital_score": {
           "score": 85
@@ -44,24 +44,24 @@
       },
       "accreditation_status": {
           "jci": {
-              "status": "valid",
-              "label": "JCI Accreditation"
+              "status": "Not Available",
+              "label": "JCI"
           },
           "nabh": {
-              "status": "valid",
-              "label": "NABH Accreditation"
+              "status": "Not Available",
+              "label": "NABH"
           },
           "rohini": {
-              "status": "valid",
-              "label": "Rohini ID"
+              "status": "Not Available",
+              "label": "ROHINI"
           },
           "none": false
       }
   },
   {
       "hospital_info": {
-          "ID": 12345678,
-          "HOSPITAL": "APOLLO SPECTRA HOSPITALS (A UNIT OF APOLLO SPECIALTY HOSPITALS PVT LTD) - Kailash Colony, New Delhi",
+          "ID": 12345679,
+          "HOSPITAL": "Sanjivani Hospitals, New Delhi",
           "ADDRESS": "NEW DELHI, DELHI - 110048",
           "CATEGORY": "Multi-Specialty",
           "INFRA_SCORE": 3.7,
