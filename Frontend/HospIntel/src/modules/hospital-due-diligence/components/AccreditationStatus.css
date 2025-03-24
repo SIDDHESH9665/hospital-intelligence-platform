@@ -63,14 +63,14 @@
   font-size: 1rem !important;
 }
 
-.accreditation-status.accredited {
-  color: #4CAF50;
+.accreditation-status.status-accredited {
+  color: #166534;  /* Dark green */
 }
 
-.accreditation-status.not-accredited {
-  color: #F44336;
+.accreditation-status.status-not-accredited {
+  color: #991b1b;  /* Dark red */
 }
 
-.accreditation-status.pending {
-  color: #FFA500;
+.accreditation-status.status-pending {
+  color: #374151;  /* Dark grey */
 } 

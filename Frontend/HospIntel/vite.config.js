@@ -34,15 +34,15 @@ export default defineConfig({
     fs: {
       strict: false,
       allow: ['..']
+    },
+    historyApiFallback: {
+      disableDotRule: true,
+      rewrites: [
+        { from: /^\/hospital-profiling.*/, to: '/index.html' },
+        { from: /^\/hospital-impact-analysis.*/, to: '/index.html' },
+        { from: /^\/hospital-due-diligence.*/, to: '/index.html' },
+        { from: /./, to: '/index.html' }
+      ]
     }
-  },
-  historyApiFallback: {
-    disableDotRule: true,
-    rewrites: [
-      { from: /^\/hospital-profiling.*/, to: '/index.html' },
-      { from: /^\/hospital-impact-analysis.*/, to: '/index.html' },
-      { from: /^\/hospital-due-diligence.*/, to: '/index.html' },
-      { from: /./, to: '/index.html' }
-    ]
   }
 });

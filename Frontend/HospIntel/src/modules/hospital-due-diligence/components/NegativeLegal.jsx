@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,6 +10,25 @@ import blacklist from '/img/blacklist.png';
 import pmjay from '/img/pmjay.png';
 
 const NegativeLegal = ({ data }) => {
+  const [error, setError] = useState(null);
+  if (error) {
+    return (
+      <Box p={3}>
+        <Typography variant="body2" color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (!data) {
+    return (
+      <Box p={3}>
+        <Typography variant="body2">Loading...</Typography>
+      </Box>
+    );
+  }
+
+
+
   const getStatusInfo = (status, count = 0, severity = '') => {
     if (severity.toLowerCase() === 'moderate') {
       return {
@@ -51,38 +70,48 @@ const NegativeLegal = ({ data }) => {
     };
   };
 
+  if (error) {
+    return (
+      <Box p={3}>
+        <Typography variant="body2" color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (!data) {
+    return (
+      <Box p={3}>
+        <Typography variant="body2">Loading...</Typography>
+      </Box>
+    );
+  }
+
   const negativeItems = [
     {
       logo: blacklist,
       title: 'Negative Status',
-      status: 'Moderate',
-      count: 2,
-      severity: 'Moderate',
+      status: data.blacklist.severity,
+      count: data.blacklist.count,
+      severity: data.blacklist.severity,
       details: []
     },
     {
       logo: pmjay,
       title: 'PMJAY Status',
-      status: 'Active',
+      status: data.pmjay_status,
       details: []
     },
     {
       logo: criminal,
       title: 'Criminal Case',
-      status: 'Active Lawsuit (2)',
-      details: [
-        'Medical malpractice case filed on Jan 15, 2024',
-        'Emergency service delivery violations'
-      ]
+      status: data.legal_status.criminal_case.status,
+      details: [data.legal_status.criminal_case.details]
     },
     {
       logo: civil,
       title: 'Civil Case',
-      status: 'Regulatory Warning',
-      details: [
-        'Compliance warning issued by State Board',
-        'Due for review in March 2024'
-      ]
+      status: data.legal_status.civil_case.status,
+      details: [data.legal_status.civil_case.details]
     }
   ];
 

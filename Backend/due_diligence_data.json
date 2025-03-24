@@ -1,297 +1,121 @@
 [
-  {
+    {
         "hospital_info": {
-          "ID": 12345678,
-          "HOSPITAL": "APOLLO SPECTRA HOSPITALS (A UNIT OF APOLLO SPECIALTY HOSPITALS PVT LTD) - Kailash Colony, New Delhi",
-          "ADDRESS": "NEW DELHI, DELHI - 110048",
-          "CATEGORY": "Multi-Specialty",
-          "INFRA_SCORE": 3.7,
-          "TIER": "Primary"
-      },
-      "hospital_score": {
-          "score": 85
-      },
-      "financial_assessment": {
-          "gst_status": {
-              "status": "valid",
-              "label": "GST Registration"
-          },
-          "pan_status": {
-              "status": "valid",
-              "label": "PAN Registration"
-          },
-          "epfo_status": {
-              "status": "valid",
-              "label": "EPFO Registration"
-          }
-      },
-      "negative_legal": {
-          "blacklist": {
-              "count": 0,
-              "severity": "low"
-          },
-          "pmjay_status": "Not Blacklisted",
-          "legal_status": {
-              "criminal_case": {
-                  "status": "none",
-                  "details": "No criminal cases found"
-              },
-              "civil_case": {
-                  "status": "none",
-                  "details": "No civil cases found"
-              }
-          }
-      },
-      "accreditation_status": {
-          "jci": {
-              "status": "Accredited",
-              "label": "JCI"
-          },
-          "nabh": {
-              "status": "Not Available",
-              "label": "NABH"
-          },
-          "rohini": {
-              "status": "Not Accredited",
-              "label": "ROHINI"
-          },
-          "none": false
-      }
-  },
-  {
-      "hospital_info": {
-          "ID": 12345679,
-          "HOSPITAL": "Sanjivani Hospitals, New Delhi",
-          "ADDRESS": "NEW DELHI, DELHI - 110048",
-          "CATEGORY": "Multi-Specialty",
-          "INFRA_SCORE": 3.7,
-          "TIER": "Primary"
-      },
-      "hospital_score": {
-          "score": 75.52
-      },
-      "financial_assessment": {
-          "gst_status": {
-              "status": "valid",
-              "label": "GST Registration"
-          },
-          "pan_status": {
-              "status": "valid",
-              "label": "PAN Registration"
-          },
-          "epfo_status": {
-              "status": "invalid",
-              "label": "EPFO Registration"
-          }
-      },
-      "negative_legal": {
-          "blacklist": {
-              "count": 2,
-              "severity": "Moderate"
-          },
-          "pmjay_status": "Active",
-          "legal_status": {
-              "criminal_case": {
-                  "status": "Recent",
-                  "details": "Notice received on Jan 15, 2024\nExplanation: Appeal pending verification"
-              },
-              "civil_case": {
-                  "status": "Old",
-                  "details": "Insurance Warning issued by State Board\nDue for review in March 2024"
-              }
-          }
-      },
-      "accreditation_status": {
-          "jci": {
-              "status": "valid",
-              "label": "JCI Accreditation"
-          },
-          "nabh": {
-              "status": "valid",
-              "label": "NABH Accreditation"
-          },
-          "rohini": {
-              "status": "valid",
-              "label": "Rohini ID"
-          },
-          "none": false
-      }
-  },
-  {
-      "hospital_info": {
-          "ID": 23456789,
-          "HOSPITAL": "Sri Balaji Action Medical Institute",
-          "ADDRESS": "Fc34, Baba Ram Dev Marg, Janta Flats, Paschim Vihar, Delhi, 110063",
-          "CATEGORY": "Multi-Specialty",
-          "INFRA_SCORE": 3.7,
-          "TIER": "Primary"
-      },
-      "hospital_score": {
-          "score": 82.35
-      },
-      "financial_assessment": {
-          "gst_status": {
-              "status": "valid",
-              "label": "GST Registration"
-          },
-          "pan_status": {
-              "status": "valid",
-              "label": "PAN Registration"
-          },
-          "epfo_status": {
-              "status": "invalid",
-              "label": "EPFO Registration"
-          }
-      },
-      "negative_legal": {
-          "blacklist": {
-              "count": 1,
-              "severity": "Low"
-          },
-          "pmjay_status": "Active",
-          "legal_status": {
-              "criminal_case": {
-                  "status": "None",
-                  "details": "No criminal cases reported"
-              },
-              "civil_case": {
-                  "status": "Old",
-                  "details": "Insurance Warning issued by State Board\nResolved in December 2023"
-              }
-          }
-      },
-      "accreditation_status": {
-          "jci": {
-              "status": "valid",
-              "label": "JCI Accreditation"
-          },
-          "nabh": {
-              "status": "valid",
-              "label": "NABH Accreditation"
-          },
-          "rohini": {
-              "status": "valid",
-              "label": "Rohini ID"
-          },
-          "none": false
-      }
-  },
-  {
-      "hospital_info": {
-          "ID": 34567890,
-          "HOSPITAL": "Rathee Hospital",
-          "ADDRESS": "A1/159-160, Opposite Japanese Park Gate no.2, Sector 11, Rohini, New Delhi, Delhi",
-          "CATEGORY": "Multi-Specialty",
-          "INFRA_SCORE": 3.7,
-          "TIER": "Primary"
-      },
-      "hospital_score": {
-          "score": 68.90
-      },
-      "financial_assessment": {
-          "gst_status": {
-              "status": "valid",
-              "label": "GST Registration"
-          },
-          "pan_status": {
-              "status": "valid",
-              "label": "PAN Registration"
-          },
-          "epfo_status": {
-              "status": "invalid",
-              "label": "EPFO Registration"
-          }
-      },
-      "negative_legal": {
-          "blacklist": {
-              "count": 3,
-              "severity": "High"
-          },
-          "pmjay_status": "Active",
-          "legal_status": {
-              "criminal_case": {
-                  "status": "Recent",
-                  "details": "Notice received on Feb 1, 2024\nExplanation: Under investigation"
-              },
-              "civil_case": {
-                  "status": "Recent",
-                  "details": "Compliance notice issued\nDue for review in April 2024"
-              }
-          }
-      },
-      "accreditation_status": {
-          "jci": {
-              "status": "valid",
-              "label": "JCI Accreditation"
-          },
-          "nabh": {
-              "status": "valid",
-              "label": "NABH Accreditation"
-          },
-          "rohini": {
-              "status": "valid",
-              "label": "Rohini ID"
-          },
-          "none": false
-      }
-  },
-  {
-      "hospital_info": {
-          "ID": 45678901,
-          "HOSPITAL": "Metro Hospital",
-          "ADDRESS": "56, Sector 5, Dwarka, New Delhi",
-          "CATEGORY": "Multi-Specialty",
-          "INFRA_SCORE": 4.3,
-          "TIER": "Tier 2"
-      },
-      "hospital_score": {
-          "score": 90.25
-      },
-      "financial_assessment": {
-          "gst_status": {
-              "status": "valid",
-              "label": "GST Registration"
-          },
-          "pan_status": {
-              "status": "valid",
-              "label": "PAN Registration"
-          },
-          "epfo_status": {
-              "status": "valid",
-              "label": "EPFO Registration"
-          }
-      },
-      "negative_legal": {
-          "blacklist": {
-              "count": 0,
-              "severity": "low"
-          },
-          "pmjay_status": "Not Blacklisted",
-          "legal_status": {
-              "criminal_case": {
-                  "status": "none",
-                  "details": "No criminal cases found"
-              },
-              "civil_case": {
-                  "status": "none",
-                  "details": "No civil cases found"
-              }
-          }
-      },
-      "accreditation_status": {
-          "jci": {
-              "status": "valid",
-              "label": "JCI Accreditation"
-          },
-          "nabh": {
-              "status": "valid",
-              "label": "NABH Accreditation"
-          },
-          "rohini": {
-              "status": "valid",
-              "label": "Rohini ID"
-          },
-          "none": false
-      }
-  }
+            "ID": 12345670,
+            "HOSPITAL": "GAWADE MULTISPECIALITY HOSPITAL",
+            "ADDRESS": "RAJGURUNAGAR, PABAL ROAD, Pune - 410505",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": 4,
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score": 8
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration"
+            },
+            "epfo_status": {
+                "status": "Not Found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345679,
+            "HOSPITAL": "Sanjivani Hospitals, New Delhi",
+            "ADDRESS": "NEW DELHI, DELHI - 110048",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 3.7,
+            "TIER": "Primary"
+        },
+        "hospital_score": {
+            "score": 75.52
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "valid",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration"
+            },
+            "epfo_status": {
+                "status": "invalid",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 2,
+                "severity": "Moderate"
+            },
+            "pmjay_status": "Active",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "Recent",
+                    "details": "Notice received on Jan 15, 2024. Explanation: Appeal pending verification."
+                },
+                "civil_case": {
+                    "status": "Old",
+                    "details": "Insurance Warning issued by State Board. Due for review in March 2024."
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "valid",
+                "label": "JCI Accreditation"
+            },
+            "nabh": {
+                "status": "valid",
+                "label": "NABH Accreditation"
+            },
+            "rohini": {
+                "status": "valid",
+                "label": "Rohini ID"
+            }
+        }
+    }
 ]

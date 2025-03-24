@@ -7,25 +7,34 @@ const AccreditationStatus = ({ data }) => {
     {
       icon: "/img/jci.png",
       label: "JCI",
-      status: data?.jci_status || "Not Available",
+      status: data?.status?.jci?.status,
     },
     {
       icon: "/img/nabh.png",
       label: "NABH",
-      status: data?.nabh_status || "Not Available",
+      status: data?.status?.nabh?.status,
     },
     {
       icon: "/img/rohini.png",
       label: "ROHINI",
-      status: data?.rohini_status || "Not Available",
+      status: data?.status?.rohini?.status,
     },
   ];
 
   const getStatusClass = (status) => {
+    if (!status || typeof status !== 'string') return "status-pending";
     const statusLower = status.toLowerCase();
-    if (statusLower === "accredited") return "accredited";
-    if (statusLower === "not accredited") return "not-accredited";
-    return "pending";
+    if (statusLower === "accredited") return "status-accredited";
+    if (statusLower === "not accredited") return "status-not-accredited";
+    return "status-pending";
+  };
+
+  const getStatusText = (status) => {
+    if (!status || typeof status !== 'string') return "Not Available";
+    const statusLower = status.toLowerCase();
+    if (statusLower === "accredited") return "Accredited";
+    if (statusLower === "not accredited") return "Not Accredited";
+    return "Not Available";
   };
 
   return (
@@ -37,33 +46,20 @@ const AccreditationStatus = ({ data }) => {
         Check hospital accreditation status
       </Typography>
       <div className="accreditation-grid">
-        <div className="accreditation-item">
-          <img src="/img/jci.png" alt="JCI" className="accreditation-icon" />
-          <Typography variant="subtitle2" className="accreditation-label">
-            JCI
-          </Typography>
-          <Typography variant="body2" className="accreditation-status status-pending">
-            Not Available
-          </Typography>
-        </div>
-        <div className="accreditation-item">
-          <img src="/img/nabh.png" alt="NABH" className="accreditation-icon" />
-          <Typography variant="subtitle2" className="accreditation-label">
-            NABH
-          </Typography>
-          <Typography variant="body2" className="accreditation-status status-pending">
-            Not Available
-          </Typography>
-        </div>
-        <div className="accreditation-item">
-          <img src="/img/rohini.png" alt="ROHINI" className="accreditation-icon" />
-          <Typography variant="subtitle2" className="accreditation-label">
-            ROHINI
-          </Typography>
-          <Typography variant="body2" className="accreditation-status status-pending">
-            Not Available
-          </Typography>
-        </div>
+        {accreditations.map((accreditation) => (
+          <div key={accreditation.label} className="accreditation-item">
+            <img src={accreditation.icon} alt={accreditation.label} className="accreditation-icon" />
+            <Typography variant="subtitle2" className="accreditation-label">
+              {accreditation.label}
+            </Typography>
+            <Typography 
+              variant="body2" 
+              className={`accreditation-status ${getStatusClass(accreditation.status)}`}
+            >
+              {getStatusText(accreditation.status)}
+            </Typography>
+          </div>
+        ))}
       </div>
     </div>
   );

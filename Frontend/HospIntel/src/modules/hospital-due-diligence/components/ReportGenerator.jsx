@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFViewer,
-  PDFDownloadLink,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  PDFViewer,
+  PDFDownloadLink,
   Font,
   Image,
   Svg,
@@ -28,8 +28,8 @@ Font.register({
   ]
 });
 
-const styles = StyleSheet.create({
-  page: {
+  const styles = StyleSheet.create({
+    page: {
     padding: 40,
     fontFamily: 'Helvetica',
     backgroundColor: '#ffffff',
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     fontSize: 100,
     color: '#f0f0f0',
     opacity: 0.3,
-  },
-  header: {
+    },
+    header: {
     marginBottom: 16,
     borderBottomWidth: 2,
     borderBottomColor: '#2563eb',
@@ -71,34 +71,39 @@ const styles = StyleSheet.create({
   hospitalInfo: {
     marginBottom: 4,
     alignSelf: 'flex-start',
-  },
-  hospitalName: {
-    fontSize: 16,
+    },
+    hospitalName: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#1e3a8a',
+    marginBottom: 8,
   },
   hospitalMeta: {
     flexDirection: 'row',
-    marginTop: 2,
     flexWrap: 'wrap',
+    gap: 4,
+    marginBottom: 0,
+    marginTop: 6,
   },
   metaItem: {
-    fontSize: 10,
-    color: '#6b7280',
-    marginRight: 16,
+    fontSize: 11,
+    color: '#4b5563',
+    backgroundColor: '#f3f4f6',
+    padding: '4px 8px',
+    borderRadius: 4,
   },
   hospitalAddress: {
-    fontSize: 10,
+    fontSize: 11,
     color: '#6b7280',
-    marginTop: 2,
+    fontStyle: 'italic',
   },
   dateText: {
     fontSize: 10,
     color: '#6b7280',
   },
   section: {
-    marginBottom: 20,
-    padding: 16,
+    marginBottom: 16,
+    padding: 6,
     backgroundColor: '#f8fafc',
     borderRadius: 8,
   },
@@ -180,7 +185,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   checkpointText: {
-    fontSize: 10,
+      fontSize: 10,
     color: '#4b5563',
   },
   scoreGrid: {
@@ -222,21 +227,21 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   summarySection: {
-    marginTop: 24,
-    padding: 16,
+    marginTop: 6,
+    padding: 6,
     backgroundColor: '#f8fafc',
     borderRadius: 8,
   },
   summaryTitle: {
-    fontSize: 14,
+      fontSize: 12,
     fontWeight: 'bold',
     color: '#1e3a8a',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   summaryText: {
     fontSize: 10,
     color: '#4b5563',
-    lineHeight: 1.4,
+    lineHeight: 1.2,
   },
   gaugeContainer: {
     position: 'relative',
@@ -280,7 +285,7 @@ const styles = StyleSheet.create({
   },
   
   scoreRating: {
-    fontSize: 12,
+      fontSize: 12,
     marginTop: 4,
     textAlign: 'center',
   },
@@ -289,8 +294,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16,
-    padding: 16,
+    gap: 10,
+    padding: 10,
   },
 
   accreditationItem: {
@@ -311,11 +316,11 @@ const styles = StyleSheet.create({
   },
 
   accreditationContent: {
-    flex: 1,
-  },
+      flex: 1,
+    },
 
   accreditationTitle: {
-    fontSize: 12,
+      fontSize: 12,
     fontWeight: 'bold',
     color: '#1e3a8a',
     marginBottom: 4,
@@ -332,7 +337,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
-    padding: 16,
+    padding: 18,
   },
 
   financialItem: {
@@ -344,7 +349,7 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    marginBottom: 6,
   },
 
   financialLogo: {
@@ -371,7 +376,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: 5,
     padding: 12,
   },
   
@@ -380,7 +385,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#fff',
     borderRadius: 8,
-    borderWidth: 1,
+      borderWidth: 1,
     borderColor: '#e2e8f0',
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -408,10 +413,9 @@ const styles = StyleSheet.create({
   
   itemStatus: {
     fontSize: 9,
-    color: '#6b7280',
     padding: '2px 6px',
     borderRadius: 4,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   
   observationText: {
@@ -449,7 +453,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   
-  pageNumber: {
+    pageNumber: {
     position: 'absolute',
     bottom: 20,
     right: 40,
@@ -468,80 +472,83 @@ const styles = StyleSheet.create({
   },
 
   detailedSummary: {
-    fontSize: 9,
+    fontSize: 8,
     color: '#4b5563',
-    lineHeight: 1.3,
-    marginTop: 4,
+    lineHeight: 1,
+    marginTop: 2,
   },
-});
+
+  hospitalInfoSection: {
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 8,
+    lineHeight: 1.5,
+  },
+  });
 
 const ReportDocument = ({ hospital, images }) => {
   // Update defaultHospitalData to include PMJAY and ROHINI
   const defaultHospitalData = {
-    hospital_info: {
-      HOSPITAL: 'N/A',
-      CATEGORY: 'N/A',
-      TIER: 'N/A',
-      ID: 'N/A',
-      ADDRESS: 'N/A'
+    hospital_info: { 
+      ID: 12345678,
+      HOSPITAL: "GAWADE MULTISPECIALITY HOSPITAL",
+      ADDRESS: "RAJGURUNAGAR,PABAL ROAD, Pune - 410505",
+      CATEGORY: "Multi-Specialty",
+      INFRA_SCORE: 0,
+      TIER: "Secondary",
+      "Hospital_Age": 4,
+      "Hospital Website": null,
+      "Patient Reviews": 0
     },
     hospital_score: {
-      score: 0,
-      financial_score: 0,
-      legal_score: 0,
-      accreditation_score: 0,
-      detailed_observations: ''
+      score: 8
     },
     financial_assessment: {
-      pan: { 
-        status: 'invalid', 
-        observations: 'PAN verification pending. Required for tax compliance and financial transactions.' 
+      gst_status: {
+        status: "Not found",
+        label: "GST Registration"
       },
-      gst: { 
-        status: 'invalid', 
-        observations: 'GST registration status needs verification. Important for billing and tax purposes.' 
+      pan_status: {
+        status: "valid",
+        label: "PAN Registration"
       },
-      epfo: { 
-        status: 'invalid', 
-        observations: 'EPFO compliance check pending. Employee benefits and statutory requirements to be verified.' 
+      epfo_status: {
+        status: "Not Found",
+        label: "EPFO Registration"
       }
     },
     negative_legal: {
-      blacklist: { 
-        severity: 'High', 
-        observations: 'Blacklist status check pending. Critical for credibility assessment.' 
+      blacklist: {
+        count: 0,
+        severity: "low"
       },
-      pmjay: { 
-        status: 'invalid', 
-        observations: 'PMJAY empanelment status pending. Required for government healthcare scheme participation.' 
-      },
+      pmjay_status: "Accredited",
       legal_status: {
-        criminal_case: { 
-          status: 'No Data', 
-          observations: 'Criminal case history check pending. Essential for legal compliance verification.' 
+        criminal_case: {
+          status: "none",
+          details: "No criminal cases found"
         },
-        civil_case: { 
-          status: 'No Data', 
-          observations: 'Civil case history check pending. Important for risk assessment.' 
+        civil_case: {
+          status: "none",
+          details: "No civil cases found"
         }
       }
     },
     accreditation_status: {
-      jci: { 
-        status: 'Not Available', 
-        label: 'JCI',
-        observations: 'JCI accreditation status not available.' 
+      jci: {
+        status: "Not Accredited",
+        label: "JCI"
       },
-      nabh: { 
-        status: 'Not Available', 
-        label: 'NABH',
-        observations: 'NABH accreditation status not available.' 
+      nabh: {
+        status: "Not Accredited",
+        label: "NABH"
       },
-      rohini: { 
-        status: 'Not Available', 
-        label: 'ROHINI',
-        observations: 'ROHINI registration status not available.' 
-      }
+      rohini: {
+        status: "Accredited",
+        label: "ROHINI"
+      },
+      none: false
     }
   };
 
@@ -564,24 +571,24 @@ const ReportDocument = ({ hospital, images }) => {
   };
 
   const getScoreColor = (score) => {
-    if (score >= 85) return '#22c55e';  // Green for 8.5 and above
-    if (score >= 70) return '#3b82f6';  // Blue
-    if (score >= 60) return '#f59e0b';  // Orange
+    if (score >= 8) return '#22c55e';  // Green for 8.5 and above
+    if (score >= 7) return '#3b82f6';  // Blue
+    if (score >= 6) return '#f59e0b';  // Orange
     return '#ef4444';  // Red
   };
 
   const getRatingInfo = (score) => {
-    if (score >= 85) return { text: 'Excellent', color: '#22c55e' };  // Green for 8.5 and above
-    if (score >= 70) return { text: 'Good', color: '#3b82f6' };
-    if (score >= 60) return { text: 'Average', color: '#f59e0b' };
+    if (score >= 8.5) return { text: 'Excellent', color: '#22c55e' };  // Green for 8.5 and above
+    if (score >= 7) return { text: 'Good', color: '#3b82f6' };
+    if (score >= 6) return { text: 'Average', color: '#f59e0b' };
     return { text: 'Needs Improvement', color: '#ef4444' };
   };
 
   const renderGauge = (score) => {
     const percentage = score;
     const { text: ratingText, color: ratingColor } = getRatingInfo(score);
-
-    return (
+ 
+  return (
       <View style={styles.gaugeContainer}>
         <Svg viewBox="0 0 100 100">
           {/* Background arc - larger and more centered */}
@@ -605,12 +612,12 @@ const ReportDocument = ({ hospital, images }) => {
           <Text style={[styles.scoreNumber, { color: ratingColor }]}>
             {(score / 10).toFixed(1)}
             <Text style={styles.scoreDenominator}>/10</Text>
-          </Text>
+            </Text>
           <Text style={[styles.scoreRating, { color: ratingColor }]}>
             {ratingText}
-          </Text>
-        </View>
-      </View>
+            </Text>
+          </View>
+        </View>
     );
   };
 
@@ -626,7 +633,7 @@ const ReportDocument = ({ hospital, images }) => {
         <XCircle style={[styles.checkpointIcon, { color: '#ef4444' }]} />
       )}
       <Text style={styles.checkpointText}>{label}</Text>
-    </View>
+          </View>
   );
 
   const renderProgressStrip = (value, max = 100) => {
@@ -642,69 +649,25 @@ const ReportDocument = ({ hospital, images }) => {
             }
           ]} 
         />
-      </View>
+        </View>
     );
   };
 
   const generateSummary = (hospital) => {
     const score = hospital?.hospital_score?.score || 0;
-    
-    let summary = '';
-    
-    // Overall Assessment
-    summary += `Executive Assessment:\n`;
-    summary += `${hospital?.hospital_info?.HOSPITAL || 'The hospital'} has achieved an overall due diligence score of ${(score/10).toFixed(1)}/10. `;
-    
-    // Financial Status
-    const financialStatus = Object.values(hospital?.financial_assessment || {}).map(item => {
-      if (item.observations) return `• ${item.observations}`;
-    }).filter(Boolean).join('\n');
-    
-    summary += `\n\nFinancial Overview:\n${financialStatus}`;
-    
-    // Legal & Compliance Status
-    const legalStatus = [
-      hospital?.negative_legal?.blacklist?.observations,
-      hospital?.negative_legal?.pmjay?.observations,
-      hospital?.negative_legal?.legal_status?.criminal_case?.observations,
-      hospital?.negative_legal?.legal_status?.civil_case?.observations
-    ].filter(Boolean).map(obs => `• ${obs}`).join('\n');
-    
-    summary += `\n\nLegal & Compliance Overview:\n${legalStatus}`;
-    
-    // Accreditation Status
-    const accreditationStatus = Object.values(hospital?.accreditation_status || {}).map(item => {
-      if (item.observations) return `• ${item.observations}`;
-    }).filter(Boolean).join('\n');
-    
-    summary += `\n\nAccreditation Overview:\n${accreditationStatus}`;
-    
-    // Business Decision Recommendation
-    summary += '\n\nBusiness Recommendation:\n';
-    if (score >= 80) {
-      summary += '• Highly recommended for partnership. Strong compliance and operational standards demonstrated.\n';
-      summary += '• Minimal risk profile with robust documentation and certifications.\n';
-      summary += '• Suggested for fast-track onboarding process.';
-    } else if (score >= 70) {
-      summary += '• Recommended for partnership with standard due diligence.\n';
-      summary += '• Moderate risk profile with minor compliance gaps to be addressed.\n';
-      summary += '• Regular monitoring of improvement areas advised.';
-    } else if (score >= 60) {
-      summary += '• Conditional recommendation pending improvements.\n';
-      summary += '• Higher risk profile requiring enhanced due diligence.\n';
-      summary += '• Specific improvement targets should be set and monitored.';
-    } else {
-      summary += '• Not recommended for immediate partnership.\n';
-      summary += '• Significant compliance and documentation gaps identified.\n';
-      summary += '• Major improvements required before reconsideration.';
-    }
-    
-    return summary;
+    const summaryPoints = [
+      `The hospital, ${hospital?.hospital_info?.HOSPITAL || 'Unnamed'}, has achieved a due diligence score of ${score}/10, reflecting its overall performance.`,
+      `Financial assessments indicate ${score >= 7 ? 'strong' : 'weak'} financial health.`,
+      `Legal and compliance status is ${score >= 7 ? 'satisfactory' : 'concerning'}.`,
+      `Accreditation status is ${score >= 7 ? 'positive' : 'negative'}.`,
+      score >= 8 ? 'Highly recommended for partnership.' : score >= 7 ? 'Recommended for partnership with standard due diligence.' : 'Not recommended for immediate partnership.'
+    ];
+    return summaryPoints.map(point => `• ${point}`).join('\n');
   };
 
   const renderScoreSection = (score, observations) => {
     const { text: ratingText, color: ratingColor } = getRatingInfo(score);
-    const scoreColor = score >= 85 ? '#22c55e' : ratingColor; // Green for 8.5 and above
+    const scoreColor = score >= 8.5 ? '#22c55e' : ratingColor; // Green for 8.5 and above
     
     return (
       <View style={styles.scoreSection}>
@@ -716,35 +679,35 @@ const ReportDocument = ({ hospital, images }) => {
           <View style={styles.greenStrip} />
           <View style={styles.scoreDisplay}>
             <Text style={[styles.scoreValue, { color: scoreColor }]}>
-              {(score / 10).toFixed(1)}<Text style={styles.scoreLabel}>/10</Text>
+              {score}<Text style={styles.scoreLabel}>/10</Text>
             </Text>
             <Text style={[styles.scoreRatingText, { color: scoreColor }]}>{ratingText}</Text>
-          </View>
-        </View>
+            </View>
+          </View>
         <View style={styles.progressStrip}>
           <View 
             style={[
               styles.progressFill, 
               { 
-                width: `${score}%`,
+                width: `${(score / 10) * 100}%`,  // Adjusted to fill out of 10
                 backgroundColor: scoreColor
               }
             ]} 
           />
-        </View>
+        </View>
         {observations && (
           <View style={styles.detailedObservations}>
             <Text style={styles.observationText}>{observations}</Text>
-          </View>
+          </View>
         )}
-      </View>
+            </View>
     );
   };
 
   const getStatusStyle = (status) => {
-    if (status === 'valid') return styles.validStatus;
-    if (status === 'Not Available') return { backgroundColor: '#f3f4f6', color: '#6b7280' };
-    return styles.invalidStatus;
+    if (status === 'Accredited') return { color: '#166534' };  // Green for Accredited
+    if (status === 'Not Accredited') return { color: '#991b1b' };  // Red for Not Accredited
+    return { color: '#374151' };  // Dark grey for Not Available
   };
 
   return (
@@ -754,81 +717,88 @@ const ReportDocument = ({ hospital, images }) => {
           <Image src={images?.logo} style={styles.logo} />
           <View style={styles.headerContent}>
             <Text style={styles.reportTitle}>Hospital Due Diligence Report</Text>
-            <View style={styles.hospitalInfo}>
-              <Text style={styles.hospitalName}>{safeHospital.hospital_info.HOSPITAL}</Text>
-              <View style={styles.hospitalMeta}>
-                <Text style={styles.metaItem}>Category: {safeHospital.hospital_info.CATEGORY}</Text>
-                <Text style={styles.metaItem}>Tier: {safeHospital.hospital_info.TIER}</Text>
-                <Text style={styles.metaItem}>ID: {safeHospital.hospital_info.ID}</Text>
-              </View>
-              <Text style={styles.hospitalAddress}>{safeHospital.hospital_info.ADDRESS}</Text>
-            </View>
-          </View>
+            </View>
           <View style={styles.headerRight}>
             <Text style={styles.dateText}>Report Generated:</Text>
             <Text style={styles.dateText}>{new Date().toLocaleDateString()}</Text>
-          </View>
-        </View>
-
+          </View>
+        </View>
+ 
+        <View style={[styles.section, { marginTop: 0 }]}>
+          <Text style={styles.sectionTitle}>Hospital Information</Text>
+          <View style={styles.hospitalInfoSection}>
+            <Text style={styles.hospitalName}>{safeHospital.hospital_info.HOSPITAL}</Text>
+            <Text style={styles.hospitalAddress}>{safeHospital.hospital_info.ADDRESS}</Text>
+            <View style={styles.hospitalMeta}>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Category: {safeHospital.hospital_info.CATEGORY}</Text>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Tier: {safeHospital.hospital_info.TIER}</Text>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Hospital Age: {safeHospital.hospital_info.Hospital_Age} years</Text>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Patient Reviews: {safeHospital.hospital_info['Patient Reviews']}</Text>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Website: {safeHospital.hospital_info['Hospital Website'] || 'N/A'}</Text>
+              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Infrastructure Score: {safeHospital.hospital_info.INFRA_SCORE}</Text>
+            </View>
+          </View>
+        </View>
+ 
         {renderScoreSection(safeHospital.hospital_score.score, safeHospital.hospital_score.detailed_observations)}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Financial Assessment</Text>
           <View style={styles.gridContainer}>
-            <View style={styles.financialItem}>
+            <View style={[styles.financialItem, { padding: 8 }]}>
               <Image src={images?.gst} style={styles.financialLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>GST Status</Text>
+                <Text style={styles.itemTitle}>GST</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.financial_assessment.gst.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.financial_assessment.gst_status.status === 'valid' ? styles.validStatus : styles.invalidStatus
                 ]}>
-                  {safeHospital.financial_assessment.gst.status.toUpperCase()}
+                  {safeHospital.financial_assessment.gst_status.status.toUpperCase()}
                 </Text>
                 <Text style={styles.detailedSummary}>
-                  {safeHospital.financial_assessment.gst.observations}
+                  {safeHospital.financial_assessment.gst_status.observations}
                 </Text>
               </View>
             </View>
-            <View style={styles.financialItem}>
+            <View style={[styles.financialItem, { padding: 8 }]}>
               <Image src={images?.pan} style={styles.financialLogo} />
               <View style={styles.itemContent}>
                 <Text style={styles.itemTitle}>PAN Verification</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.financial_assessment.pan.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.financial_assessment.pan_status.status === 'valid' ? styles.validStatus : styles.invalidStatus
                 ]}>
-                  {safeHospital.financial_assessment.pan.status.toUpperCase()}
+                  {safeHospital.financial_assessment.pan_status.status.toUpperCase()}
                 </Text>
                 <Text style={styles.detailedSummary}>
-                  {safeHospital.financial_assessment.pan.observations}
+                  {safeHospital.financial_assessment.pan_status.observations}
                 </Text>
               </View>
-            </View>
-            <View style={styles.financialItem}>
+          </View>
+            <View style={[styles.financialItem, { padding: 8 }]}>
               <Image src={images?.epfo} style={styles.financialLogo} />
               <View style={styles.itemContent}>
                 <Text style={styles.itemTitle}>EPFO Compliance</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.financial_assessment.epfo.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.financial_assessment.epfo_status.status === 'valid' ? styles.validStatus : styles.invalidStatus
                 ]}>
-                  {safeHospital.financial_assessment.epfo.status.toUpperCase()}
-                </Text>
+                  {safeHospital.financial_assessment.epfo_status.status.toUpperCase()}
+              </Text>
                 <Text style={styles.detailedSummary}>
-                  {safeHospital.financial_assessment.epfo.observations}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
+                  {safeHospital.financial_assessment.epfo_status.observations}
+              </Text>
+            </View>
+            </View>
+          </View>
+        </View>
+ 
         <View style={styles.footer}>
           <View style={styles.footerContent}>
             <Text style={styles.trademark}>© {new Date().getFullYear()} Hospital Due Diligence. All Rights Reserved.</Text>
             <Text style={styles.trademark}>CONFIDENTIAL - For Internal Use Only</Text>
           </View>
-        </View>
+              </View>
         
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
           `Page ${pageNumber} of ${totalPages}`
@@ -842,7 +812,7 @@ const ReportDocument = ({ hospital, images }) => {
             <View style={styles.gridItem}>
               <Image src={images?.case} style={styles.itemLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>Blacklist Status</Text>
+                <Text style={styles.itemTitle}>Blacklist</Text>
                 <Text style={[
                   styles.itemStatus,
                   safeHospital.negative_legal.blacklist.severity.toLowerCase() === 'low' ? styles.validStatus : styles.invalidStatus
@@ -850,92 +820,92 @@ const ReportDocument = ({ hospital, images }) => {
                   Severity: {safeHospital.negative_legal.blacklist.severity}
                 </Text>
                 <Text style={styles.observationText}>{safeHospital.negative_legal.blacklist.observations}</Text>
-              </View>
-            </View>
+              </View>
+            </View>
             <View style={styles.gridItem}>
               <Image src={images?.pmjay} style={styles.itemLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>PMJAY Status</Text>
+                <Text style={styles.itemTitle}>PMJAY</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.negative_legal.pmjay.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.negative_legal.pmjay_status === 'Accredited' ? styles.validStatus : styles.invalidStatus
                 ]}>
-                  {safeHospital.negative_legal.pmjay.status.toUpperCase()}
+                  {safeHospital.negative_legal.pmjay_status}
                 </Text>
-                <Text style={styles.observationText}>{safeHospital.negative_legal.pmjay.observations}</Text>
+                <Text style={styles.observationText}>{safeHospital.negative_legal.pmjay?.observations}</Text>
               </View>
-            </View>
+              </View>
             <View style={styles.gridItem}>
               <Image src={images?.criminal} style={styles.itemLogo} />
               <View style={styles.itemContent}>
                 <Text style={styles.itemTitle}>Criminal Cases</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.negative_legal.legal_status.criminal_case.status.toLowerCase() === 'no cases' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.negative_legal.legal_status.criminal_case.status.toLowerCase() === 'none' ? { color: '#6b7280' } : styles.invalidStatus
                 ]}>
                   {safeHospital.negative_legal.legal_status.criminal_case.status || 'None'}
                 </Text>
-              </View>
-            </View>
+              </View>
+            </View>
             <View style={styles.gridItem}>
               <Image src={images?.civil} style={styles.itemLogo} />
               <View style={styles.itemContent}>
                 <Text style={styles.itemTitle}>Civil Cases</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.negative_legal.legal_status.civil_case.status.toLowerCase() === 'no cases' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.negative_legal.legal_status.civil_case.status.toLowerCase() === 'none' ? { color: '#6b7280' } : styles.invalidStatus
                 ]}>
                   {safeHospital.negative_legal.legal_status.civil_case.status || 'None'}
                 </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
+              </View>
+            </View>
+          </View>
+        </View>
+ 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Accreditation & Certifications</Text>
           <View style={styles.gridContainer}>
             <View style={styles.gridItem}>
               <Image src={images?.nabh} style={styles.accreditationLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>NABH Status</Text>
+                <Text style={styles.itemTitle}>NABH</Text>
                 <Text style={[
                   styles.itemStatus,
-                  getStatusStyle(safeHospital.accreditation_status.nabh.status)
+                  safeHospital.accreditation_status.nabh.status === 'Accredited' ? styles.validStatus : styles.invalidStatus
                 ]}>
                   {safeHospital.accreditation_status.nabh.status}
                 </Text>
                 <Text style={styles.observationText}>{safeHospital.accreditation_status.nabh.observations}</Text>
-              </View>
-            </View>
+              </View>
+            </View>
             <View style={styles.gridItem}>
               <Image src={images?.rohini} style={styles.accreditationLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>ROHINI Status</Text>
+                <Text style={styles.itemTitle}>ROHINI</Text>
                 <Text style={[
                   styles.itemStatus,
-                  getStatusStyle(safeHospital.accreditation_status.rohini.status)
+                  safeHospital.accreditation_status.rohini.status === 'Accredited' ? styles.validStatus : styles.invalidStatus
                 ]}>
                   {safeHospital.accreditation_status.rohini.status}
                 </Text>
                 <Text style={styles.observationText}>{safeHospital.accreditation_status.rohini.observations}</Text>
-              </View>
-            </View>
+              </View>
+            </View>
             <View style={styles.gridItem}>
               <Image src={images?.jci} style={styles.accreditationLogo} />
               <View style={styles.itemContent}>
-                <Text style={styles.itemTitle}>JCI Status</Text>
+                <Text style={styles.itemTitle}>JCI</Text>
                 <Text style={[
                   styles.itemStatus,
-                  getStatusStyle(safeHospital.accreditation_status.jci.status)
+                  safeHospital.accreditation_status.jci.status === 'Accredited' ? styles.validStatus : styles.invalidStatus
                 ]}>
                   {safeHospital.accreditation_status.jci.status}
                 </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
+              </View>
+            </View>
+          </View>
+        </View>
+ 
         <View style={styles.summarySection}>
           <Text style={styles.summaryTitle}>Executive Summary</Text>
           <Text style={styles.summaryText}>{generateSummary(safeHospital)}</Text>
@@ -947,15 +917,18 @@ const ReportDocument = ({ hospital, images }) => {
             <Text style={styles.trademark}>CONFIDENTIAL - For Internal Use Only</Text>
           </View>
         </View>
+        <Text style={{ color: 'black', fontStyle: 'italic', marginTop: 160, fontSize: 10 }}>
+          Note: This report is a work in progress and is intended for testing purposes only.
+        </Text>
         
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
           `Page ${pageNumber} of ${totalPages}`
         )} fixed />
-      </Page>
-    </Document>
-  );
+      </Page>
+    </Document>
+  );
 };
-
+ 
 const ReportGenerator = ({ hospital }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -987,19 +960,20 @@ const ReportGenerator = ({ hospital }) => {
   if (!hospital) {
     return null;
   }
-
-  return (
+ 
+  return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Button
-          variant="contained"
+      <div className="flex flex-row gap-2 justify-start items-center">
+      <Button
+        variant="contained"
           color="primary"
           onClick={handleOpen}
-          className="w-full sm:w-auto"
+          className="w-auto"
           sx={{
-            minWidth: '120px',
-            px: 4,
-            py: 2,
+            minWidth: { xs: '100px', sm: '120px' },
+            px: { xs: 2, sm: 4 },
+            py: { xs: 1, sm: 2 },
+            fontSize: { xs: '0.875rem', sm: '1rem' },
             bgcolor: 'primary.main',
             '&:hover': {
               bgcolor: 'primary.dark',
@@ -1007,27 +981,28 @@ const ReportGenerator = ({ hospital }) => {
           }}
         >
           {isLoading ? 'Loading...' : 'View Report'}
-        </Button>
-        <PDFDownloadLink
+      </Button>
+          <PDFDownloadLink
           document={<ReportDocument hospital={hospital} images={base64Images} />}
           fileName={`${hospital.hospital_info.HOSPITAL.replace(/\s+/g, '_')}_Report_${new Date().toISOString().split('T')[0]}.pdf`}
-          className="w-full sm:w-auto"
-        >
-          {({ loading }) => (
+          className="w-auto"
+          >
+            {({ loading }) => (
             <Button
               variant="outlined"
               color="primary"
               disabled={loading || isLoading}
               sx={{
-                minWidth: '120px',
-                px: 4,
-                py: 2
+                minWidth: { xs: '100px', sm: '120px' },
+                px: { xs: 2, sm: 4 },
+                py: { xs: 1, sm: 2 },
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }}
             >
               {loading || isLoading ? 'Preparing...' : 'Download Report'}
-            </Button>
-          )}
-        </PDFDownloadLink>
+              </Button>
+            )}
+          </PDFDownloadLink>
       </div>
 
       <Dialog
@@ -1100,9 +1075,9 @@ const ReportGenerator = ({ hospital }) => {
             </PDFViewer>
           )}
         </DialogContent>
-      </Dialog>
-    </div>
-  );
+      </Dialog>
+    </div>
+  );
 };
-
+ 
 export default ReportGenerator;
