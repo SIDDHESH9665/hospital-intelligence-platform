@@ -484,90 +484,18 @@ Font.register({
     borderRadius: 8,
     marginTop: 8,
     lineHeight: 1.5,
-  },
-  });
+    },
+  });
 
 const ReportDocument = ({ hospital, images }) => {
-  // Update defaultHospitalData to include PMJAY and ROHINI
-  const defaultHospitalData = {
-    hospital_info: { 
-      ID: 12345678,
-      HOSPITAL: "GAWADE MULTISPECIALITY HOSPITAL",
-      ADDRESS: "RAJGURUNAGAR,PABAL ROAD, Pune - 410505",
-      CATEGORY: "Multi-Specialty",
-      INFRA_SCORE: 0,
-      TIER: "Secondary",
-      "Hospital_Age": 4,
-      "Hospital Website": null,
-      "Patient Reviews": 0
-    },
-    hospital_score: {
-      score: 8
-    },
-    financial_assessment: {
-      gst_status: {
-        status: "Not found",
-        label: "GST Registration"
-      },
-      pan_status: {
-        status: "valid",
-        label: "PAN Registration"
-      },
-      epfo_status: {
-        status: "Not Found",
-        label: "EPFO Registration"
-      }
-    },
-    negative_legal: {
-      blacklist: {
-        count: 0,
-        severity: "low"
-      },
-      pmjay_status: "Accredited",
-      legal_status: {
-        criminal_case: {
-          status: "none",
-          details: "No criminal cases found"
-        },
-        civil_case: {
-          status: "none",
-          details: "No civil cases found"
-        }
-      }
-    },
-    accreditation_status: {
-      jci: {
-        status: "Not Accredited",
-        label: "JCI"
-      },
-      nabh: {
-        status: "Not Accredited",
-        label: "NABH"
-      },
-      rohini: {
-        status: "Accredited",
-        label: "ROHINI"
-      },
-      none: false
-    }
-  };
-
-  // Merge provided hospital data with default values
+  // Use the hospital data directly from the props
   const safeHospital = {
-    ...defaultHospitalData,
     ...hospital,
-    hospital_info: { ...defaultHospitalData.hospital_info, ...(hospital?.hospital_info || {}) },
-    hospital_score: { ...defaultHospitalData.hospital_score, ...(hospital?.hospital_score || {}) },
-    financial_assessment: { ...defaultHospitalData.financial_assessment, ...(hospital?.financial_assessment || {}) },
-    negative_legal: {
-      ...defaultHospitalData.negative_legal,
-      ...(hospital?.negative_legal || {}),
-      legal_status: {
-        ...defaultHospitalData.negative_legal.legal_status,
-        ...(hospital?.negative_legal?.legal_status || {})
-      }
-    },
-    accreditation_status: { ...defaultHospitalData.accreditation_status, ...(hospital?.accreditation_status || {}) }
+    hospital_info: { ...hospital.hospital_info },
+    hospital_score: { ...hospital.hospital_score },
+    financial_assessment: { ...hospital.financial_assessment },
+    negative_legal: { ...hospital.negative_legal },
+    accreditation_status: { ...hospital.accreditation_status }
   };
 
   const getScoreColor = (score) => {
@@ -578,7 +506,7 @@ const ReportDocument = ({ hospital, images }) => {
   };
 
   const getRatingInfo = (score) => {
-    if (score >= 8.5) return { text: 'Excellent', color: '#22c55e' };  // Green for 8.5 and above
+    if (score >= 8) return { text: 'Excellent', color: '#22c55e' };  // Green for 8.5 and above
     if (score >= 7) return { text: 'Good', color: '#3b82f6' };
     if (score >= 6) return { text: 'Average', color: '#f59e0b' };
     return { text: 'Needs Improvement', color: '#ef4444' };
@@ -956,6 +884,9 @@ const ReportGenerator = ({ hospital }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  console.log('Updated hospital data in HospitalDueDiligence:', hospital);
+  console.log('Hospital data in ReportGenerator:', hospital);
 
   if (!hospital) {
     return null;

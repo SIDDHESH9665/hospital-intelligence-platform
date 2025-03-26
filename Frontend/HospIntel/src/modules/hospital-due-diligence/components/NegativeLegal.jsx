@@ -11,6 +11,12 @@ import pmjay from '/img/pmjay.png';
 
 const NegativeLegal = ({ data }) => {
   const [error, setError] = useState(null);
+  console.log('NegativeLegal component data:', data);
+  console.log('Blacklist Data:', data.blacklist);
+  console.log('PMJAY Status:', data.pmjay_status);
+  console.log('Criminal Case:', data.legal_status.criminal_case);
+  console.log('Civil Case:', data.legal_status.civil_case);
+
   if (error) {
     return (
       <Box p={3}>
@@ -27,9 +33,15 @@ const NegativeLegal = ({ data }) => {
     );
   }
 
-
-
   const getStatusInfo = (status, count = 0, severity = '') => {
+    if (severity.toLowerCase() === 'low') {
+      return {
+        icon: <WarningIcon style={{ color: '#22c55e' }} />,
+        color: '#22c55e',
+        text: `Blacklist Count: ${count}`,
+        severity: 'Severity: Low'
+      };
+    }
     if (severity.toLowerCase() === 'moderate') {
       return {
         icon: <WarningIcon style={{ color: '#FFA500' }} />,
@@ -38,8 +50,17 @@ const NegativeLegal = ({ data }) => {
         severity: 'Severity: Moderate'
       };
     }
+    if (severity.toLowerCase() === 'high') {
+      return {
+        icon: <WarningIcon style={{ color: '#F44336' }} />,
+        color: '#F44336',
+        text: `Blacklist Count: ${count}`,
+        severity: 'Severity: High'
+      };
+    }
     
-    if (status === 'Active') {
+    
+    if (status === 'Accredited') {
       return {
         icon: <CheckCircleIcon style={{ color: '#4CAF50' }} />,
         color: '#4CAF50',

@@ -4,8 +4,8 @@ import { RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
 
 const HospitalScore = ({ data }) => {
   // Convert percentage score to score out of 10
-  const percentageScore = data?.score || 0;
-  const score = (percentageScore / 10).toFixed(1);
+  const score = data?.score || 0;
+  // const score = (percentageScore / 10).toFixed(1);
 
   // Determine rating and color based on score
   const getRatingInfo = (score) => {
@@ -16,7 +16,7 @@ const HospitalScore = ({ data }) => {
   };
 
   const { text: ratingText, color: ratingColor } = getRatingInfo(score);
-  const data_score = [{ value: percentageScore }];
+  const data_score = [{ value: score }];
 
   return (
     <div className="score-container">
@@ -42,7 +42,7 @@ const HospitalScore = ({ data }) => {
         >
           <PolarAngleAxis
             type="number"
-            domain={[0, 100]}
+            domain={[0, 10]}
             angleAxisId={0}
             tick={false}
           />

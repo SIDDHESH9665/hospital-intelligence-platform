@@ -31,7 +31,7 @@
         "negative_legal": {
             "blacklist": {
                 "count": 0,
-                "severity": "low"
+                "severity": "Low"
             },
             "pmjay_status": "Accredited",
             "legal_status": {
@@ -70,7 +70,7 @@
             "TIER": "Primary"
         },
         "hospital_score": {
-            "score": 75.52
+            "score": 8
         },
         "financial_assessment": {
             "gst_status": {
@@ -91,7 +91,7 @@
                 "count": 2,
                 "severity": "Moderate"
             },
-            "pmjay_status": "Active",
+            "pmjay_status": "Accredited",
             "legal_status": {
                 "criminal_case": {
                     "status": "Recent",
@@ -105,15 +105,15 @@
         },
         "accreditation_status": {
             "jci": {
-                "status": "valid",
+                "status": "Accredited",
                 "label": "JCI Accreditation"
             },
             "nabh": {
-                "status": "valid",
+                "status": "Accredited",
                 "label": "NABH Accreditation"
             },
             "rohini": {
-                "status": "valid",
+                "status": "Not Accredited",
                 "label": "Rohini ID"
             }
         }

@@ -2,22 +2,24 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./AccreditationStatus.css";
 
-const AccreditationStatus = ({ data }) => {
+const AccreditationStatus = ({ data = {} }) => {
+  console.log('AccreditationStatus component data:', data);
+
   const accreditations = [
     {
       icon: "/img/jci.png",
       label: "JCI",
-      status: data?.status?.jci?.status,
+      status: data.jci?.status || 'Not Available',
     },
     {
       icon: "/img/nabh.png",
       label: "NABH",
-      status: data?.status?.nabh?.status,
+      status: data.nabh?.status || 'Not Available',
     },
     {
       icon: "/img/rohini.png",
       label: "ROHINI",
-      status: data?.status?.rohini?.status,
+      status: data.rohini?.status || 'Not Available',
     },
   ];
 

@@ -1,5 +1,5 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Box, Button, Card, CardContent, TextField, Snackbar, Rating, Stack, Alert, Typography, CircularProgress } from "@mui/material";
+import { Box, Button, Card, CardContent, TextField, Snackbar, Rating, Stack, Alert, Typography, CircularProgress, Grid } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
 import AccreditationStatus from "./components/AccreditationStatus";
 import FinancialAssessment from "./components/FinancialAssessment";
@@ -12,6 +12,12 @@ import "./HospitalDueDiligence.css";
 import "./components/components.css";
 import HospitalRegistrationForm from './components/HospitalRegistrationForm';
 import SearchIcon from "@mui/icons-material/Search";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CategoryIcon from '@mui/icons-material/Category';
+import LayersIcon from '@mui/icons-material/Layers';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import StarIcon from '@mui/icons-material/Star';
+import LanguageIcon from '@mui/icons-material/Language';
 
 const HospitalDueDiligence = () => {
   const [hospitals, setHospitals] = useState([]);
@@ -51,6 +57,7 @@ const HospitalDueDiligence = () => {
         throw new Error(`Hospital with ID ${hospitalId} not found.`);
       }
       const data = await response.json();
+      console.log('Fetched hospital data:', data);
       setHospitalData({
         hospital_info: { ...data.hospital_info },
         hospital_score: { ...data.hospital_score },
@@ -58,11 +65,19 @@ const HospitalDueDiligence = () => {
         negative_legal: { ...data.negative_legal },
         accreditation_status: { ...data.accreditation_status }
       });
+      console.log('Structured hospitalData:', {
+        hospital_info: { ...data.hospital_info },
+        hospital_score: { ...data.hospital_score },
+        financial_assessment: { ...data.financial_assessment },
+        negative_legal: { ...data.negative_legal },
+        accreditation_status: { ...data.accreditation_status }
+      });
+      console.log('Negative Legal Data:', data.negative_legal);
       setError("");
       showSnackbar("Hospital found successfully", "success");
     } catch (error) {
       console.error('Error fetching hospital by ID:', error);
-      setHospital(null);
+      setHospitalData(null);
       setError(error.message || "An error occurred while fetching the hospital.");
     } finally {
       setIsLoading(false);
@@ -160,6 +175,32 @@ const HospitalDueDiligence = () => {
     }
   }, [hospital, fetchHospitalById, hospitalData]);
 
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case 'Multi-Specialty':
+        return 'rgba(255, 87, 34, 0.7)'; // Subtle orange
+      case 'Single-Specialty':
+        return 'rgba(76, 175, 80, 0.7)'; // Subtle green
+      default:
+        return 'rgba(158, 158, 158, 0.7)'; // Subtle gray
+    }
+  };
+
+  const getTierColor = (tier) => {
+    switch (tier) {
+      case 'Primary':
+        return 'rgba(33, 150, 243, 0.7)'; // Subtle blue
+      case 'Secondary':
+        return 'rgba(255, 193, 7, 0.7)'; // Subtle yellow
+      case 'Tertiary':
+        return 'rgba(103, 58, 183, 0.7)'; // Subtle purple
+      default:
+        return 'rgba(158, 158, 158, 0.7)'; // Subtle gray
+    }
+  };
+
+  console.log('HospitalData before rendering NegativeLegal:', hospitalData);
+
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -228,9 +269,49 @@ const HospitalDueDiligence = () => {
             <section>
               <Card className="hospital-due-diligence-card">
                 <CardContent>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px", flexWrap: "wrap", gap: "10px" }}>
-                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>Hospital Information</Typography>
-                    {hospital && <ReportGenerator hospital={hospital} />}
+                  <Box className="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-6">
+                    <Grid container spacing={2} alignItems="center">
+                      {hospitalData && (
+                        <Grid item xs={12} sm={6}>
+                          <Typography variant="h4" className="text-xl sm:text-3xl font-bold text-gray-800">{hospitalData.hospital_info.HOSPITAL}</Typography>
+                          <Box className="mt-2 text-sm sm:text-base text-gray-600 space-y-1">
+                            <Box className="flex items-center gap-2">
+                              <LocationOnIcon className="text-gray-500" />
+                              <Typography variant="body1">{hospitalData.hospital_info.ADDRESS}</Typography>
+                            </Box>
+                            <Box className="flex items-center gap-2">
+                              <Typography variant="body1" sx={{ color: 'black', fontSize: { xs: '0.75rem', sm: '1rem' } }}>Category: </Typography>
+                              <Typography variant="body1" sx={{
+                                backgroundColor: getCategoryColor(hospitalData.hospital_info.CATEGORY),
+                                borderRadius: '4px',
+                                padding: '4px 12px',
+                                color: 'white',
+                                border: '1px solid transparent',
+                                fontSize: { xs: '0.75rem', sm: '1rem' },
+                                '&:hover': {
+                                  boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
+                                }
+                              }}>{hospitalData.hospital_info.CATEGORY}</Typography>
+                              <Typography variant="body1" sx={{ color: 'black', fontSize: { xs: '0.75rem', sm: '1rem' } }}>Tier: </Typography>
+                              <Typography variant="body1" sx={{
+                                backgroundColor: getTierColor(hospitalData.hospital_info.TIER),
+                                borderRadius: '4px',
+                                padding: '4px 12px',
+                                color: 'white',
+                                border: '1px solid transparent',
+                                fontSize: { xs: '0.75rem', sm: '1rem' },
+                                '&:hover': {
+                                  boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
+                                }
+                              }}>{hospitalData.hospital_info.TIER}</Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      )}
+                      <Grid item xs={12} sm={6} className="flex flex-col items-end justify-end h-full">
+                        {hospitalData && <ReportGenerator hospital={hospitalData} />}
+                      </Grid>
+                    </Grid>
                   </Box>
                   <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
                     <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>{snackbarMessage}</Alert>
@@ -246,7 +327,7 @@ const HospitalDueDiligence = () => {
                 <Card><CardContent><FinancialAssessment data={hospitalData?.financial_assessment} /></CardContent></Card>
               </div>
               <div className="due-diligence-grid-item">
-                <Card><CardContent>{hospital && <NegativeScore data={hospitalData?.negative_legal} />}</CardContent></Card>
+                <Card><CardContent>{hospitalData?.negative_legal && <NegativeScore data={hospitalData.negative_legal} />}</CardContent></Card>
               </div>
               <div className="due-diligence-grid-item">
                 <Card><CardContent><AccreditationStatus data={hospitalData?.accreditation_status} /></CardContent></Card>
@@ -255,7 +336,7 @@ const HospitalDueDiligence = () => {
           </>
         )}
       </main>
-      <div><Supplimentry /></div>
+      <div><Supplimentry hospitalData={hospitalData} /></div>
       <footer className="hospital-due-diligence-footer">
         <p>2025 Hospital Due Diligence All Rights Reserved</p>
       </footer>

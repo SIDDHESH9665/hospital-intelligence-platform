@@ -8,41 +8,46 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LanguageIcon from "@mui/icons-material/Language";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import RateReviewIcon from "@mui/icons-material/RateReview";
+import CategoryIcon from "@mui/icons-material/Category";
 
-const cards = [
-  {
-    id: 1,
-    title: "Hospital Age",
-    description: "Established in 2005 (18 years)",
-    subtext: "Well-established healthcare provider",
-    icon: <LocalHospitalIcon />,
-  },
-  {
-    id: 2,
-    title: "Digital Presence",
-    description: "www.hospital-name.com",
-    subtext: "Active online presence with telemedicine services",
-    icon: <LanguageIcon />,
-  },
-  {
-    id: 3,
-    title: "Infrastructure Score",
-    description: "4.5/5.0",
-    subtext: "Modern facilities with latest medical equipment",
-    icon: <AssessmentIcon />,
-  },
-  {
-    id: 4,
-    title: "Patient Reviews",
-    description: "4.2/5.0 (500+ reviews)",
-    subtext: "High patient satisfaction rate",
-    icon: <RateReviewIcon />,
-  },
-];
-
-function Supplimentry() {
+function Supplimentry({ hospitalData }) {
   const [selectedCard, setSelectedCard] = React.useState(0);
   
+  if (!hospitalData) {
+    return null; // Render nothing if hospitalData is not available
+  }
+
+  const cards = [
+    {
+      id: 1,
+      title: "Hospital Age",
+      description: `${hospitalData.hospital_info.Hospital_Age} years`,
+      subtext: "Well-established healthcare provider",
+      icon: <LocalHospitalIcon />,
+    },
+    {
+      id: 2,
+      title: "Digital Presence",
+      description: hospitalData.hospital_info.Hospital_Website || 'N/A',
+      subtext: "Active online presence with telemedicine services",
+      icon: <LanguageIcon />,
+    },
+    {
+      id: 3,
+      title: "Infrastructure Score",
+      description: `${hospitalData.hospital_info.INFRA_SCORE}/5.0`,
+      subtext: "Modern facilities with latest medical equipment",
+      icon: <AssessmentIcon />,
+    },
+    {
+      id: 4,
+      title: "Patient Reviews",
+      description: `${hospitalData.hospital_info.Patient_Reviews} reviews`,
+      subtext: "High patient satisfaction rate",
+      icon: <RateReviewIcon />,
+    },
+  ];
+
   return (
     <div className="supplementary-strip">
       <Box className="supplementary-grid">
