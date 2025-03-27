@@ -18,3 +18,19 @@ git push
 
 # Print a success message
 echo "Changes have been successfully pushed to the repository." 
+
+# Print the current date and time
+echo "Current date and time:"
+date
+
+# Print the current working directory
+echo "Current working directory:"
+pwd
+
+# deploy the vercel prod
+echo "Deploying vercel prod..."
+vercel --prod
+
+# Print the vercel prod deployment status
+echo "Vercel prod deployment status:"
+vercel ls --prod
