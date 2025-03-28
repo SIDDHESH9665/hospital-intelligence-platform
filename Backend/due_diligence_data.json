@@ -21,7 +21,8 @@
             },
             "pan_status": {
                 "status": "valid",
-                "label": "PAN Registration"
+                "label": "PAN Registration",
+                "type" :"Sole Proprietor"
             },
             "epfo_status": {
                 "status": "Not Found",
@@ -62,15 +63,18 @@
     },
     {
         "hospital_info": {
-            "ID": 12345679,
-            "HOSPITAL": "Sanjivani Hospitals, New Delhi",
-            "ADDRESS": "NEW DELHI, DELHI - 110048",
+            "ID": 12345678,
+            "HOSPITAL": "Himaya Multispeciality Hospital",
+            "ADDRESS": "Shubham Doctor House, Opp. Gokuldham Residency, Bhaktinandan Chowk To Ram Chowk Road, Mota Varachha, Surat. 394101 ",
             "CATEGORY": "Multi-Specialty",
-            "INFRA_SCORE": 3.7,
-            "TIER": "Primary"
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": "N/A",
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
         },
         "hospital_score": {
-            "score": 3.8
+            "score":3
         },
         "financial_assessment": {
             "gst_status": {
@@ -79,42 +83,478 @@
             },
             "pan_status": {
                 "status": "valid",
-                "label": "PAN Registration"
+                "label": "PAN Registration",
+                "type" : "Firm"
             },
             "epfo_status": {
-                "status": "invalid",
+                "status": "Not Found",
                 "label": "EPFO Registration"
             }
         },
         "negative_legal": {
             "blacklist": {
-                "count": 2,
-                "severity": "Moderate"
+                "count": 3,
+                "severity": "High"
             },
             "pmjay_status": "Accredited",
             "legal_status": {
                 "criminal_case": {
-                    "status": "Recent",
-                    "details": "Notice received on Jan 15, 2024. Explanation: Appeal pending verification."
+                    "status": "none",
+                    "details": "No criminal cases found"
                 },
                 "civil_case": {
-                    "status": "Old",
-                    "details": "Insurance Warning issued by State Board. Due for review in March 2024."
+                    "status": "none",
+                    "details": "No civil cases found"
                 }
             }
         },
         "accreditation_status": {
             "jci": {
-                "status": "Accredited",
-                "label": "JCI Accreditation"
+                "status": "Not Accredited",
+                "label": "JCI"
             },
             "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
                 "status": "Accredited",
-                "label": "NABH Accreditation"
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345677,
+            "HOSPITAL": "Mehta Hospital",
+            "ADDRESS": "Nh-48, Killa Pardi, Pardi, Valsad. 396125 ",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": 19,
+            "Hospital_Website": "https://www.mehtahospitalpardi.com/",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":6.9
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration",
+                "type" : "Sole Proprietor"
+            },
+            "epfo_status": {
+                "status": "valid",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345675,
+            "HOSPITAL": "Shiv Hospital",
+            "ADDRESS": "Near Eye Hospital Mandal Road Viramgam, Ahmedabad",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": "N/A",
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":4.5
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "Not Found",
+                "label": "PAN Registration",
+                "type" : ""
+            },
+            "epfo_status": {
+                "status": "Not Found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Not Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
             },
             "rohini": {
                 "status": "Not Accredited",
-                "label": "Rohini ID"
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345674,
+            "HOSPITAL": "Shreeji Multispeciality Hospital",
+            "ADDRESS": "Ff - Sahajanand Arcade, Near Everest Cinema Cross Road, Saraspur, Ahmedabad. 380018 ",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": "N/A",
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":3
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration",
+                "type" : "Firm"
+            },
+            "epfo_status": {
+                "status": "Not found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 1,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345673,
+            "HOSPITAL": "Shreeji Multispeciality Hospital",
+            "ADDRESS": "9 Square Building, Second Floor, Near Zanzarda Chowkdi, Junagadh. 362001 ",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": "N/A",
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":4
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "Not found",
+                "label": "PAN Registration",
+                "type":""
+            },
+            "epfo_status": {
+                "status": "Not found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Not Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345672,
+            "HOSPITAL": "Shubham Hospital",
+            "ADDRESS": "Near Petrol Pump Dhanera,Banas Kantha",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": "N/A",
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":5
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration",
+                "type": "Sole Proprietor"
+            },
+            "epfo_status": {
+                "status": "Not Found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345671,
+            "HOSPITAL": "Shubham Hospital",
+            "ADDRESS": "Shubham Hospital Complex, 4Th Floor, Opp. Reliance Trends, Zanzarda Chokdi, Junagadh.,362001",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": 17,
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score": 6.15
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration",
+                "type" :"Sole Proprietor"
+
+            },
+            "epfo_status": {
+                "status": "Not Found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
+            }
+        }
+    },
+    {
+        "hospital_info": {
+            "ID": 12345676,
+            "HOSPITAL": "Vinayak Hospital",
+            "ADDRESS": "Plot No 7/8 Ward 5-A,Kachchh,370205 ",
+            "CATEGORY": "Multi-Specialty",
+            "INFRA_SCORE": 0,
+            "TIER": "Secondary",
+            "Hospital_Age": 18,
+            "Hospital_Website": "",
+            "Patient_Reviews": 0
+        },
+        "hospital_score": {
+            "score":5.15
+        },
+        "financial_assessment": {
+            "gst_status": {
+                "status": "Not found",
+                "label": "GST Registration"
+            },
+            "pan_status": {
+                "status": "valid",
+                "label": "PAN Registration",
+                "type" :"Sole Proprietor"
+            },
+            "epfo_status": {
+                "status": "Not Found",
+                "label": "EPFO Registration"
+            }
+        },
+        "negative_legal": {
+            "blacklist": {
+                "count": 0,
+                "severity": "Low"
+            },
+            "pmjay_status": "Accredited",
+            "legal_status": {
+                "criminal_case": {
+                    "status": "none",
+                    "details": "No criminal cases found"
+                },
+                "civil_case": {
+                    "status": "none",
+                    "details": "No civil cases found"
+                }
+            }
+        },
+        "accreditation_status": {
+            "jci": {
+                "status": "Not Accredited",
+                "label": "JCI"
+            },
+            "nabh": {
+                "status": "Not Accredited",
+                "label": "NABH"
+            },
+            "rohini": {
+                "status": "Accredited",
+                "label": "ROHINI"
             }
         }
     }

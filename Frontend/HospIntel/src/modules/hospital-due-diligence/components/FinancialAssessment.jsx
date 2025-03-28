@@ -31,6 +31,7 @@ const FinancialAssessment = ({ data }) => {
       icon: panIcon,
       label: "PAN Status",
       status: data?.pan_status,
+      type: data?.pan_status?.type,
     },
     {
       icon: epfoIcon,
@@ -58,6 +59,21 @@ const FinancialAssessment = ({ data }) => {
             >
               {typeof metric.status === 'object' ? metric.status.status : metric.status || 'Not Available'}
             </Typography>
+            {metric.type && (
+              <Typography
+                className="financial-metric-type"
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '0.75rem',
+                  color: '#22304D',
+                  backgroundColor: '#f1f1f1',
+                  padding: '2px 4px',
+                  borderRadius: 4
+                }}
+              >
+                Type: {metric.type}
+              </Typography>
+            )}
           </Box>
         ))}
       </Box>

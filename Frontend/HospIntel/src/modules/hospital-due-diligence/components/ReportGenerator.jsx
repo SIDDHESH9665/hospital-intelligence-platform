@@ -69,7 +69,7 @@ Font.register({
     marginBottom: 6,
   },
   hospitalInfo: {
-    marginBottom: 4,
+    marginBottom: 2,
     alignSelf: 'flex-start',
     },
     hospitalName: {
@@ -102,7 +102,7 @@ Font.register({
     color: '#6b7280',
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 17,
     padding: 6,
     backgroundColor: '#f8fafc',
     borderRadius: 8,
@@ -658,13 +658,25 @@ const ReportDocument = ({ hospital, images }) => {
             <Text style={styles.hospitalName}>{safeHospital.hospital_info.HOSPITAL}</Text>
             <Text style={styles.hospitalAddress}>{safeHospital.hospital_info.ADDRESS}</Text>
             <View style={styles.hospitalMeta}>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Category: {safeHospital.hospital_info.CATEGORY}</Text>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Tier: {safeHospital.hospital_info.TIER}</Text>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Hospital Age: {safeHospital.hospital_info.Hospital_Age} years</Text>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Patient Reviews: {safeHospital.hospital_info['Patient Reviews']}</Text>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Website: {safeHospital.hospital_info['Hospital Website'] || 'N/A'}</Text>
-              <Text style={{ fontSize: 12, color: '#4b5563', marginBottom: 2 }}>Infrastructure Score: {safeHospital.hospital_info.INFRA_SCORE}</Text>
-            </View>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Category: {safeHospital.hospital_info.CATEGORY},
+              </Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Tier: {safeHospital.hospital_info.TIER},
+              </Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Hospital Age: {safeHospital.hospital_info.Hospital_Age || 'N/A'} years,
+              </Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Patient Reviews: {safeHospital.hospital_info['Patient Reviews']},
+              </Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Website: {safeHospital.hospital_info['Hospital Website'] || 'N/A'},
+              </Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#4b5563', marginBottom: 2 }}>
+                Infrastructure Score: {safeHospital.hospital_info.INFRA_SCORE}
+              </Text>
+            </View>
           </View>
         </View>
  
@@ -694,13 +706,25 @@ const ReportDocument = ({ hospital, images }) => {
                 <Text style={styles.itemTitle}>PAN Verification</Text>
                 <Text style={[
                   styles.itemStatus,
-                  safeHospital.financial_assessment.pan_status.status === 'valid' ? styles.validStatus : styles.invalidStatus
+                  safeHospital.financial_assessment.pan_status.status === 'valid' ? styles.validStatus : styles.invalidStatus,
+                  { fontSize: 10 }
                 ]}>
                   {safeHospital.financial_assessment.pan_status.status.toUpperCase()}
                 </Text>
                 <Text style={styles.detailedSummary}>
                   {safeHospital.financial_assessment.pan_status.observations}
                 </Text>
+                {safeHospital.financial_assessment.pan_status.type && (
+                  <Text style={{
+                    fontSize: 8,
+                    fontWeight: 'bold',
+                    color: '#22304D',
+                    backgroundColor: '#f1f1f1',
+                    borderRadius: 4
+                  }}>
+                    Type: {safeHospital.financial_assessment.pan_status.type}
+                  </Text>
+                )}
               </View>
           </View>
             <View style={[styles.financialItem, { padding: 8 }]}>
@@ -731,9 +755,6 @@ const ReportDocument = ({ hospital, images }) => {
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
           `Page ${pageNumber} of ${totalPages}`
         )} fixed />
-      </Page>
-
-      <Page size="A4" style={styles.page}>
         <View style={[styles.section, { marginTop: 0 }]}>
           <Text style={styles.sectionTitle}>Legal Status & Compliance</Text>
           <View style={styles.gridContainer}>
@@ -845,14 +866,14 @@ const ReportDocument = ({ hospital, images }) => {
             <Text style={styles.trademark}>CONFIDENTIAL - For Internal Use Only</Text>
           </View>
         </View>
-        <Text style={{ color: 'black', fontStyle: 'italic', marginTop: 160, fontSize: 10 }}>
+        <Text style={{ color: 'black', fontStyle: 'italic', marginTop: 100, fontSize: 10 }}>
           Note: This report is a work in progress and is intended for testing purposes only.
         </Text>
         
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
           `Page ${pageNumber} of ${totalPages}`
         )} fixed />
-      </Page>
+      </Page>
     </Document>
   );
 };
