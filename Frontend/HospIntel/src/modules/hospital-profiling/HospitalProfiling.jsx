@@ -24,6 +24,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
+import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
 
 // Lazy load the map components
 const MapComponent = React.lazy(() => 
@@ -51,6 +52,8 @@ const MapComponent = React.lazy(() =>
   })
 );
 
+// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5173';
+
 function HospitalProfiling() {
   const navigate = useNavigate();
   const { partnerId } = useParams();
@@ -66,16 +69,13 @@ function HospitalProfiling() {
     const fetchHospitalData = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/hospital-profiling/hospitals');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const hospitals = await response.json();
+        const hospitals = await makeAPIRequest('/api/hospital-profiling/hospitals');
+        console.log('Fetched Hospitals:', hospitals);
+
         setHospitalsData(hospitals);
         const hospital = partnerId ? hospitals.find(h => h.id === partnerId) : hospitals[0];
-        console.log('Fetched Hospital:', hospital);
+        console.log('Selected Hospital:', hospital);
 
-        // Ensure hospital is defined and set default values if fields are missing
         setHospitalData({
           ...hospital,
           accreditationStatus: hospital?.accreditationStatus || [],
@@ -166,6 +166,9 @@ function HospitalProfiling() {
     );
   }
 
+  // Ensure hospitalsData is an array before accessing its length
+  const hospitalCount = Array.isArray(hospitalsData) ? hospitalsData.length : 0;
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Back Button and Logo */}
@@ -254,7 +257,7 @@ function HospitalProfiling() {
           <div className="flex border-b min-w-max">
             {[
               { id: 'overview', label: 'Overview' },
-              { id: 'doctors', label: `Doctors (${hospitalData.doctors.length})` },
+              { id: 'doctors', label: `Doctors (${hospitalData?.doctors?.length || 0})` },
               { id: 'rc', label: 'Relationship Manager' },
               { id: 'services', label: 'Services' },
               { id: 'network', label: 'Network Status' }
