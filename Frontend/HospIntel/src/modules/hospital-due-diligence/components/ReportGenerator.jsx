@@ -507,8 +507,8 @@ const ReportDocument = ({ hospital, images }) => {
 
   const getRatingInfo = (score) => {
     if (score >= 8) return { text: 'Excellent', color: '#22c55e' };  // Green for 8.5 and above
-    if (score >= 7) return { text: 'Good', color: '#3b82f6' };
-    if (score >= 6) return { text: 'Average', color: '#f59e0b' };
+    if (score >= 6) return { text: 'Good', color: '#3b82f6' };
+    if (score >= 3) return { text: 'Average', color: '#f59e0b' };
     return { text: 'Needs Improvement', color: '#ef4444' };
   };
 

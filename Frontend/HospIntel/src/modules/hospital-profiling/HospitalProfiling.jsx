@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
+import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -22,7 +23,6 @@ import {
   ClipboardCheck,
   AlertTriangle
 } from 'lucide-react';
-import { doctors, hospitalsData } from './data/hospitalData.js';
 import 'leaflet/dist/leaflet.css';
 
 // Lazy load the map components
@@ -59,27 +59,38 @@ function HospitalProfiling() {
   const [isMapReady, setIsMapReady] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hospitalData, setHospitalData] = useState(null);
+  const [error, setError] = useState(null);
+  const [hospitalsData, setHospitalsData] = useState([]);
 
   useEffect(() => {
-    const loadHospitalData = () => {
+    const fetchHospitalData = async () => {
       setLoading(true);
-      // If partnerId is provided, find that specific hospital
-      if (partnerId) {
-        const hospital = hospitalsData.find(h => h.id === partnerId);
-        if (hospital) {
-          setHospitalData(hospital);
-        } else {
-          // If not found, use the first hospital
-          setHospitalData(hospitalsData[0]);
+      try {
+        const response = await fetch('/api/hospital-profiling/hospitals');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      } else {
-        // If no partnerId, use the first hospital
-        setHospitalData(hospitalsData[0]);
+        const hospitals = await response.json();
+        setHospitalsData(hospitals);
+        const hospital = partnerId ? hospitals.find(h => h.id === partnerId) : hospitals[0];
+        console.log('Fetched Hospital:', hospital);
+
+        // Ensure hospital is defined and set default values if fields are missing
+        setHospitalData({
+          ...hospital,
+          accreditationStatus: hospital?.accreditationStatus || [],
+          amountGrading: hospital?.amountGrading || { value: 'N/A', grading: 'N/A', barFill: 0 },
+          readmissionRate: hospital?.readmissionRate || { percentage: 'N/A', barFill: 0 },
+        });
+      } catch (err) {
+        setError('Failed to fetch hospital data');
+        console.error('Error fetching hospitals:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    loadHospitalData();
+    fetchHospitalData();
   }, [partnerId]);
 
   const handleBack = () => {
@@ -139,6 +150,14 @@ function HospitalProfiling() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-red-600">{error}</div>
+      </div>
+    );
+  }
+
   if (!hospitalData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -192,9 +211,7 @@ function HospitalProfiling() {
             <div>
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">{hospitalData.name}</h2>
-                <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                  Blacklisted
-                </span>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${hospitalData.networkStatus?.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{hospitalData.networkStatus?.status || 'Unknown'}</span>
               </div>
               <div className="flex items-center mt-2 space-x-2">
                 <span className="text-xl sm:text-2xl font-semibold text-green-600">{hospitalData.rating}</span>
@@ -205,17 +222,17 @@ function HospitalProfiling() {
                 <span className="text-sm sm:text-base text-gray-600">({hospitalData.patientStories} patient stories)</span>
               </div>
               <div className="mt-2 text-sm sm:text-base text-blue-600 font-medium">
-                Partner ID: HP-2024-001
+                Partner ID: {hospitalData.id}
               </div>
-              <p className="text-gray-600 mt-2">{hospitalData.location.city}</p>
+              <p className="text-gray-600 mt-2">{hospitalData.location?.city || 'City not available'}</p>
               <div className="flex flex-wrap items-center gap-2 mt-2 text-sm sm:text-base text-gray-600">
-                <span>{hospitalData.details.type}</span>
+                <span>{hospitalData.details?.type || 'Type not available'}</span>
                 <span>•</span>
-                <span>Established {hospitalData.details.established}</span>
+                <span>Established {hospitalData.details?.established || 'N/A'}</span>
                 <span>•</span>
-                <span>{hospitalData.details.beds} Beds</span>
+                <span>{hospitalData.details?.beds || 'N/A'} Beds</span>
                 <span>•</span>
-                <span>{hospitalData.details.doctorsCount} Doctors</span>
+                <span>{hospitalData.details?.doctorsCount || 'N/A'} Doctors</span>
               </div>
               <div className="flex items-center mt-2 text-gray-600">
                 <Armchair className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
@@ -237,8 +254,8 @@ function HospitalProfiling() {
           <div className="flex border-b min-w-max">
             {[
               { id: 'overview', label: 'Overview' },
-              { id: 'doctors', label: `Doctors (${hospitalData.details.doctorsCount})` },
-              { id: 'rc', label: 'Handled By' },
+              { id: 'doctors', label: `Doctors (${hospitalData.doctors.length})` },
+              { id: 'rc', label: 'Relationship Manager' },
               { id: 'services', label: 'Services' },
               { id: 'network', label: 'Network Status' }
             ].map((tab) => (
@@ -267,9 +284,9 @@ function HospitalProfiling() {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-800">Accreditation</h3>
                   <div className="grid grid-cols-2 gap-3 mt-4">
-                    {['JCI', 'NABH', 'Rohini'].map((accred, index) => (
+                    {['JCI', 'NABH', 'NABL', 'ROHINI'].map((accred, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div className={`w-3 h-3 rounded-full ${hospitalData.accreditationStatus?.includes(accred) ? 'bg-green-500' : 'bg-red-500'}`}></div>
                         <span>{accred}</span>
                       </div>
                     ))}
@@ -286,9 +303,11 @@ function HospitalProfiling() {
                   <div className="mt-4">
                     <div className="flex items-center justify-between">
                       <div className="w-3/4 bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-green-600 h-2.5 rounded-full" style={{ width: '85%' }}></div>
+                        <div className="bg-green-600 h-2.5 rounded-full" style={{ width: `${hospitalData.amountGrading?.barFill || 0}%` }}></div>
                       </div>
-                      <span className="ml-3 text-green-600 font-medium whitespace-nowrap">High (&gt;40L)</span>
+                      <span className="ml-3 text-green-600 font-medium whitespace-nowrap">
+                        {hospitalData.amountGrading?.grading || 'N/A'} ({hospitalData.amountGrading?.value || 'N/A'})
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -322,9 +341,11 @@ function HospitalProfiling() {
                   <div className="mt-4">
                     <div className="flex items-center justify-between">
                       <div className="w-3/4 bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '12%' }}></div>
+                        <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${hospitalData.readmissionRate?.barFill || 0}%` }}></div>
                       </div>
-                      <span className="ml-3 text-blue-600 font-medium">12%</span>
+                      <span className="ml-3 text-blue-600 font-medium">
+                        {hospitalData.readmissionRate?.percentage || 'N/A'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -341,11 +362,11 @@ function HospitalProfiling() {
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     <div>
                       <p className="text-sm text-gray-600">Medical Claims</p>
-                      <p className="text-2xl font-bold text-gray-800">1,245</p>
+                      <p className="text-2xl font-bold text-gray-800">{hospitalData.claimCounts?.medicalClaims || 'N/A'}</p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Surgical Claims</p>
-                      <p className="text-2xl font-bold text-gray-800">867</p>
+                      <p className="text-2xl font-bold text-gray-800">{hospitalData.claimCounts?.surgicalClaims || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -359,12 +380,12 @@ function HospitalProfiling() {
                   <h3 className="text-lg font-semibold text-gray-800">Portfolio Analysis</h3>
                   <div className="mt-4">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600">Portfolio Average</span>
-                      <span className="text-sm font-medium">₹35L</span>
+                      <span className="text-sm text-gray-600">Medical Average</span>
+                      <span className="text-sm font-medium">₹{hospitalData.portfolioAnalysis?.portfolioAverage || 'N/A'}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Category Average</span>
-                      <span className="text-sm font-medium">₹42L</span>
+                      <span className="text-sm text-gray-600">Surgical Average</span>
+                      <span className="text-sm font-medium">₹{hospitalData.portfolioAnalysis?.categoryAverage || 'N/A'}</span>
                     </div>
                   </div>
                 </div>
@@ -407,37 +428,16 @@ function HospitalProfiling() {
                 <div className="mt-6">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Photos</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-                    <img
-                      src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2800&q=80"
-                      alt="Hospital Building"
-                      className="rounded-lg w-full h-24 object-cover"
-                    />
-                    <img
-                      src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2800&q=80"
-                      alt="Hospital Reception"
-                      className="rounded-lg w-full h-24 object-cover"
-                    />
-                    <img
-                      src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2800&q=80"
-                      alt="Operation Theater"
-                      className="rounded-lg w-full h-24 object-cover"
-                    />
-                    <img
-                      src="https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2800&q=80"
-                      alt="Hospital Room"
-                      className="rounded-lg w-full h-24 object-cover"
-                    />
-                    <button 
-                      className="bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors"
-                      onClick={() => window.open('https://unsplash.com/s/photos/hospital', '_blank')}
-                    >
-                      <div className="text-center">
-                        <span className="block text-lg font-semibold">+21</span>
-                        <span className="text-sm">more</span>
-                      </div>
-                    </button>
+                    {hospitalData.photos.map((photo, index) => (
+                      <img
+                        key={index}
+                        src={photo}
+                        alt={`Hospital Photo ${index + 1}`}
+                        className="rounded-lg w-full h-24 object-cover"
+                      />
+                    ))}
                   </div>
-                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {/* <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <img
                       src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2800&q=80"
                       alt="Emergency Room"
@@ -453,7 +453,7 @@ function HospitalProfiling() {
                       alt="Medical Equipment"
                       className="rounded-lg w-full h-32 object-cover hidden sm:block"
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="mt-6">
@@ -467,7 +467,7 @@ function HospitalProfiling() {
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Payment Methods</h4>
                   <div className="flex items-center space-x-2">
                     <CreditCard className="w-5 h-5 text-gray-600" />
-                    <span className="text-gray-600">{hospitalData.paymentMethods.join(' | ')}</span>
+                    <span className="text-gray-600">{hospitalData?.paymentMethods?.join(' | ') || 'No payment methods available'}</span>
                   </div>
                 </div>
               </div>
@@ -475,10 +475,10 @@ function HospitalProfiling() {
 
             {activeTab === 'doctors' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                {doctors.map((doctor, index) => (
+                {hospitalData.doctors.map((doctor, index) => (
                   <div key={index} className="bg-white rounded-lg shadow p-4 flex flex-col items-center text-center">
                     <img
-                      src={`https://xsgames.co/randomusers/assets/avatars/male/${index + 1}.jpg`}
+                      src={doctor.doc_image}
                       alt={doctor.name}
                       className="w-32 h-32 object-cover rounded-full mb-4"
                     />
@@ -500,27 +500,27 @@ function HospitalProfiling() {
                 <div className="flex items-center space-x-4">
                   <User className="w-8 h-8 text-blue-500" />
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-800">Account Handler</h3>
-                    <p className="text-lg text-gray-600">Mr. Jayesh Jadhav</p>
+                    <h3 className="text-xl font-semibold text-gray-800">Relationship Manager</h3>
+                    <p className="text-lg text-gray-600">{hospitalData.accountHandler.name}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="text-sm font-medium text-gray-600">Contact Number</h4>
-                    <p className="text-lg font-semibold text-gray-800">+91 98765 43210</p>
+                    <p className="text-lg font-semibold text-gray-800">{hospitalData.accountHandler.contactNumber}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="text-sm font-medium text-gray-600">Email Address</h4>
-                    <p className="text-lg font-semibold text-gray-800">jayesh.jadhav@hospintel.com</p>
+                    <p className="text-lg font-semibold text-gray-800">{hospitalData.accountHandler.email}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="text-sm font-medium text-gray-600">Designation</h4>
-                    <p className="text-lg font-semibold text-gray-800">Senior Account Manager</p>
+                    <p className="text-lg font-semibold text-gray-800">{hospitalData.accountHandler.designation}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="text-sm font-medium text-gray-600">Managing Since</h4>
-                    <p className="text-lg font-semibold text-gray-800">January 2024</p>
+                    <p className="text-lg font-semibold text-gray-800">{hospitalData.accountHandler.managingSince}</p>
                   </div>
                 </div>
               </div>
@@ -528,11 +528,11 @@ function HospitalProfiling() {
 
             {activeTab === 'services' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {hospitalData.keyServices.map((service, index) => (
+                {hospitalData.services.map((service, index) => (
                   <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-center">
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-800">{service}</h4>
-                      <p className="text-gray-600 mt-2">Comprehensive {service.toLowerCase()} care and treatment services</p>
+                      <h4 className="text-lg font-semibold text-gray-800">{service.name}</h4>
+                      <p className="text-gray-600 mt-2">{service.description}</p>
                     </div>
                   </div>
                 ))}
@@ -547,29 +547,25 @@ function HospitalProfiling() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <h3 className="text-lg font-semibold text-gray-800">Network Status</h3>
-                      <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                        Blacklisted
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${hospitalData.networkStatus?.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {hospitalData.networkStatus?.status || 'Unknown'}
                       </span>
                     </div>
                     <div className="mt-4">
                       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <h4 className="text-red-800 font-medium mb-4">Limited Network Access</h4>
+                        <h4 className="text-red-800 font-medium mb-4">Details</h4>
                         <div className="space-y-4">
-                          {[
-                            { name: 'ICICI Lombard', status: 'Blacklisted', date: '2024-01-15' },
-                            { name: 'HDFC Ergo', status: 'Restricted', date: '2024-02-01' },
-                            { name: 'Bajaj Allianz', status: 'Under Review', date: '2024-03-01' }
-                          ].map((company, index) => (
+                          {hospitalData.networkStatus.details.map((detail, index) => (
                             <div key={index} className="flex items-center justify-between bg-white p-3 rounded-lg">
-                              <span className="font-medium text-gray-800">{company.name}</span>
+                              <span className="font-medium text-gray-800">{detail.company}</span>
                               <div className="flex items-center gap-4">
-                                <span className="text-sm text-red-600">{company.status}</span>
-                                <span className="text-sm text-gray-500">Since: {company.date}</span>
+                                <span className="text-sm text-red-600">{detail.status}</span>
+                                <span className="text-sm text-gray-500">Since: {detail.since}</span>
                               </div>
                             </div>
-                          ))}
+                          ))}x
                         </div>
-                        <p className="text-sm text-red-600 mt-4">Last verified: 11/03/2025</p>
+                        <p className="text-sm text-red-600 mt-4">Last verified: {hospitalData.networkStatus.lastVerified}</p>
                       </div>
                     </div>
                   </div>

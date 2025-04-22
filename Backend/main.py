@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from utils import analyze_hospital_claims
 from due_dil_utils import DueDiligenceDataHandler
+from hospital_profiling import HospitalProfilingDataHandler
 import logging
 import os
 import socket
@@ -18,6 +19,9 @@ app = FastAPI()
 
 # Initialize DueDiligenceDataHandler
 due_dil_handler = DueDiligenceDataHandler()
+
+# Initialize HospitalProfilingDataHandler
+hospital_profiling_handler = HospitalProfilingDataHandler("hospital_profiling_data.json")
 
 # Debug: Print all registered routes
 @app.on_event("startup")
@@ -250,6 +254,26 @@ try:
 except Exception as e:
     logging.error(f"Error mounting static files: {e}")
     raise
+
+@app.get("/api/hospital-profiling/hospitals")
+async def get_all_hospital_profiles():
+    try:
+        hospitals = hospital_profiling_handler.get_all_hospitals()
+        return hospitals
+    except Exception as e:
+        logging.error(f"Error fetching hospital profiles: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/hospital-profiling/hospital/{hospital_id}")
+async def get_hospital_profile_by_id(hospital_id: str):
+    try:
+        hospital = hospital_profiling_handler.get_hospital_by_id(hospital_id)
+        if not hospital:
+            raise HTTPException(status_code=404, detail="Hospital not found")
+        return hospital
+    except Exception as e:
+        logging.error(f"Error fetching hospital profile {hospital_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Update the catch-all route to serve from the correct location
 @app.get("/{full_path:path}")

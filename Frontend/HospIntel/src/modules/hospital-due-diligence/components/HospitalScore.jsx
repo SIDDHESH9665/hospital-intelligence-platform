@@ -10,8 +10,8 @@ const HospitalScore = ({ data }) => {
   // Determine rating and color based on score
   const getRatingInfo = (score) => {
     if (score >= 8) return { text: 'Excellent', color: '#4CAF50' };
-    if (score >= 6.5) return { text: 'Good', color: '#2196F3' };
-    if (score >= 5) return { text: 'Average', color: '#FFC107' };
+    if (score >= 6) return { text: 'Good', color: '#2196F3' };
+    if (score >= 3) return { text: 'Average', color: '#FFC107' };
     return { text: 'Needs Improvement', color: '#f44336' };
   };
 

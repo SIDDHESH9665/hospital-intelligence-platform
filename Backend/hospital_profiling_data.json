@@ -1,0 +1,901 @@
+{
+  "hospitals": [
+      {
+          "id": "65458106",
+          "name": "Apollo Spectra Hospital",
+          "location": {
+              "address": "Address: Plot No. A-2,",
+              "city": "Delhi",
+              "state": "Delhi",
+              "pincode": 110048.0,
+              "coordinates": {
+                  "lat": 28.5482404,
+                  "lng": 77.2467057
+              }
+          },
+          "details": {
+              "type": "Multi-Speciality Hospital",
+              "established": null,
+              "beds": 25,
+              "doctorsCount": 46
+          },
+          "rating": 4.1,
+          "patientStories": 177,
+          "keyServices": [
+              "orthopedist(9)",
+              "ear-nose-throat (ent) specialist(8)",
+              "general surgeon(8)",
+              "general physician(6)",
+              "internal medicine(5)",
+              "laparoscopic surgeon(4)",
+              "urologist(3)",
+              "dermatologist(2)",
+              "plastic surgeon(2)",
+              "psychiatrist(2)",
+              "bariatric surgeon(1)",
+              "dentist(1)",
+              "head and neck surgeon(1)",
+              "nephrologist(1)",
+              "podiatrist(1)",
+              "psychologist(1)",
+              "radiologist(1)",
+              "spine surgeon(1)"
+          ],
+          "doctors": [
+              {
+                  "name": "Dr. Usha Maheshwari",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/421824/dr-usha-maheshwari-58e3780bd7b89.jpg",
+                  "specialty": "Laparoscopic Surgeon",
+                  "qualification": "MBBS, MS - General Surgery",
+                  "experience": 37
+              },
+              {
+                  "name": "Dr. S.K. Poddar",
+                  "doc_image": "https://images1-fabric.practo.com/dr-sk-poddar-1468638478-5789a50e11729.jpg",
+                  "specialty": "Laparoscopic Surgeon, General Surgeon",
+                  "qualification": "MBBS, MS - General Surgery, FICS",
+                  "experience": 40
+              },
+              {
+                  "name": "Dr. Lalit Mohan Parashar",
+                  "doc_image": "https://images1-fabric.practo.com/dr-lalit-mohan-parashar-1468559811-578871c39543d.JPG",
+                  "specialty": "Ear-Nose-Throat (ENT) Specialist, Head and Neck Surgeon",
+                  "qualification": "MBBS, MS - ENT",
+                  "experience": 41
+              },
+              {
+                  "name": "Dr. Nipun Bajaj",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/346424/dr-nipun-bajaj-5ab885f41de15.jpg",
+                  "specialty": "Spine Surgeon, Orthopedist",
+                  "qualification": "DNB - Orthopedics/Orthopedic Surgery, FNB - Spine Surgery, MNAMS - Orthopaedics",
+                  "experience": 17
+              },
+              {
+                  "name": "Dr. Ashish Dewan",
+                  "doc_image": "https://images1-fabric.practo.com/dr-ashish-dewan-1483445413-586b94a5c1ebb.jpg",
+                  "specialty": "Orthopedist",
+                  "qualification": "MBBS, MS - Orthopaedics",
+                  "experience": 30
+              },
+              {
+                  "name": "Dr. Sanjay Kumar Gudwani",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/679041/dr-sanjay-kumar-gudwani-5b6435cc1173e.png",
+                  "specialty": "Ear-Nose-Throat (ENT) Specialist",
+                  "qualification": "MBBS, MS - ENT",
+                  "experience": 33
+              },
+              {
+                  "name": "Dr. Anil Malik",
+                  "doc_image": "https://images1-fabric.practo.com/dr-anil-malik--1456915418-56d6c3daea2ec.jpg",
+                  "specialty": "General Surgeon",
+                  "qualification": "MBBS, MS - General Surgery",
+                  "experience": 47
+              },
+              {
+                  "name": "Dr. Navneet Kaur",
+                  "doc_image": "https://images1-fabric.practo.com/dr-navneet-kaur-1477200085-580c48d56bed6.jpg",
+                  "specialty": "General Physician",
+                  "qualification": "MBBS",
+                  "experience": 27
+              },
+              {
+                  "name": "Dr. Gulshan Jit Singh",
+                  "doc_image": "https://images1-fabric.practo.com/dr-gulshan-jit-singh-1471496848-57b5429053b0f.jpg",
+                  "specialty": "General Surgeon",
+                  "qualification": "MBBS, MS - General Surgery",
+                  "experience": 38
+              },
+              {
+                  "name": "Dr. Abhishek Kumar Mishra",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/291986/dr-abhishek-kumar-mishra-64df3dc5db3db.jpeg",
+                  "specialty": "Orthopedist, Orthopedist",
+                  "qualification": "MBBS, MS - Orthopaedics",
+                  "experience": 28
+              }
+          ],
+          "claimCounts": {
+              "medicalClaims": 50,
+              "surgicalClaims": 146
+          },
+          "portfolioAnalysis": {
+              "portfolioAverage": 74387,
+              "categoryAverage": 98731
+          },
+          "amountGrading": {
+              "grading": ">20 Lacs",
+              "value": "More than 20 Lacs and Less than 40 Lacs",
+              "barFill": 57
+          },
+          "readmissionRate": {
+              "percentage": 2.73,
+              "barFill": 2.73
+          },
+          "accreditationStatus": [
+              "NABL", "ROHINI"
+          ],
+          "accountHandler": {
+              "name": "Gyanendra Singh",
+              "contactNumber": "9175872400",
+              "email": "Gyanendra.Singh02@bajajallianz.co.in",
+              "designation": "Senior Executive Network Management",
+              "managingSince": null
+          },
+          "services": [
+              {
+                  "name": "orthopedist(9)",
+                  "description": ""
+              },
+              {
+                  "name": "ear-nose-throat (ent) specialist(8)",
+                  "description": ""
+              },
+              {
+                  "name": "general surgeon(8)",
+                  "description": ""
+              },
+              {
+                  "name": "general physician(6)",
+                  "description": ""
+              },
+              {
+                  "name": "internal medicine(5)",
+                  "description": ""
+              },
+              {
+                  "name": "laparoscopic surgeon(4)",
+                  "description": ""
+              },
+              {
+                  "name": "urologist(3)",
+                  "description": ""
+              },
+              {
+                  "name": "dermatologist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "plastic surgeon(2)",
+                  "description": ""
+              },
+              {
+                  "name": "psychiatrist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "bariatric surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "dentist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "head and neck surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "nephrologist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "podiatrist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "psychologist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "radiologist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "spine surgeon(1)",
+                  "description": ""
+              }
+          ],
+          "networkStatus": {
+              "status": "Active",
+              "details": [],
+              "lastVerified": null
+          },
+          "photos": [
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269829-569f234555342.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269831-569f23476f2f7.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269833-569f2349a86b6.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269836-569f234c61bbc.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269838-569f234e759df.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269840-569f2350843bc.jpg",
+              "https://images1-fabric.practo.com/apollo-spectra-hospitals-kailash-colony-delhi-1453269844-569f2354e068d.jpg",
+              "https://images1-fabric.practo.com/practices/1147960/apollo-spectra-delhi-59301a4e476bd.jpg",
+              "https://images1-fabric.practo.com/practices/1147960/apollo-spectra-delhi-59301aa326e34.jpg",
+              "https://images1-fabric.practo.com/practices/1147960/apollo-spectra-delhi-59301a0f5f4fb.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-624e9a000c720.jpg",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d51a31026.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d51b5c938.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d51c8e18f.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d51e0ce78.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d51f25e11.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d5201cc3f.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d520db34c.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-66d2d521a5d57.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-675834763d268.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-675834771fec5.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-67583477d4624.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-67583478e0449.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-67583479910ff.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-6758347a3e929.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-6758347b35454.png",
+              "https://images1-fabric.practo.com/practices/1132658/apollo-spectra-hospital-delhi-6758347c0ebc4.png"
+          ]
+      },
+      {
+          "id": "49996517",
+          "name": "Fortis C-DOC Hospital",
+          "location": {
+              "address": "B-16, Chirag Enclave",
+              "city": "Delhi",
+              "state": "Delhi",
+              "pincode": 110019.0,
+              "coordinates": {
+                  "lat": 28.54701,
+                  "lng": 77.24944
+              }
+          },
+          "details": {
+              "type": "Multi-Speciality Hospital",
+              "established": null,
+              "beds": 25,
+              "doctorsCount": 15
+          },
+          "rating": 4.7,
+          "patientStories": 255,
+          "keyServices": [
+              "general surgeon(5)",
+              "laparoscopic surgeon(4)",
+              "bariatric surgeon(2)",
+              "general physician(2)",
+              "orthopedist(2)",
+              "pain management specialist(2)",
+              "spine and pain specialist(2)",
+              "anesthesiologist(1)",
+              "dentist(1)",
+              "diabetologist(1)",
+              "gastroentrology surgeon(1)",
+              "gynecologist/obstetrician(1)",
+              "internal medicine(1)"
+          ],
+          "doctors": [
+              {
+                  "name": "Dr. Ritesh Gupta",
+                  "doc_image": "https://images1-fabric.practo.com/dr-ritesh-gupta-1472040991-57bd901f30185.jpg",
+                  "specialty": "Internal Medicine",
+                  "qualification": "MBBS, MD - General Medicine",
+                  "experience": 30
+              },
+              {
+                  "name": "Dr. Amrita Ghosh",
+                  "doc_image": "https://images1-fabric.practo.com/dr-amrita-ghosh-1454512646-56b21a0629571.jpeg",
+                  "specialty": "General Physician",
+                  "qualification": "MBBS",
+                  "experience": 17
+              },
+              {
+                  "name": "Dr. Kapil Dev",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/627279/mr-kapil-dev-5a0596eb6349e.jpg",
+                  "specialty": "Laparoscopic Surgeon, General Surgeon, Bariatric Surgeon",
+                  "qualification": "MS - General Surgery, MBBS",
+                  "experience": 33
+              },
+              {
+                  "name": "Dr. Madhujeet Gupta",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/558992/dr-madhujeet-gupta-5b39ab8c88126.JPG",
+                  "specialty": "Spine And Pain Specialist",
+                  "qualification": "MBBS, Diploma in Anesthesiology, Fellowship in Pain Management, Live Surgery Hands On Operative  Training Program, Fellowship in Interventional Pain Practice(FIPP)",
+                  "experience": 23
+              },
+              {
+                  "name": "Dr. Sandip Banerjee",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/957253/mr-sandip-banerjee-611cd524cdd73.jpg",
+                  "specialty": "Laparoscopic Surgeon, Gastroentrology Surgeon, General Surgeon",
+                  "qualification": "MBBS, DNB - General Surgery, FMAS, Fellowship in Minimal Access Gastro & Bariatric Surgery, FAIS",
+                  "experience": 22
+              },
+              {
+                  "name": "Dr. Sushant Wadhera",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/336208/dr-sushant-wadhera-5e9064ac62d8d.jpg",
+                  "specialty": "Laparoscopic Surgeon, Bariatric Surgeon, General Surgeon",
+                  "qualification": "MBBS, MS - General Surgery, FNB - Minimal Access Surgery",
+                  "experience": 21
+              },
+              {
+                  "name": "Dr. Vimal Kumar Dakour",
+                  "doc_image": "https://images1-fabric.practo.com/dr-vimal-kumar-dakour-1455985769-56c89469dd280.jpg",
+                  "specialty": "Orthopedist",
+                  "qualification": "MBBS, Diploma in Orthopaedics, DNB - Orthopedics/Orthopedic Surgery",
+                  "experience": 21
+              },
+              {
+                  "name": "Dr. Madhur Chadha",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/736911/dr-madhur-chadha-5e5652ca6f720.jpeg",
+                  "specialty": "Pain Management Specialist",
+                  "qualification": "MBBS, DNB - Anaesthesia",
+                  "experience": 18
+              },
+              {
+                  "name": "Dr. Hemanth Kumar Kasaragod",
+                  "doc_image": "https://images1-fabric.practo.com/dr-hemanth-kumar-kasaragod-1471327584-57b2ad6031b56.jpg",
+                  "specialty": "General Surgeon",
+                  "qualification": "MBBS, DNB - General Surgery",
+                  "experience": 16
+              },
+              {
+                  "name": "Dr. Minoo Fazilat",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/669121/dr-minoo-fazilat-pt-5b2c9ba37b95d.jpg",
+                  "specialty": "Gynecologist/Obstetrician",
+                  "qualification": "MBBS, DGO",
+                  "experience": 21
+              }
+          ],
+          "claimCounts": {
+              "medicalClaims": 166,
+              "surgicalClaims": 213
+          },
+          "portfolioAnalysis": {
+              "portfolioAverage": 63798,
+              "categoryAverage": 97307
+          },
+          "amountGrading": {
+              "grading": ">10 Lacs",
+              "value": "More than 10 Lacs and Less than 20 Lacs",
+              "barFill": 42
+          },
+          "readmissionRate": {
+              "percentage": 4.72,
+              "barFill": 4.72
+          },
+          "accreditationStatus": ["ROHINI"],
+          "accountHandler": {
+              "name": "Gyanendra Singh",
+              "contactNumber": "9175872400",
+              "email": "Gyanendra.Singh02@bajajallianz.co.in",
+              "designation": "Senior Executive Network Management",
+              "managingSince": null
+          },
+          "services": [
+              {
+                  "name": "general surgeon(5)",
+                  "description": ""
+              },
+              {
+                  "name": "laparoscopic surgeon(4)",
+                  "description": ""
+              },
+              {
+                  "name": "bariatric surgeon(2)",
+                  "description": ""
+              },
+              {
+                  "name": "general physician(2)",
+                  "description": ""
+              },
+              {
+                  "name": "orthopedist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "pain management specialist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "spine and pain specialist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "anesthesiologist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "dentist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "diabetologist(1)",
+                  "description": ""
+              },
+              {
+                  "name": "gastroentrology surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "gynecologist/obstetrician(1)",
+                  "description": ""
+              },
+              {
+                  "name": "internal medicine(1)",
+                  "description": ""
+              }
+          ],
+          "networkStatus": {
+              "status": "Active",
+              "details": [],
+              "lastVerified": null
+          },
+          "photos": [
+              "https://images1-fabric.practo.com/559a555da3c6f153b51a9717804a1f84b1f666a87a788.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040459-57bd8e0bb6b98.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040460-57bd8e0c07f7f.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040472-57bd8e1852009.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040472-57bd8e18f3592.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040473-57bd8e197cf14.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040473-57bd8e19c11b7.jpg",
+              "https://images1-fabric.practo.com/fortis-c-doc-hospital-delhi-1472040474-57bd8e1a0f072.jpg",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-5b91184fb39b8.png",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-6662a27411d20.png",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-6662a2757ba28.png",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-6662a27724f5d.png",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-6662a2787de03.png",
+              "https://images1-fabric.practo.com/practices/793123/fortis-c-doc-hospital-delhi-6662a279cc63d.png"
+          ]
+      },
+      {
+          "id": "29251945",
+          "name": "Shroff Eye Centre",
+          "location": {
+              "address": "A-9, 1st Floor",
+              "city": "Delhi",
+              "state": "Delhi",
+              "pincode": 110048.0,
+              "coordinates": {
+                  "lat": 28.55418,
+                  "lng": 77.24302
+              }
+          },
+          "details": {
+              "type": "Multi-Speciality Hospital",
+              "established": null,
+              "beds": 15,
+              "doctorsCount": 16
+          },
+          "rating": 4.5,
+          "patientStories": 36,
+          "keyServices": [
+              "ophthalmologist(16)"
+          ],
+          "doctors": [
+              {
+                  "name": "Dr. Dariel Mathur",
+                  "doc_image": "https://images2-fabric.practo.com/practo-resources/core/doctor/photos/336cabe585599aaf1244491d283e6f6d5cbbc21d.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, DO, MS - Ophthalmology",
+                  "experience": 31
+              },
+              {
+                  "name": "Dr. J.C. Das",
+                  "doc_image": "https://images1-fabric.practo.com/dr-j-c-das-1468397697-5785f8818b1f1.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MD - Ophthalmology",
+                  "experience": 48
+              },
+              {
+                  "name": "Dr. Sharad Rohatgi",
+                  "doc_image": "https://images2-fabric.practo.com/practo-resources/core/doctor/photos/64e72fc346b3291d8f2b6999c09027dade95eaf8.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MD - Ophthalmology",
+                  "experience": 42
+              },
+              {
+                  "name": "Dr. Charu Gupta",
+                  "doc_image": "https://images1-fabric.practo.com/dr-charu-gupta-1469015604-578f663471cf3.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 28
+              },
+              {
+                  "name": "Dr. Daraius Shroff",
+                  "doc_image": "https://images1-fabric.practo.com/dr-daraius-shroff-1468117483-5781b1eb2a7a0.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 23
+              },
+              {
+                  "name": "Dr. Manish Malhotra",
+                  "doc_image": "https://images1-fabric.practo.com/543cfeb6d803e68f4259f7e288dc7c22d8d166b27e5c7.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, DOMS",
+                  "experience": 23
+              },
+              {
+                  "name": "Dr. Soma Talukdar",
+                  "doc_image": null,
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 29
+              },
+              {
+                  "name": "Dr. Saswat Ray",
+                  "doc_image": "https://images2-fabric.practo.com/practo-resources/core/doctor/photos/6d19cb136c6131a2fd6eba9e70d1c15deeb8aba3.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 25
+              },
+              {
+                  "name": "Dr. Noshir Shroff",
+                  "doc_image": "https://images2-fabric.practo.com/practo-resources/core/doctor/photos/cdc55359fa9c26e416411417adb2e8daf41adef0.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 44
+              },
+              {
+                  "name": "Dr. Cyrus M. Shroff",
+                  "doc_image": "https://images1-fabric.practo.com/dr-cyrus-m-shroff-1469015714-578f66a291b67.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MD - Ophthalmology",
+                  "experience": 46
+              }
+          ],
+          "claimCounts": {
+              "medicalClaims": 436,
+              "surgicalClaims": 905
+          },
+          "portfolioAnalysis": {
+              "portfolioAverage": 37086,
+              "categoryAverage": 46437
+          },
+          "amountGrading": {
+              "grading": "> 40 Lacs",
+              "value": "Above 40 Lacs",
+              "barFill": 71
+          },
+          "readmissionRate": {
+              "percentage": 5.17,
+              "barFill": 5.17
+          },
+          "accreditationStatus": [
+              "NABH", "ROHINI"
+          ],
+          "accountHandler": {
+              "name": "Gyanendra Singh",
+              "contactNumber": "9175872400",
+              "email": "Gyanendra.Singh02@bajajallianz.co.in",
+              "designation": "Senior Executive Network Management",
+              "managingSince": null
+          },
+          "services": [
+              {
+                  "name": "ophthalmologist(16)",
+                  "description": ""
+              }
+          ],
+          "networkStatus": {
+              "status": "Active",
+              "details": [],
+              "lastVerified": null
+          },
+          "photos": [
+              "https://images1-fabric.practo.com/shroff-eye-centre-kailash-colony-delhi-1466408287-57679d5fbbd2b.jpeg",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44b948d64.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44ba4493d.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44bb82de4.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44bc6c953.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44bd6f3d8.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44be669f7.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44bfa657f.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44c0a576c.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44c23d248.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44c3ad7c3.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44cc03a64.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44cd2b1d8.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44ce5de50.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44cf43346.png",
+              "https://images1-fabric.practo.com/practices/646114/shroff-eye-centre-delhi-672f44d03ce87.png"
+          ]
+      },
+      {
+          "id": "419233498",
+          "name": "MASSH-Minimal Access Smart Surgery Hospital",
+          "location": {
+              "address": "B-18,Nehru Place Flyover, Chirag Enclave, Nehru Place, New Delhi",
+              "city": "Delhi",
+              "state": "Delhi",
+              "pincode": 110048.0,
+              "coordinates": {
+                  "lat": 28.546919,
+                  "lng": 77.249654
+              }
+          },
+          "details": {
+              "type": "Multi-Speciality Hospital",
+              "established": null,
+              "beds": 50,
+              "doctorsCount": 5
+          },
+          "rating": 4.6,
+          "patientStories": 32,
+          "keyServices": [
+              "orthopedist(2)",
+              "bariatric surgeon(1)",
+              "general surgeon(1)",
+              "gynecologist/obstetrician(1)",
+              "laparoscopic surgeon(1)",
+              "urologist(1)"
+          ],
+          "doctors": [
+              {
+                  "name": "Dr. Sachin Ambekar",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/433975/dr-sachin-ambekar-64cd44914c8a8.png",
+                  "specialty": "Laparoscopic Surgeon, General Surgeon, Bariatric Surgeon",
+                  "qualification": "MS - General Surgery, MD - Physician",
+                  "experience": 23
+              },
+              {
+                  "name": "Dr. Ankit Goel",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/1085410/dr-ankit-goel-650ea6a99b726.jpeg",
+                  "specialty": "Urologist",
+                  "qualification": "MBBS, MS - General Surgery, MCh - Urology",
+                  "experience": 15
+              },
+              {
+                  "name": "Dr. Sudhir Seth",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/278059/dr-sudhir-seth-5e5787704f32e.jpg",
+                  "specialty": "Orthopedist",
+                  "qualification": "MBBS, MS - Orthopaedics, DNB - Orthopedics/Orthopedic Surgery, MCh - Orthopaedics",
+                  "experience": 43
+              },
+              {
+                  "name": "Dr. Rashmi Shriya",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/943272/dr-rashmi-shriya-675abc32b06b5.png",
+                  "specialty": "Gynecologist/Obstetrician, Gynecologist/Obstetrician",
+                  "qualification": "MBBS, MD - Obstetrics & Gynaecology, DNB - Obstetrics & Gynecology, Fellowship in Minimal Access Surgery",
+                  "experience": 16
+              },
+              {
+                  "name": "Dr. Abhishek Bansal",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/539771/dr-abhishek-bansal-64cd45045fa3c.jpeg",
+                  "specialty": "Orthopedist",
+                  "qualification": "MBBS, MS - Orthopaedics, DNB - Orthopedics/Orthopedic Surgery",
+                  "experience": 20
+              }
+          ],
+          "claimCounts": {
+              "medicalClaims": 4,
+              "surgicalClaims": 35
+          },
+          "portfolioAnalysis": {
+              "portfolioAverage": 61323,
+              "categoryAverage": 108399
+          },
+          "amountGrading": {
+              "grading": "> 20 Lacs",
+              "value": "More than 20 Lacs and Less than 40 Lacs",
+              "barFill": 57
+          },
+          "readmissionRate": {
+              "percentage": null,
+              "barFill": null
+          },
+          "accreditationStatus": ["ROHINI"],
+          "accountHandler": {
+              "name": "Gyanendra Singh",
+              "contactNumber": "9175872400",
+              "email": "Gyanendra.Singh02@bajajallianz.co.in",
+              "designation": "Senior Executive Network Management",
+              "managingSince": null
+          },
+          "services": [
+              {
+                  "name": "orthopedist(2)",
+                  "description": ""
+              },
+              {
+                  "name": "bariatric surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "general surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "gynecologist/obstetrician(1)",
+                  "description": ""
+              },
+              {
+                  "name": "laparoscopic surgeon(1)",
+                  "description": ""
+              },
+              {
+                  "name": "urologist(1)",
+                  "description": ""
+              }
+          ],
+          "networkStatus": {
+              "status": "Active",
+              "details": [],
+              "lastVerified": null
+          },
+          "photos": [
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a867699ae.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a896d5bf2.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a89c9da18.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a8a2a00cb.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a8a8e15cb.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a8b10441a.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a8bacc3dd.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-64c4a8cfeb9b2.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580c9a6272.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580ca724db.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580cb454b5.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580cc173bf.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580ccd63d6.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-667580cda8edc.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d55198c2adf.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551a5b5c80.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551b527efd.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551c415f33.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551d3b3765.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551e339c72.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551f07ab6f.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d551fe74ecf.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d5520e168d7.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d5521f2b0e9.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d55232d8b91.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-66d552569c5e0.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-6757ee2a399ba.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-6757ee2f41e9c.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-6757ee34a3e72.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-6757ee3999647.png",
+              "https://images1-fabric.practo.com/practices/1431379/massh-minimal-access-smart-surgery-hospital-delhi-6757ee3fc034d.png"
+          ]
+      },
+      {
+          "id": "115172636",
+          "name": "Bharti Eye Hospital",
+          "location": {
+              "address": "E-52",
+              "city": "Delhi",
+              "state": "Delhi",
+              "pincode": 110048.0,
+              "coordinates": {
+                  "lat": 28.560845,
+                  "lng": 77.243861
+              }
+          },
+          "details": {
+              "type": "Ophthalmology (Eye Doctor) Hospital",
+              "established": null,
+              "beds": 10,
+              "doctorsCount": 7
+          },
+          "rating": 4.8,
+          "patientStories": 87,
+          "keyServices": [
+              "ophthalmologist(7)"
+          ],
+          "doctors": [
+              {
+                  "name": "Dr. S.Bharti",
+                  "doc_image": "https://images1-fabric.practo.com/dr-s-bharti-1467711520-577b802027669.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 44
+              },
+              {
+                  "name": "Dr. Archana G. Mahajan",
+                  "doc_image": "https://images1-fabric.practo.com/552e0acaf41212057ad74d4c9ae1b665be0aab4288fbb.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, DNB - Ophthalmology",
+                  "experience": 29
+              },
+              {
+                  "name": "Dr. Bhupesh Singh",
+                  "doc_image": "https://images1-fabric.practo.com/dr-bhupesh-singh-1452767100-5697777c208ff.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, DO, flvpei, FCE",
+                  "experience": 19
+              },
+              {
+                  "name": "Dr. Bhuvan Chanana",
+                  "doc_image": "https://images1-fabric.practo.com/dr-bhuvan-chanana-1467711531-577b802b48572.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MD - Ophthalmology, DNB - Ophthalmology, FICO",
+                  "experience": 22
+              },
+              {
+                  "name": "Dr. R.V. Azad",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/497901/dr-r-v-azad-58e3dc16d0e65.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MD - Ophthalmology",
+                  "experience": 51
+              },
+              {
+                  "name": "Dr. Sudhir Bhatia",
+                  "doc_image": "https://images1-fabric.practo.com/dr-sudhir-bhatia-1451284986-5680d9fad25cc.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, MS - Ophthalmology",
+                  "experience": 36
+              },
+              {
+                  "name": "Dr. Neha Bharti",
+                  "doc_image": "https://images1-fabric.practo.com/doctor/367566/dr-neha-bharti-58e3dc16b2425.jpg",
+                  "specialty": "Ophthalmologist",
+                  "qualification": "MBBS, DNB - Ophthalmology, FVR",
+                  "experience": 18
+              }
+          ],
+          "claimCounts": {
+              "medicalClaims": 9,
+              "surgicalClaims": 31
+          },
+          "portfolioAnalysis": {
+              "portfolioAverage": 51511,
+              "categoryAverage": 44538
+          },
+          "amountGrading": {
+              "grading": "< 5 Lacs",
+              "value": "Less Than 5 Lacs",
+              "barFill": 14
+          },
+          "readmissionRate": {
+              "percentage": 6.25,
+              "barFill": 6.25
+          },
+          "accreditationStatus": [
+              "NABH", "ROHINI"
+          ],
+          "accountHandler": {
+              "name": "Gyanendra Singh",
+              "contactNumber": "9175872400",
+              "email": "Gyanendra.Singh02@bajajallianz.co.in",
+              "designation": "Senior Executive Network Management",
+              "managingSince": null
+          },
+          "services": [
+              {
+                  "name": "ophthalmologist(7)",
+                  "description": ""
+              }
+          ],
+          "networkStatus": {
+              "status": "Active",
+              "details": [],
+              "lastVerified": null
+          },
+          "photos": [
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1451286204-5680debcb9463.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769495-5678fc576f377.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769508-5678fc6442f19.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769514-5678fc6ae36e6.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769519-5678fc6f807bd.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769524-5678fc745460e.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769529-5678fc794a1b9.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769533-5678fc7d2639d.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1450769537-5678fc817f564.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1451416450-5682db82f2db3.JPG",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1452252165-568f9c05d86ad.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1452252168-568f9c08dea2e.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1452252171-568f9c0bcf168.jpg",
+              "https://images1-fabric.practo.com/bharti-eye-hospital-delhi-1452252174-568f9c0f00df5.jpg"
+          ]
+      }
+  ]
+}
