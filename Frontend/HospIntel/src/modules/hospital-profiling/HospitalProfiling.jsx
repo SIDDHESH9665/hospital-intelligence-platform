@@ -325,11 +325,11 @@ function HospitalProfiling() {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-800">Key Services</h3>
                   <div className="grid grid-cols-2 gap-3 mt-4">
-                    {hospitalData.keyServices.slice(0, 5).map((service, index) => (
+                    {(hospitalData.keyServices || []).slice(0, 5).map((service, index) => (
                       <span key={index} className="px-3 py-1 bg-gray-100 rounded-full text-sm">{service}</span>
                     ))}
                     <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                      +{hospitalData.keyServices.length - 5} more
+                      +{hospitalData.keyServices?.length - 5 || 0} more
                     </span>
                   </div>
                 </div>
