@@ -402,7 +402,7 @@ function HospitalProfiling() {
               <div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">About {hospitalData.name}</h3>
                 <p className="text-gray-600 mb-6">
-                  {hospitalData.name} was established in {hospitalData.details.established}, and today it has emerged as Asia's foremost integrated healthcare services provider. The hospital has a robust presence across the healthcare ecosystem, including Hospitals, Pharmacies, Primary Care & Diagnostic Clinics.
+                  {hospitalData.name} was established in {hospitalData.details?.established || 'N/A'}, and today it has emerged as Asia's foremost integrated healthcare services provider. The hospital has a robust presence across the healthcare ecosystem, including Hospitals, Pharmacies, Primary Care & Diagnostic Clinics.
                 </p>
 
                 <div className="grid grid-cols-2 gap-6">
