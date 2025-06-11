@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 import pandas as pd
 import numpy as np
 from utils import analyze_hospital_claims
@@ -10,6 +10,13 @@ from hospital_profiling import HospitalProfilingDataHandler
 import logging
 import os
 import socket
+from authlib.integrations.starlette_client import OAuth
+from starlette.middleware.sessions import SessionMiddleware
+import secrets
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -22,6 +29,111 @@ due_dil_handler = DueDiligenceDataHandler()
 
 # Initialize HospitalProfilingDataHandler
 hospital_profiling_handler = HospitalProfilingDataHandler("hospital_profiling_data.json")
+
+# --- SSO LOGIC REPLACEMENT START ---
+from fastapi import Depends
+import json
+
+# Configure session middleware with secure settings
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=os.getenv("SESSION_SECRET_KEY", secrets.token_hex(32)),
+    max_age=3600,
+    same_site="lax",
+    https_only=False
+    
+)
+
+# Configure OAuth
+oauth = OAuth()
+oauth.register(
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid email profile',
+    },
+)
+
+def get_current_user(request: Request):
+    user = request.session.get('user')
+    if not user or not user.get('authenticated'):
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return user
+
+@app.get("/login")
+async def login(request: Request):
+    print("/login endpoint hit")
+    # Support redirect_uri param for frontend flexibility
+    frontend_redirect = request.query_params.get('redirect_uri')
+    redirect_uri = request.url_for("auth_google")
+    if frontend_redirect:
+        request.session['frontend_redirect'] = frontend_redirect
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+@app.get("/auth/google")
+async def auth_google(request: Request):
+    print("/auth/google endpoint hit")
+    try:
+        token = await oauth.google.authorize_access_token(request)
+        if not token:
+            return RedirectResponse(url="http://localhost:5173/login?error=no_token")
+        user_info = token.get('userinfo')
+        if not user_info:
+            user_info = await oauth.google.parse_id_token(request, token)
+        if not user_info:
+            return RedirectResponse(url="http://localhost:5173/login?error=invalid_user")
+        user_data = {
+            "email": user_info.get("email"),
+            "name": user_info.get("name"),
+            "picture": user_info.get("picture"),
+            "authenticated": True
+        }
+        request.session['user'] = user_data
+        # Use frontend_redirect if present
+        frontend_redirect = request.session.pop('frontend_redirect', None)
+        if frontend_redirect:
+            return RedirectResponse(url=frontend_redirect)
+        return RedirectResponse(url="http://localhost:5173/home")
+    except Exception as e:
+        return RedirectResponse(url=f"http://localhost:5173/login?error=oauth_error")
+
+@app.get("/logout")
+async def logout(request: Request):
+    print("/logout endpoint hit")
+    request.session.clear()
+    return RedirectResponse(url="http://localhost:5173/login")
+
+@app.get("/user")
+async def get_user(request: Request):
+    print("/user endpoint hit")
+    try:
+        user = request.session.get('user')
+        if not user or not user.get('authenticated'):
+            raise HTTPException(status_code=401, detail="Not authenticated")
+        return JSONResponse(content=user)
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+@app.get("/auth/status")
+async def auth_status(request: Request):
+    print("/auth/status endpoint hit")
+    try:
+        user = request.session.get('user')
+        if user and user.get('authenticated'):
+            return JSONResponse(content={"authenticated": True, "user": user})
+        else:
+            return JSONResponse(content={"authenticated": False}, status_code=401)
+    except Exception as e:
+        return JSONResponse(content={"authenticated": False}, status_code=401)
+
+@app.get("/protected-data")
+async def protected_data(request: Request):
+    print("/protected-data endpoint hit")
+    user = get_current_user(request)
+    return {"message": f"Hello, {user['name']}! This is protected data."}
+# --- SSO LOGIC REPLACEMENT END ---
 
 # Debug: Print all registered routes
 @app.on_event("startup")
@@ -64,6 +176,7 @@ app.add_middleware(
 # Add endpoint to get server IP
 @app.get("/api/server-info")
 async def get_server_info(request: Request):
+    print("/api/server-info endpoint hit")
     return {
         "status": "ok",
         "message": "Server is running"
@@ -72,6 +185,7 @@ async def get_server_info(request: Request):
 # Add favicon endpoint
 @app.get("/favicon.ico")
 async def get_favicon():
+    print("/favicon.ico endpoint hit")
     try:
         return FileResponse("../frontend/HospIntel/public/favicon.ico")
     except Exception as e:
@@ -117,6 +231,7 @@ except Exception as e:
 # Add test endpoint
 @app.get("/api/test")
 async def test_endpoint():
+    print("/api/test endpoint hit")
     return {
         "status": "ok",
         "message": "API is working"
@@ -124,6 +239,7 @@ async def test_endpoint():
 
 @app.get("/api/claims-analysis/{partner_id}")
 async def claims_analysis(partner_id: int):
+    print(f"/api/claims-analysis/{partner_id} endpoint hit")
     try:
         if df is None:
             raise HTTPException(status_code=500, detail="Dataset not loaded")
@@ -175,6 +291,7 @@ async def claims_analysis(partner_id: int):
 # Add due diligence endpoints
 @app.get("/api/due-diligence/hospitals")
 async def get_all_hospitals():
+    print("/api/due-diligence/hospitals endpoint hit")
     """Get all hospital due diligence data"""
     try:
         hospitals = due_dil_handler.get_all_hospitals()
@@ -186,6 +303,7 @@ async def get_all_hospitals():
 
 @app.get("/api/due-diligence/hospital/{hospital_id}")
 async def get_hospital_by_id(hospital_id: int):
+    print(f"/api/due-diligence/hospital/{hospital_id} endpoint hit")
     """Get hospital due diligence data by ID"""
     try:
         logger.info(f"Received request for hospital ID: {hospital_id}")
@@ -201,6 +319,7 @@ async def get_hospital_by_id(hospital_id: int):
 
 @app.post("/api/due-diligence/hospital")
 async def add_hospital(hospital_data: dict):
+    print("/api/due-diligence/hospital [POST] endpoint hit")
     """Add new hospital due diligence data"""
     try:
         success = due_dil_handler.add_hospital(hospital_data)
@@ -214,6 +333,7 @@ async def add_hospital(hospital_data: dict):
 
 @app.put("/api/due-diligence/hospital/{hospital_id}")
 async def update_hospital(hospital_id: int, hospital_data: dict):
+    print(f"/api/due-diligence/hospital/{hospital_id} [PUT] endpoint hit")
     """Update hospital due diligence data"""
     try:
         success = due_dil_handler.update_hospital(hospital_id, hospital_data)
@@ -227,6 +347,7 @@ async def update_hospital(hospital_id: int, hospital_data: dict):
 
 @app.delete("/api/due-diligence/hospital/{hospital_id}")
 async def delete_hospital(hospital_id: int):
+    print(f"/api/due-diligence/hospital/{hospital_id} [DELETE] endpoint hit")
     """Delete hospital due diligence data"""
     try:
         success = due_dil_handler.delete_hospital(hospital_id)
@@ -257,6 +378,7 @@ except Exception as e:
 
 @app.get("/api/hospital-profiling/hospitals")
 async def get_all_hospital_profiles():
+    print("/api/hospital-profiling/hospitals endpoint hit")
     try:
         hospitals = hospital_profiling_handler.get_all_hospitals()
         return hospitals
@@ -266,6 +388,7 @@ async def get_all_hospital_profiles():
 
 @app.get("/api/hospital-profiling/hospital/{hospital_id}")
 async def get_hospital_profile_by_id(hospital_id: str):
+    print(f"/api/hospital-profiling/hospital/{hospital_id} endpoint hit")
     try:
         hospital = hospital_profiling_handler.get_hospital_by_id(hospital_id)
         if not hospital:
@@ -278,6 +401,7 @@ async def get_hospital_profile_by_id(hospital_id: str):
 # Update the catch-all route to serve from the correct location
 @app.get("/{full_path:path}")
 async def serve_app(full_path: str):
+    print(f"Catch-all endpoint hit for path: {full_path}")
     """Serve the frontend app for all routes, letting the client handle routing"""
     try:
         # Log the request
@@ -326,4 +450,4 @@ def handle_nan_values(obj):
 if __name__ == '__main__':
     import uvicorn
     logging.info("Starting server on 0.0.0.0:5002")
-    uvicorn.run(app, host="0.0.0.0", port=5002) 
+    uvicorn.run(app, host="0.0.0.0", port=5002)

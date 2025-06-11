@@ -25,10 +25,10 @@ export default defineConfig({
     host: true,
     port: 5173,
     proxy: {
-      "/api": {
-        target: "http://localhost:8000",
+      '/api': {
+        target: 'http://localhost:5002', // Changed from 8000 to 5002 to match FastAPI backend
         changeOrigin: true,
-        secure: false
+        secure: false,
       }
     },
     fs: {

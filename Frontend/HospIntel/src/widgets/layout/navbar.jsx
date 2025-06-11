@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   Navbar as MTNavbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
@@ -146,14 +146,11 @@ export function Navbar({ brandName, routes, action }) {
           )}
         </IconButton>
       </div>
-      <MobileNav
-        className="rounded-xl px-4 pt-2 pb-4 bg-transparent backdrop-blur-sm"
-        open={openNav}
-      >
+      <Collapse open={openNav} className="rounded-xl px-4 pt-2 pb-4 bg-transparent backdrop-blur-sm lg:hidden">
         <div className="container mx-auto">
           {navList}
         </div>
-      </MobileNav>
+      </Collapse>
     </MTNavbar>
   );
 }
