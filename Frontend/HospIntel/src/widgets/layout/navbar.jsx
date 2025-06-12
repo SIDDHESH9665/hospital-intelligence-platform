@@ -52,7 +52,7 @@ export function Navbar({ brandName, routes, action }) {
               Hospital Impact Analysis
             </Link>
             <Link
-              to="/due-diligence"
+              to="/hospital-due-diligence"
               className="block w-full font-bold text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
               role="menuitem"
             >

@@ -18,6 +18,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarIcon from '@mui/icons-material/Star';
 import LanguageIcon from '@mui/icons-material/Language';
+import RequestReportForm from '../hospital-profiling/components/RequestReportForm';
 
 const HospitalDueDiligence = () => {
   const [hospitals, setHospitals] = useState([]);
@@ -30,6 +31,9 @@ const HospitalDueDiligence = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [registrationFormOpen, setRegistrationFormOpen] = useState(false);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [showNotFoundPopup, setShowNotFoundPopup] = useState(false);
 
   const fetchHospitals = useCallback(async () => {
     try {
@@ -120,12 +124,22 @@ const HospitalDueDiligence = () => {
       showSnackbar("Please enter a valid hospital name or ID.", "error");
       return;
     }
-    
     const hospitalId = parseInt(search);
     if (!isNaN(hospitalId)) {
+      const found = hospitals.find(h => h.hospital_info.ID === hospitalId);
+      if (!found) {
+        setPopupMessage(`Hospital with ID ${search} not found. Please check the ID and try again.`);
+        setShowNotFoundPopup(true);
+        return;
+      }
       return searchHospitalById(); // Search by ID
     }
-
+    const foundByName = hospitals.find((h) => h.hospital_info.HOSPITAL.toLowerCase().trim().includes(search.toLowerCase().trim()));
+    if (!foundByName) {
+      setPopupMessage(`Hospital with name "${search}" not found. Please check the name and try again.`);
+      setShowNotFoundPopup(true);
+      return;
+    }
     await searchHospitalByName(); // Search by name
   };
 
@@ -221,7 +235,7 @@ const HospitalDueDiligence = () => {
     <div className="hospital-due-diligence-container">
       <Box className="hospital-due-diligence-header">
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/")} />
+          <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/home")} />
           <img src="/img/bajaj-logo2.png" alt="bajaj-logo" className="hospital-due-diligence-logo" />
         </Box>
         <Box className="hospital-due-diligence-search">
@@ -232,8 +246,9 @@ const HospitalDueDiligence = () => {
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && searchHospital()}
           />
-          <Button className="hospital-due-diligence-search-button" onClick={searchHospital} sx={{ color: '#666' }}>
+          <Button className="hospital-due-diligence-search-button" onClick={searchHospital} sx={{ color: '#666', ml: 1 }}>
             <SearchIcon />
+            Search
           </Button>
         </Box>
       </Box>
@@ -262,6 +277,7 @@ const HospitalDueDiligence = () => {
                   boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
                 }
               }}>Submit Request</Button>
+              <Button variant="contained" color="success" onClick={handleGoToDefault} sx={{ ml: 1 }}>Try Default ID</Button>
             </Box>
           </Box>
         ) : (
@@ -342,8 +358,32 @@ const HospitalDueDiligence = () => {
       </footer>
 
       <HospitalRegistrationForm open={registrationFormOpen} onClose={() => setRegistrationFormOpen(false)} title="Submit Request" />
+      {showRequestForm && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+          <RequestReportForm onClose={() => setShowRequestForm(false)} />
+        </div>
+      )}
+      {showNotFoundPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+          <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md w-full">
+            <div className="mb-6">
+              <svg className="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
+            <p className="text-gray-600 mb-6">{popupMessage || `Hospital with ID or Name ${search} not found. Please check and try again.`}</p>
+            <div className="flex flex-col gap-2">
+              <button onClick={() => { setShowNotFoundPopup(false); setShowRequestForm(true); }} className="px-4 py-2 bg-blue-600 text-white rounded">Request Report</button>
+              <button onClick={() => { setShowNotFoundPopup(false); setSearch(hospitals[0]?.hospital_info?.ID?.toString() || ''); handleGoToDefault(); }} className="px-4 py-2 bg-green-600 text-white rounded">Try Default ID</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default HospitalDueDiligence;
+
+

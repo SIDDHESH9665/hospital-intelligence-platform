@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Building2, MapPin, ArrowLeft } from 'lucide-react';
 import { StarRating } from './components/StarRating';
 import ACSGauge from './components/ACSGauge';
@@ -8,8 +8,9 @@ import { MedicalVsSurgical } from './components/MedicalVsSurgical';
 import { RoomCategoryDistribution } from './components/RoomCategoryDistribution';
 import { TopDiagnoses } from './components/TopDiagnoses';
 import { ClaimsSummary } from './components/ClaimsSummary';
-import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
+import { API_ENDPOINTS, initializeAPI } from '@/config/api';
 import { useNavigate } from 'react-router-dom';
+import RequestReportForm from '../hospital-profiling/components/RequestReportForm';
 
 const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const [alternativeHospitals, setAlternativeHospitals] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [apiInitialized, setApiInitialized] = useState(false);
+  const [showRequestForm, setShowRequestForm] = useState(false);
 
   const fetchData = async () => {
     if (!apiInitialized) return;
@@ -113,7 +115,7 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   };
 
   const handleBack = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   if (loading) return (
@@ -123,74 +125,24 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   );
   
   if (error) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md w-full">
-        <div className="mb-6">
-          <svg className="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
+    <>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md w-full">
+          <div className="mb-6">
+            <svg className="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <div className="flex flex-col gap-2">
+            <button onClick={() => setShowRequestForm(true)} className="px-4 py-2 bg-blue-600 text-white rounded">Request Report</button>
+            <button onClick={() => { setCurrentPartnerId(65458106); setSearchInput('65458106'); }} className="px-4 py-2 bg-green-600 text-white rounded">Try Default ID</button>
+          </div>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
-        <p className="text-gray-600 mb-6">{error}</p>
-        
-        {showSearch ? (
-          <div className="space-y-4">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Enter Hospital Partner ID"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                autoFocus
-              />
-            </div>
-            <div className="flex gap-3">
-              <button 
-                onClick={() => {
-                  if (searchInput.trim()) {
-                    setCurrentPartnerId(searchInput);
-                    setError(null);
-                  }
-                }}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Search
-              </button>
-              <button 
-                onClick={() => {
-                  setShowSearch(false);
-                  setSearchInput('');
-                  setError(null);
-                }}
-                className="px-4 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            <button 
-              onClick={() => {
-                setCurrentPartnerId(partnerId);
-                setError(null);
-              }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Try Default Hospital
-            </button>
-            <button 
-              onClick={() => setShowSearch(true)}
-              className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-            >
-              Try Another ID
-            </button>
-          </div>
-        )}
       </div>
-    </div>
+      <RequestReportForm open={showRequestForm} onClose={() => setShowRequestForm(false)} />
+    </>
   );
   
   if (!data) return null;

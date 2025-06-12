@@ -73,7 +73,7 @@ const HospitalDashboard = () => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
   };
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (_event, reason) => {
     if (reason === "clickaway") {
       return;
     }
