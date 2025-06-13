@@ -3,14 +3,19 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   Navbar as MTNavbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
+  Avatar,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-export function Navbar({ brandName, routes, action }) {
+export function Navbar({ brandName, routes, action, user, onLogout }) {
   const [openNav, setOpenNav] = React.useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
@@ -52,7 +57,7 @@ export function Navbar({ brandName, routes, action }) {
               Hospital Impact Analysis
             </Link>
             <Link
-              to="/due-diligence"
+              to="/hospital-due-diligence"
               className="block w-full font-bold text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
               role="menuitem"
             >
@@ -126,6 +131,23 @@ export function Navbar({ brandName, routes, action }) {
           </Link>
         </div>
         <div className="hidden lg:block">{navList}</div>
+        {/* User profile and logout */}
+        {user && (
+          <div className="flex items-center gap-2">
+            <Menu placement="bottom-end">
+              <MenuHandler>
+                <Avatar src={user.avatar} alt={user.name} className="cursor-pointer w-10 h-10" />
+              </MenuHandler>
+              <MenuList className="p-2 min-w-[180px]">
+                <div className="px-2 py-1 border-b border-gray-200 mb-2">
+                  <Typography variant="small" className="font-bold">{user.name}</Typography>
+                  <Typography variant="small" color="gray" className="text-xs">{user.email}</Typography>
+                </div>
+                <MenuItem onClick={onLogout} className="text-red-600 font-semibold">Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
+        )}
         <div className="hidden md:flex gap-2 items-center">
           <img
             src="/img/logo.png"
@@ -146,14 +168,11 @@ export function Navbar({ brandName, routes, action }) {
           )}
         </IconButton>
       </div>
-      <MobileNav
-        className="rounded-xl px-4 pt-2 pb-4 bg-transparent backdrop-blur-sm"
-        open={openNav}
-      >
+      <Collapse open={openNav} className="rounded-xl px-4 pt-2 pb-4 bg-transparent backdrop-blur-sm lg:hidden">
         <div className="container mx-auto">
           {navList}
         </div>
-      </MobileNav>
+      </Collapse>
     </MTNavbar>
   );
 }

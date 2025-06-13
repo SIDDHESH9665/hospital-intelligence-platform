@@ -21,10 +21,12 @@ import {
   Clock,
   CreditCard,
   ClipboardCheck,
-  AlertTriangle
+  AlertTriangle,
+  X
 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
+import ReportRequestForm from '@/components/ReportRequestForm';
 
 // Lazy load the map components
 const MapComponent = React.lazy(() => 
@@ -64,6 +66,8 @@ function HospitalProfiling() {
   const [hospitalData, setHospitalData] = useState(null);
   const [error, setError] = useState(null);
   const [hospitalsData, setHospitalsData] = useState([]);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     const fetchHospitalData = async () => {
@@ -76,12 +80,17 @@ function HospitalProfiling() {
         const hospital = partnerId ? hospitals.find(h => h.id === partnerId) : hospitals[0];
         console.log('Selected Hospital:', hospital);
 
-        setHospitalData({
-          ...hospital,
-          accreditationStatus: hospital?.accreditationStatus || [],
-          amountGrading: hospital?.amountGrading || { value: 'N/A', grading: 'N/A', barFill: 0 },
-          readmissionRate: hospital?.readmissionRate || { percentage: 'N/A', barFill: 0 },
-        });
+        if (hospital) {
+          setHospitalData({
+            ...hospital,
+            accreditationStatus: hospital?.accreditationStatus || [],
+            amountGrading: hospital?.amountGrading || { value: 'N/A', grading: 'N/A', barFill: 0 },
+            readmissionRate: hospital?.readmissionRate || { percentage: 'N/A', barFill: 0 },
+          });
+          setError(null);
+        } else {
+          setError('Hospital not found. Please try again.');
+        }
       } catch (err) {
         setError('Failed to fetch hospital data');
         console.error('Error fetching hospitals:', err);
@@ -94,13 +103,33 @@ function HospitalProfiling() {
   }, [partnerId]);
 
   const handleBack = () => {
-    navigate('/', { replace: true });
+    navigate('/home', { replace: true });
   };
 
   const handleSearch = () => {
-    const hospital = hospitalsData.find(h => h.id === searchQuery);
+    if (!searchQuery.trim()) {
+      setError("Please enter a valid hospital ID.");
+      return;
+    }
+
+    const hospital = hospitalsData.find(h => {
+      const hospitalId = h.id.toString().trim();
+      const searchValue = searchQuery.trim();
+      return hospitalId === searchValue;
+    });
+
     if (hospital) {
-      navigate(`/hospital-profiling/${hospital.id}`);
+      setHospitalData({
+        ...hospital,
+        accreditationStatus: hospital?.accreditationStatus || [],
+        amountGrading: hospital?.amountGrading || { value: 'N/A', grading: 'N/A', barFill: 0 },
+        readmissionRate: hospital?.readmissionRate || { percentage: 'N/A', barFill: 0 },
+      });
+      setError(null);
+      setShowReportModal(false);
+    } else {
+      setError("Hospital not found. Please try again.");
+      setShowReportModal(false);
     }
   };
 
@@ -152,8 +181,48 @@ function HospitalProfiling() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-red-600">{error}</div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-xl shadow-lg max-w-md w-full mx-4">
+          <div className="mb-6">
+            <AlertTriangle className="mx-auto h-16 w-16 text-red-500" />
+          </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <div className="flex flex-col gap-3">
+            <button 
+              onClick={() => {
+                if (hospitalsData.length > 0) {
+                  setHospitalData(hospitalsData[0]);
+                  setError(null);
+                }
+              }}
+              className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Try Default Hospital
+            </button>
+            <button 
+              onClick={() => {
+                setShowSearch(true);
+                setSearchQuery('');
+                setError(null);
+              }}
+              className="px-4 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            >
+              Try Another ID
+            </button>
+            <button 
+              onClick={() => setShowReportModal(true)}
+              className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors shadow-md"
+            >
+              Request Report
+            </button>
+          </div>
+        </div>
+        <ReportRequestForm 
+          isOpen={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          hospitalId={searchQuery}
+        />
       </div>
     );
   }
@@ -193,13 +262,15 @@ function HospitalProfiling() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="w-full text-sm sm:text-base pl-8 sm:pl-10 pr-4 py-1.5 sm:py-2 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-white/70"
-                />
-                <Search 
-                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-white/70 cursor-pointer" 
-                  onClick={handleSearch}
+                  className="w-full text-sm sm:text-base px-4 py-2.5 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-white/70"
                 />
               </div>
+              <button 
+                onClick={handleSearch}
+                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <Search className="w-5 h-5 text-white" />
+              </button>
               <img src="/img/logo.png" alt="Logo" className="h-8 sm:h-12 w-auto" />
             </div>
           </div>

@@ -10,7 +10,7 @@ import ReportGenerator from "./components/ReportGenerator";
 import { useNavigate } from "react-router-dom";
 import "./HospitalDueDiligence.css";
 import "./components/components.css";
-import HospitalRegistrationForm from './components/HospitalRegistrationForm';
+import ReportRequestForm from '@/components/ReportRequestForm';
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -19,7 +19,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarIcon from '@mui/icons-material/Star';
 import LanguageIcon from '@mui/icons-material/Language';
 
-const HospitalDueDiligence = () => {
+const HospitalDueDiligence = () => {  
   const [hospitals, setHospitals] = useState([]);
   const [hospital, setHospital] = useState(null);
   const [search, setSearch] = useState("");
@@ -84,37 +84,6 @@ const HospitalDueDiligence = () => {
     }
   }, []);
 
-  const searchHospitalById = async () => {
-    const hospitalId = parseInt(search);
-    if (isNaN(hospitalId)) {
-      return showSnackbar("Please enter a valid Hospital ID.", "error");
-    }
-    setIsLoading(true);
-    await fetchHospitalById(hospitalId);
-  };
-
-  const searchHospitalByName = async () => {
-    if (!search.trim()) {
-      showSnackbar("Please enter a valid hospital name.", "error");
-      return;
-    }
-
-    const foundHospital = hospitals.find((h) => {
-      const hospitalName = h.hospital_info.HOSPITAL.toLowerCase().trim();
-      const searchValue = search.toLowerCase().trim();
-      return hospitalName.includes(searchValue);
-    });
-
-    if (foundHospital) {
-      setHospital(foundHospital);
-      setError("");
-      showSnackbar("Hospital found successfully", "success");
-    } else {
-      setHospital(null);
-      setError(`Hospital with name "${search}" not found.`);
-    }
-  };
-
   const searchHospital = async () => {
     if (!search.trim()) {
       showSnackbar("Please enter a valid hospital name or ID.", "error");
@@ -123,10 +92,55 @@ const HospitalDueDiligence = () => {
     
     const hospitalId = parseInt(search);
     if (!isNaN(hospitalId)) {
-      return searchHospitalById(); // Search by ID
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/due-diligence/hospital/${hospitalId}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error(`Hospital with ID ${hospitalId} not found. Please check the ID and try again.`);
+          }
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (!data || !data.hospital_info) {
+          throw new Error(`No data found for Hospital with ID ${hospitalId}`);
+        }
+        setHospitalData({
+          hospital_info: { ...data.hospital_info },
+          hospital_score: { ...data.hospital_score },
+          financial_assessment: { ...data.financial_assessment },
+          negative_legal: { ...data.negative_legal },
+          accreditation_status: { ...data.accreditation_status }
+        });
+        setError(null);
+        showSnackbar("Hospital found successfully", "success");
+      } catch (error) {
+        console.error('Error fetching hospital by ID:', error);
+        setHospitalData(null);
+        setError(error.message || "An error occurred while fetching the hospital.");
+        setRegistrationFormOpen(false);
+      } finally {
+        setIsLoading(false);
+      }
+      return;
     }
 
-    await searchHospitalByName(); // Search by name
+    // Search by name
+    const searchValue = search.toLowerCase().trim();
+    const foundHospital = hospitals.find((h) => {
+      const hospitalName = h.hospital_info.HOSPITAL.toLowerCase().trim();
+      return hospitalName.includes(searchValue);
+    });
+
+    if (foundHospital) {
+      setHospital(foundHospital);
+      setError(null);
+      showSnackbar("Hospital found successfully", "success");
+    } else {
+      setHospital(null);
+      setError(`Hospital with name "${search}" not found. Would you like to request a report for this hospital?`);
+      setRegistrationFormOpen(false);
+    }
   };
 
   const showSnackbar = (message, severity = "error") => {
@@ -211,9 +225,46 @@ const HospitalDueDiligence = () => {
 
   if (error) {
     return (
-      <Box p={3}>
-        <Alert severity="error">{error}</Alert>
-      </Box>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-xl shadow-lg max-w-md w-full mx-4">
+          <div className="mb-6">
+            <svg className="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <div className="flex flex-col gap-3">
+            <button 
+              onClick={handleGoToDefault}
+              className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Try Default Hospital
+            </button>
+            <button 
+              onClick={() => {
+                setSearch('');
+                setError(null);
+              }}
+              className="px-4 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            >
+              Try Another ID
+            </button>
+            <button 
+              onClick={() => setRegistrationFormOpen(true)}
+              className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors shadow-md"
+            >
+              Request Report
+            </button>
+          </div>
+        </div>
+        <ReportRequestForm 
+          isOpen={registrationFormOpen}
+          onClose={() => setRegistrationFormOpen(false)}
+          hospitalId={search}
+          title="Submit Request"
+        />
+      </div>
     );
   }
 
@@ -221,7 +272,7 @@ const HospitalDueDiligence = () => {
     <div className="hospital-due-diligence-container">
       <Box className="hospital-due-diligence-header">
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/")} />
+          <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/home")}/>
           <img src="/img/bajaj-logo2.png" alt="bajaj-logo" className="hospital-due-diligence-logo" />
         </Box>
         <Box className="hospital-due-diligence-search">
@@ -251,17 +302,23 @@ const HospitalDueDiligence = () => {
             <Typography variant="h5" className="error-message-title" gutterBottom>
               Oops! Hospital Not Found
             </Typography>
-            <Typography className="error-message-details">Hospital with ID {search} not found. Please check the ID and try again.</Typography>
+            <Typography className="error-message-details">{error}</Typography>
             <Box className="not-found-actions">
               <Button variant="outlined" onClick={() => setSearch("")}>Clear Search</Button>
               <Button variant="contained" onClick={handleGoToDefault} color="primary">Go to Default</Button>
-              <Button variant="contained" onClick={() => setRegistrationFormOpen(true)} sx={{
-                background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)',
-                  boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
-                }
-              }}>Submit Request</Button>
+              <Button 
+                variant="contained" 
+                onClick={() => setRegistrationFormOpen(true)} 
+                sx={{
+                  background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
+                  '&:hover': {
+                    background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)',
+                    boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
+                  }
+                }}
+              >
+                Request Report
+              </Button>
             </Box>
           </Box>
         ) : (
@@ -341,7 +398,12 @@ const HospitalDueDiligence = () => {
         <p>2025 Hospital Due Diligence All Rights Reserved</p>
       </footer>
 
-      <HospitalRegistrationForm open={registrationFormOpen} onClose={() => setRegistrationFormOpen(false)} title="Submit Request" />
+      <ReportRequestForm 
+        isOpen={registrationFormOpen}
+        onClose={() => setRegistrationFormOpen(false)}
+        hospitalId={search}
+        title="Submit Request"
+      />
     </div>
   );
 };

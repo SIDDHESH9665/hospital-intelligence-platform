@@ -1,167 +1,106 @@
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
-  Box,
-  Typography,
-  CircularProgress,
-  Alert,
-} from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { X } from 'lucide-react';
 
-const HospitalRegistrationForm = ({ open, onClose }) => {
+const HospitalRegistrationForm = ({ open, onClose, title, hospitalId }) => {
   const [formData, setFormData] = useState({
-    pan: '',
-    gstin: '',
-    hospitalName: '',
-    address: '',
-    pincode: '',
+    fullName: '',
+    email: '',
+    hospitalId: hospitalId || '',
+    message: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
-      // TODO: Replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
-      setSuccess(true);
-      setTimeout(() => {
-        onClose();
-        setSuccess(false);
-        setFormData({
-          pan: '',
-          gstin: '',
-          hospitalName: '',
-          address: '',
-          pincode: '',
-        });
-      }, 2000);
-    } catch (err) {
-      setError('Failed to submit request. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    // TODO: Implement form submission logic
+    console.log('Form submitted:', formData);
+    onClose();
   };
+
+  if (!open) return null;
 
   return (
-    <Dialog open={open} onClose={!loading ? onClose : undefined} maxWidth="sm" fullWidth>
-      <DialogTitle>
-        Submit Request
-      </DialogTitle>
-      <DialogContent>
-        {success ? (
-          <Box display="flex" flexDirection="column" alignItems="center" py={4}>
-            <CheckCircleIcon sx={{ fontSize: 60, color: '#4CAF50', mb: 2 }} />
-            <Typography variant="h6" gutterBottom>
-              Request Submitted Successfully!
-            </Typography>
-            <Typography color="textSecondary">
-              We will process your request shortly.
-            </Typography>
-          </Box>
-        ) : (
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            )}
-            <TextField
-              margin="normal"
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 transform transition-all">
+        <div className="flex justify-between items-center p-4 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">{title || 'Request Hospital Report'}</h3>
+          <button 
+            onClick={onClose} 
+            className="text-gray-400 hover:text-gray-500 transition-colors p-1 rounded-full hover:bg-gray-100"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+          <div>
+            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              fullWidth
-              label="PAN Number"
-              name="pan"
-              value={formData.pan}
-              onChange={handleChange}
-              disabled={loading}
             />
-            <TextField
-              margin="normal"
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              fullWidth
-              label="GSTIN"
-              name="gstin"
-              value={formData.gstin}
-              onChange={handleChange}
-              disabled={loading}
             />
-            <TextField
-              margin="normal"
+          </div>
+          <div>
+            <label htmlFor="hospitalId" className="block text-sm font-medium text-gray-700 mb-1">
+              Hospital ID
+            </label>
+            <input
+              type="text"
+              id="hospitalId"
+              value={formData.hospitalId}
+              onChange={(e) => setFormData({ ...formData, hospitalId: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              fullWidth
-              label="Hospital Name"
-              name="hospitalName"
-              value={formData.hospitalName}
-              onChange={handleChange}
-              disabled={loading}
             />
-            <TextField
-              margin="normal"
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              Message
+            </label>
+            <textarea
+              id="message"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              rows="4"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              fullWidth
-              label="Address"
-              name="address"
-              multiline
-              rows={3}
-              value={formData.address}
-              onChange={handleChange}
-              disabled={loading}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Pincode"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              disabled={loading}
-            />
-          </Box>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} disabled={loading}>
-          Cancel
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          variant="contained"
-          disabled={loading}
-          sx={{
-            background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
-            '&:hover': {
-              background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)',
-              boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
-            },
-            '&:disabled': {
-              background: 'rgba(0, 0, 0, 0.12)',
-              boxShadow: 'none'
-            }
-          }}
-        >
-          {loading ? <CircularProgress size={24} /> : 'Submit Request'}
-        </Button>
-      </DialogActions>
-    </Dialog>
+          </div>
+          <div className="flex justify-end gap-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Submit Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

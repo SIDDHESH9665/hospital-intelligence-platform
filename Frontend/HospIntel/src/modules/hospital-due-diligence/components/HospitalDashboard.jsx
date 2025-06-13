@@ -10,7 +10,14 @@ import {
   Stack,
   Alert,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AccreditationStatus from "../accreditation/AccreditationStatus";
@@ -21,6 +28,144 @@ import "../styles/dashboard.css";
 import Supplimentry from "../Supplimentry/Supplimentry";
 import ReportGenerator from "../pdfGenerator/ReportGenerator";
 import { useNavigate } from "react-router-dom";
+import { Search } from "@mui/icons-material";
+
+const ReportRequestModal = ({ open, onClose, hospitalId }) => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    hospitalId: hospitalId || '',
+    message: ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: Implement form submission logic
+    console.log('Form submitted:', formData);
+    onClose();
+  };
+
+  return (
+    <Dialog 
+      open={open} 
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 2,
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+        }
+      }}
+    >
+      <DialogTitle sx={{ 
+        m: 0, 
+        p: 2, 
+        display: 'flex', 
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: '1px solid #e5e7eb'
+      }}>
+        <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+          Request Hospital Report
+        </Typography>
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            color: (theme) => theme.palette.grey[500],
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)'
+            }
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent sx={{ p: 3 }}>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            <TextField
+              fullWidth
+              label="Full Name"
+              variant="outlined"
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              required
+              InputProps={{
+                sx: { borderRadius: 1 }
+              }}
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              variant="outlined"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              required
+              InputProps={{
+                sx: { borderRadius: 1 }
+              }}
+            />
+            <TextField
+              fullWidth
+              label="Hospital ID"
+              variant="outlined"
+              value={formData.hospitalId}
+              onChange={(e) => setFormData({ ...formData, hospitalId: e.target.value })}
+              required
+              InputProps={{
+                sx: { borderRadius: 1 }
+              }}
+            />
+            <TextField
+              fullWidth
+              label="Message"
+              multiline
+              rows={4}
+              variant="outlined"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              required
+              InputProps={{
+                sx: { borderRadius: 1 }
+              }}
+            />
+          </Stack>
+        </form>
+      </DialogContent>
+      <DialogActions sx={{ p: 3, borderTop: '1px solid #e5e7eb' }}>
+        <Button 
+          onClick={onClose}
+          variant="outlined"
+          sx={{ 
+            borderRadius: 1,
+            textTransform: 'none',
+            px: 3
+          }}
+        >
+          Cancel
+        </Button>
+        <Button 
+          onClick={handleSubmit}
+          variant="contained"
+          sx={{ 
+            borderRadius: 1,
+            textTransform: 'none',
+            px: 3,
+            background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
+            '&:hover': {
+              background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)'
+            }
+          }}
+        >
+          Submit Request
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 const HospitalDashboard = () => {
   const [hospitals, setHospitals] = useState([]);
@@ -30,6 +175,8 @@ const HospitalDashboard = () => {
   const [error, setError] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     axios
@@ -47,9 +194,13 @@ const HospitalDashboard = () => {
 
   const navigate = useNavigate();
 
-  const searchHospital = () => {
+  const searchHospital = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    
     if (!search.trim()) {
-      showSnackbar("Please enter a valid hospital name or ID.");
+      setError("Please enter a valid hospital name or ID.");
       return;
     }
 
@@ -64,8 +215,16 @@ const HospitalDashboard = () => {
     if (foundHospital) {
       setHospital(foundHospital);
       setError("");
+      setShowSearch(false);
     } else {
-      showSnackbar("Hospital not found. Please try again.");
+      setError("Hospital not found. Please try again.");
+      setShowReportModal(true);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      searchHospital();
     }
   };
 
@@ -73,12 +232,122 @@ const HospitalDashboard = () => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
   };
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box p={3}>
+        <Card sx={{ maxWidth: 600, mx: 'auto', p: 4, textAlign: 'center' }}>
+          <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
+          <Typography variant="h5" gutterBottom>Oops! Hospital Not Found</Typography>
+          <Typography color="text.secondary" sx={{ mb: 4 }}>
+            The hospital you're looking for doesn't exist in our database.
+          </Typography>
+          
+          {showSearch ? (
+            <Box sx={{ spaceY: 2 }}>
+              <TextField
+                fullWidth
+                placeholder="Enter Hospital Name or ID"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyPress={handleKeyPress}
+                sx={{ mb: 2 }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Stack direction="row" spacing={2} justifyContent="center">
+                <Button 
+                  variant="contained" 
+                  onClick={searchHospital}
+                  sx={{
+                    background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)'
+                    }
+                  }}
+                >
+                  Search
+                </Button>
+                <Button 
+                  variant="outlined"
+                  onClick={() => {
+                    setShowSearch(false);
+                    setSearch('');
+                    setError(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Stack>
+            </Box>
+          ) : (
+            <Stack spacing={2}>
+              <Button 
+                variant="contained"
+                onClick={() => {
+                  if (hospitals.length > 0) {
+                    setHospital(hospitals[0]);
+                    setError(null);
+                  }
+                }}
+                sx={{
+                  background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
+                  '&:hover': {
+                    background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)'
+                  }
+                }}
+              >
+                Try Default Hospital
+              </Button>
+              <Button 
+                variant="outlined"
+                onClick={() => setShowSearch(true)}
+              >
+                Try Another ID
+              </Button>
+              <Button 
+                variant="contained"
+                onClick={() => setShowReportModal(true)}
+                sx={{
+                  background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
+                  '&:hover': {
+                    background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)'
+                  }
+                }}
+              >
+                Request Report
+              </Button>
+            </Stack>
+          )}
+        </Card>
+        <ReportRequestModal 
+          open={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          hospitalId={search}
+        />
+      </Box>
+    );
+  }
 
   return (
     <div className="container">
@@ -152,7 +421,6 @@ const HospitalDashboard = () => {
             position: "relative",
             padding: "15px",
             backgroundColor: "transparent",
-            // boxShadow: 3,
             borderRadius: "8px",
             zIndex: 2,
           }}
@@ -202,11 +470,6 @@ const HospitalDashboard = () => {
               {loading && (
                 <Typography variant="body2">
                   Loading hospital data...
-                </Typography>
-              )}
-              {error && (
-                <Typography variant="body2" color="error">
-                  {error}
                 </Typography>
               )}
               {hospital && (
@@ -324,7 +587,7 @@ const HospitalDashboard = () => {
                         variant="outlined"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && searchHospital()}
+                        onKeyPress={handleKeyPress}
                         sx={{ marginRight: "5px", height: "50px" }}
                         InputProps={{
                           sx: { padding: "10px", height: "50px" },

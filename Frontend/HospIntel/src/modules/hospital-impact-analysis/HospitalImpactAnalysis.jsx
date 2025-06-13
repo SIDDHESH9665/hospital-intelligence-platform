@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, Building2, MapPin, ArrowLeft } from 'lucide-react';
+import { Search, Building2, MapPin, ArrowLeft, X } from 'lucide-react';
 import { StarRating } from './components/StarRating';
 import ACSGauge from './components/ACSGauge';
 import CostRevise from './components/CostRevise';
@@ -10,6 +10,7 @@ import { TopDiagnoses } from './components/TopDiagnoses';
 import { ClaimsSummary } from './components/ClaimsSummary';
 import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
 import { useNavigate } from 'react-router-dom';
+import ReportRequestForm from '@/components/ReportRequestForm';
 
 const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const [alternativeHospitals, setAlternativeHospitals] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [apiInitialized, setApiInitialized] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   const fetchData = async () => {
     if (!apiInitialized) return;
@@ -113,7 +115,7 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   };
 
   const handleBack = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   if (loading) return (
@@ -187,9 +189,20 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
             >
               Try Another ID
             </button>
+            <button 
+              onClick={() => setShowReportModal(true)}
+              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors shadow-md"
+            >
+              Request Report
+            </button>
           </div>
         )}
       </div>
+      <ReportRequestForm 
+        isOpen={showReportModal}
+        onClose={() => setShowReportModal(false)}
+        hospitalId={currentPartnerId}
+      />
     </div>
   );
   

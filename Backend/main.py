@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 import pandas as pd
 import numpy as np
 from utils import analyze_hospital_claims
@@ -10,6 +10,13 @@ from hospital_profiling import HospitalProfilingDataHandler
 import logging
 import os
 import socket
+from authlib.integrations.starlette_client import OAuth
+from starlette.middleware.sessions import SessionMiddleware
+import secrets
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -22,6 +29,114 @@ due_dil_handler = DueDiligenceDataHandler()
 
 # Initialize HospitalProfilingDataHandler
 hospital_profiling_handler = HospitalProfilingDataHandler("hospital_profiling_data.json")
+
+# --- SSO LOGIC REPLACEMENT START ---
+from fastapi import Depends
+import json
+
+# Configure session middleware with secure settings
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=os.getenv("SESSION_SECRET_KEY", secrets.token_hex(32)),
+    max_age=3600,
+    same_site="lax",
+    https_only=False
+)
+
+# Configure OAuth
+oauth = OAuth()
+oauth.register(
+    name='microsoft',
+    client_id=os.getenv("MICROSOFT_CLIENT_ID"),
+    client_secret=os.getenv("MICROSOFT_CLIENT_SECRET"),
+    # Use 'consumers' endpoint to support personal Microsoft accounts only
+    server_metadata_url='https://login.microsoftonline.com/consumers/v2.0/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid email profile',
+    },
+)
+
+def get_current_user(request: Request):
+    user = request.session.get('user')
+    if not user or not user.get('authenticated'):
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return user
+
+@app.get("/login")
+async def login(request: Request):
+    # Support redirect_uri param for frontend flexibility
+    frontend_redirect = request.query_params.get('redirect_uri')
+    redirect_uri = request.url_for("auth_microsoft")
+    if frontend_redirect:
+        request.session['frontend_redirect'] = frontend_redirect
+    return await oauth.microsoft.authorize_redirect(request, redirect_uri)
+
+@app.get("/auth/microsoft")
+async def auth_microsoft(request: Request):
+    try:
+        token = await oauth.microsoft.authorize_access_token(request)
+        if not token:
+            print("OAuth token exchange failed: No token returned.")
+            return RedirectResponse(url="http://localhost:5173/login?error=no_token")
+        user_info = token.get('userinfo')
+        if not user_info:
+            user_info = await oauth.microsoft.parse_id_token(request, token)
+        if not user_info:
+            print("OAuth token exchange failed: No user info in token.")
+            return RedirectResponse(url="http://localhost:5173/login?error=invalid_user")
+        user_data = {
+            "email": user_info.get("email") or user_info.get("preferred_username"),
+            "name": user_info.get("name"),
+            "picture": None,  # Microsoft Graph API needed for photo
+            "authenticated": True
+        }
+        request.session['user'] = user_data
+        frontend_redirect = request.session.pop('frontend_redirect', None)
+        if frontend_redirect:
+            return RedirectResponse(url=frontend_redirect)
+        return RedirectResponse(url="http://localhost:5173/home")
+    except Exception as e:
+        import traceback
+        print("OAuth callback exception:")
+        print(traceback.format_exc())
+        # Print extra details if available
+        if hasattr(e, 'error'):
+            print(f"OAuth error: {e.error}")
+        if hasattr(e, 'description'):
+            print(f"OAuth error description: {e.description}")
+        return RedirectResponse(url=f"http://localhost:5173/login?error=oauth_error")
+
+@app.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse(url="http://localhost:5173/login")
+
+@app.get("/user")
+async def get_user(request: Request):
+    try:
+        user = request.session.get('user')
+        if not user or not user.get('authenticated'):
+            raise HTTPException(status_code=401, detail="Not authenticated")
+        return JSONResponse(content=user)
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+@app.get("/auth/status")
+async def auth_status(request: Request):
+    try:
+        user = request.session.get('user')
+        if user and user.get('authenticated'):
+            return JSONResponse(content={"authenticated": True, "user": user})
+        else:
+            return JSONResponse(content={"authenticated": False}, status_code=401)
+    except Exception as e:
+        return JSONResponse(content={"authenticated": False}, status_code=401)
+
+@app.get("/protected-data")
+async def protected_data(request: Request):
+    user = get_current_user(request)
+    return {"message": f"Hello, {user['name']}! This is protected data."}
+# --- SSO LOGIC REPLACEMENT END ---
 
 # Debug: Print all registered routes
 @app.on_event("startup")
@@ -326,4 +441,4 @@ def handle_nan_values(obj):
 if __name__ == '__main__':
     import uvicorn
     logging.info("Starting server on 0.0.0.0:5002")
-    uvicorn.run(app, host="0.0.0.0", port=5002) 
+    uvicorn.run(app, host="0.0.0.0", port=5002)

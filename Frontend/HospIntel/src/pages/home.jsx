@@ -98,7 +98,7 @@ export function Home() {
                 Real-time Insights
               </Typography>
               <Typography className="font-normal text-blue-gray-500">
-                Make quick decisions with real-time analytics and market insights.
+                Make quick decisions with real-time analytics and market insights.``
               </Typography>
             </Card>
 
