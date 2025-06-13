@@ -232,8 +232,12 @@ const HospitalDashboard = () => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
   };
+<<<<<<< HEAD
 
   const handleSnackbarClose = (event, reason) => {
+=======
+  const handleSnackbarClose = (_event, reason) => {
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     if (reason === "clickaway") {
       return;
     }

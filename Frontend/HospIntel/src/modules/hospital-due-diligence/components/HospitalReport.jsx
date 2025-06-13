@@ -5,7 +5,7 @@ import MuiAlert from '@mui/material/Alert';
 const HospitalReport = () => {
   const [open, setOpen] = useState(false);
   const [reportType, setReportType] = useState('');
-
+  
   const generateReport = (type) => {
     
     console.log(`Generating ${type} report...`);

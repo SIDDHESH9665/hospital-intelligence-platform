@@ -41,16 +41,27 @@ app.add_middleware(
     max_age=3600,
     same_site="lax",
     https_only=False
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 )
 
 # Configure OAuth
 oauth = OAuth()
 oauth.register(
+<<<<<<< HEAD
     name='microsoft',
     client_id=os.getenv("MICROSOFT_CLIENT_ID"),
     client_secret=os.getenv("MICROSOFT_CLIENT_SECRET"),
     # Use 'consumers' endpoint to support personal Microsoft accounts only
     server_metadata_url='https://login.microsoftonline.com/consumers/v2.0/.well-known/openid-configuration',
+=======
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     client_kwargs={
         'scope': 'openid email profile',
     },
@@ -64,6 +75,7 @@ def get_current_user(request: Request):
 
 @app.get("/login")
 async def login(request: Request):
+<<<<<<< HEAD
     # Support redirect_uri param for frontend flexibility
     frontend_redirect = request.query_params.get('redirect_uri')
     redirect_uri = request.url_for("auth_microsoft")
@@ -91,11 +103,42 @@ async def auth_microsoft(request: Request):
             "authenticated": True
         }
         request.session['user'] = user_data
+=======
+    print("/login endpoint hit")
+    # Support redirect_uri param for frontend flexibility
+    frontend_redirect = request.query_params.get('redirect_uri')
+    redirect_uri = request.url_for("auth_google")
+    if frontend_redirect:
+        request.session['frontend_redirect'] = frontend_redirect
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+@app.get("/auth/google")
+async def auth_google(request: Request):
+    print("/auth/google endpoint hit")
+    try:
+        token = await oauth.google.authorize_access_token(request)
+        if not token:
+            return RedirectResponse(url="http://localhost:5173/login?error=no_token")
+        user_info = token.get('userinfo')
+        if not user_info:
+            user_info = await oauth.google.parse_id_token(request, token)
+        if not user_info:
+            return RedirectResponse(url="http://localhost:5173/login?error=invalid_user")
+        user_data = {
+            "email": user_info.get("email"),
+            "name": user_info.get("name"),
+            "picture": user_info.get("picture"),
+            "authenticated": True
+        }
+        request.session['user'] = user_data
+        # Use frontend_redirect if present
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
         frontend_redirect = request.session.pop('frontend_redirect', None)
         if frontend_redirect:
             return RedirectResponse(url=frontend_redirect)
         return RedirectResponse(url="http://localhost:5173/home")
     except Exception as e:
+<<<<<<< HEAD
         import traceback
         print("OAuth callback exception:")
         print(traceback.format_exc())
@@ -104,15 +147,25 @@ async def auth_microsoft(request: Request):
             print(f"OAuth error: {e.error}")
         if hasattr(e, 'description'):
             print(f"OAuth error description: {e.description}")
+=======
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
         return RedirectResponse(url=f"http://localhost:5173/login?error=oauth_error")
 
 @app.get("/logout")
 async def logout(request: Request):
+<<<<<<< HEAD
+=======
+    print("/logout endpoint hit")
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     request.session.clear()
     return RedirectResponse(url="http://localhost:5173/login")
 
 @app.get("/user")
 async def get_user(request: Request):
+<<<<<<< HEAD
+=======
+    print("/user endpoint hit")
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     try:
         user = request.session.get('user')
         if not user or not user.get('authenticated'):
@@ -123,6 +176,10 @@ async def get_user(request: Request):
 
 @app.get("/auth/status")
 async def auth_status(request: Request):
+<<<<<<< HEAD
+=======
+    print("/auth/status endpoint hit")
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     try:
         user = request.session.get('user')
         if user and user.get('authenticated'):
@@ -134,6 +191,10 @@ async def auth_status(request: Request):
 
 @app.get("/protected-data")
 async def protected_data(request: Request):
+<<<<<<< HEAD
+=======
+    print("/protected-data endpoint hit")
+>>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     user = get_current_user(request)
     return {"message": f"Hello, {user['name']}! This is protected data."}
 # --- SSO LOGIC REPLACEMENT END ---
@@ -179,6 +240,7 @@ app.add_middleware(
 # Add endpoint to get server IP
 @app.get("/api/server-info")
 async def get_server_info(request: Request):
+    print("/api/server-info endpoint hit")
     return {
         "status": "ok",
         "message": "Server is running"
@@ -187,6 +249,7 @@ async def get_server_info(request: Request):
 # Add favicon endpoint
 @app.get("/favicon.ico")
 async def get_favicon():
+    print("/favicon.ico endpoint hit")
     try:
         return FileResponse("../frontend/HospIntel/public/favicon.ico")
     except Exception as e:
@@ -232,6 +295,7 @@ except Exception as e:
 # Add test endpoint
 @app.get("/api/test")
 async def test_endpoint():
+    print("/api/test endpoint hit")
     return {
         "status": "ok",
         "message": "API is working"
@@ -239,6 +303,7 @@ async def test_endpoint():
 
 @app.get("/api/claims-analysis/{partner_id}")
 async def claims_analysis(partner_id: int):
+    print(f"/api/claims-analysis/{partner_id} endpoint hit")
     try:
         if df is None:
             raise HTTPException(status_code=500, detail="Dataset not loaded")
@@ -290,6 +355,7 @@ async def claims_analysis(partner_id: int):
 # Add due diligence endpoints
 @app.get("/api/due-diligence/hospitals")
 async def get_all_hospitals():
+    print("/api/due-diligence/hospitals endpoint hit")
     """Get all hospital due diligence data"""
     try:
         hospitals = due_dil_handler.get_all_hospitals()
@@ -301,6 +367,7 @@ async def get_all_hospitals():
 
 @app.get("/api/due-diligence/hospital/{hospital_id}")
 async def get_hospital_by_id(hospital_id: int):
+    print(f"/api/due-diligence/hospital/{hospital_id} endpoint hit")
     """Get hospital due diligence data by ID"""
     try:
         logger.info(f"Received request for hospital ID: {hospital_id}")
@@ -316,6 +383,7 @@ async def get_hospital_by_id(hospital_id: int):
 
 @app.post("/api/due-diligence/hospital")
 async def add_hospital(hospital_data: dict):
+    print("/api/due-diligence/hospital [POST] endpoint hit")
     """Add new hospital due diligence data"""
     try:
         success = due_dil_handler.add_hospital(hospital_data)
@@ -329,6 +397,7 @@ async def add_hospital(hospital_data: dict):
 
 @app.put("/api/due-diligence/hospital/{hospital_id}")
 async def update_hospital(hospital_id: int, hospital_data: dict):
+    print(f"/api/due-diligence/hospital/{hospital_id} [PUT] endpoint hit")
     """Update hospital due diligence data"""
     try:
         success = due_dil_handler.update_hospital(hospital_id, hospital_data)
@@ -342,6 +411,7 @@ async def update_hospital(hospital_id: int, hospital_data: dict):
 
 @app.delete("/api/due-diligence/hospital/{hospital_id}")
 async def delete_hospital(hospital_id: int):
+    print(f"/api/due-diligence/hospital/{hospital_id} [DELETE] endpoint hit")
     """Delete hospital due diligence data"""
     try:
         success = due_dil_handler.delete_hospital(hospital_id)
@@ -372,6 +442,7 @@ except Exception as e:
 
 @app.get("/api/hospital-profiling/hospitals")
 async def get_all_hospital_profiles():
+    print("/api/hospital-profiling/hospitals endpoint hit")
     try:
         hospitals = hospital_profiling_handler.get_all_hospitals()
         return hospitals
@@ -381,6 +452,7 @@ async def get_all_hospital_profiles():
 
 @app.get("/api/hospital-profiling/hospital/{hospital_id}")
 async def get_hospital_profile_by_id(hospital_id: str):
+    print(f"/api/hospital-profiling/hospital/{hospital_id} endpoint hit")
     try:
         hospital = hospital_profiling_handler.get_hospital_by_id(hospital_id)
         if not hospital:
@@ -393,6 +465,7 @@ async def get_hospital_profile_by_id(hospital_id: str):
 # Update the catch-all route to serve from the correct location
 @app.get("/{full_path:path}")
 async def serve_app(full_path: str):
+    print(f"Catch-all endpoint hit for path: {full_path}")
     """Serve the frontend app for all routes, letting the client handle routing"""
     try:
         # Log the request
