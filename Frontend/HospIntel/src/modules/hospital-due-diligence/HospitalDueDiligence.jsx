@@ -18,7 +18,6 @@ import LayersIcon from '@mui/icons-material/Layers';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarIcon from '@mui/icons-material/Star';
 import LanguageIcon from '@mui/icons-material/Language';
-import RequestReportForm from '../hospital-profiling/components/RequestReportForm';
 
 const HospitalDueDiligence = () => {  
   const [hospitals, setHospitals] = useState([]);
@@ -96,6 +95,14 @@ const HospitalDueDiligence = () => {
     
     const hospitalId = parseInt(search);
     if (!isNaN(hospitalId)) {
+      // Search by ID - check if exists in hospitals list first
+      const found = hospitals.find(h => h.hospital_info.ID === hospitalId);
+      if (!found) {
+        setPopupMessage(`Hospital with ID ${search} not found. Please check the ID and try again.`);
+        setShowNotFoundPopup(true);
+        return;
+      }
+      
       try {
         setIsLoading(true);
         const response = await fetch(`/api/due-diligence/hospital/${hospitalId}`);
@@ -131,13 +138,19 @@ const HospitalDueDiligence = () => {
 
     // Search by name
     const searchValue = search.toLowerCase().trim();
-    const foundHospital = hospitals.find((h) => {
+    const foundByName = hospitals.find((h) => {
       const hospitalName = h.hospital_info.HOSPITAL.toLowerCase().trim();
       return hospitalName.includes(searchValue);
     });
 
-    if (foundHospital) {
-      setHospital(foundHospital);
+    if (!foundByName) {
+      setPopupMessage(`Hospital with name "${search}" not found. Please check the name and try again.`);
+      setShowNotFoundPopup(true);
+      return;
+    }
+
+    if (foundByName) {
+      setHospital(foundByName);
       setError(null);
       showSnackbar("Hospital found successfully", "success");
     } else {
@@ -145,26 +158,6 @@ const HospitalDueDiligence = () => {
       setError(`Hospital with name "${search}" not found. Would you like to request a report for this hospital?`);
       setRegistrationFormOpen(false);
     }
-<<<<<<< HEAD
-=======
-    const hospitalId = parseInt(search);
-    if (!isNaN(hospitalId)) {
-      const found = hospitals.find(h => h.hospital_info.ID === hospitalId);
-      if (!found) {
-        setPopupMessage(`Hospital with ID ${search} not found. Please check the ID and try again.`);
-        setShowNotFoundPopup(true);
-        return;
-      }
-      return searchHospitalById(); // Search by ID
-    }
-    const foundByName = hospitals.find((h) => h.hospital_info.HOSPITAL.toLowerCase().trim().includes(search.toLowerCase().trim()));
-    if (!foundByName) {
-      setPopupMessage(`Hospital with name "${search}" not found. Please check the name and try again.`);
-      setShowNotFoundPopup(true);
-      return;
-    }
-    await searchHospitalByName(); // Search by name
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
   };
 
   const showSnackbar = (message, severity = "error") => {
@@ -296,11 +289,7 @@ const HospitalDueDiligence = () => {
     <div className="hospital-due-diligence-container">
       <Box className="hospital-due-diligence-header">
         <Box sx={{ display: "flex", alignItems: "center" }}>
-<<<<<<< HEAD
-          <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/home")}/>
-=======
           <ArrowBackIcon sx={{ cursor: "pointer", color: "#666", marginRight: 2 }} onClick={() => navigate("/home")} />
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
           <img src="/img/bajaj-logo2.png" alt="bajaj-logo" className="hospital-due-diligence-logo" />
         </Box>
         <Box className="hospital-due-diligence-search">
@@ -335,7 +324,6 @@ const HospitalDueDiligence = () => {
             <Box className="not-found-actions">
               <Button variant="outlined" onClick={() => setSearch("")}>Clear Search</Button>
               <Button variant="contained" onClick={handleGoToDefault} color="primary">Go to Default</Button>
-<<<<<<< HEAD
               <Button 
                 variant="contained" 
                 onClick={() => setRegistrationFormOpen(true)} 
@@ -349,16 +337,6 @@ const HospitalDueDiligence = () => {
               >
                 Request Report
               </Button>
-=======
-              <Button variant="contained" onClick={() => setRegistrationFormOpen(true)} sx={{
-                background: 'linear-gradient(45deg, #2196F3 30%, #00BCD4 90%)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #1976D2 30%, #00ACC1 90%)',
-                  boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)'
-                }
-              }}>Submit Request</Button>
-              <Button variant="contained" color="success" onClick={handleGoToDefault} sx={{ ml: 1 }}>Try Default ID</Button>
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
             </Box>
           </Box>
         ) : (
@@ -438,20 +416,17 @@ const HospitalDueDiligence = () => {
         <p>2025 Hospital Due Diligence All Rights Reserved</p>
       </footer>
 
-<<<<<<< HEAD
       <ReportRequestForm 
         isOpen={registrationFormOpen}
         onClose={() => setRegistrationFormOpen(false)}
         hospitalId={search}
         title="Submit Request"
       />
-=======
-      <HospitalRegistrationForm open={registrationFormOpen} onClose={() => setRegistrationFormOpen(false)} title="Submit Request" />
+      
       {showRequestForm && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
-          <RequestReportForm onClose={() => setShowRequestForm(false)} />
-        </div>
+        <ReportRequestForm isOpen={showRequestForm} onClose={() => setShowRequestForm(false)} />
       )}
+      
       {showNotFoundPopup && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
           <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md w-full">
@@ -469,11 +444,8 @@ const HospitalDueDiligence = () => {
           </div>
         </div>
       )}
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     </div>
   );
 };
 
 export default HospitalDueDiligence;
-
-

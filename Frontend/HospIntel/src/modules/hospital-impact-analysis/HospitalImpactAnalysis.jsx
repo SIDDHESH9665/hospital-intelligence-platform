@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, Building2, MapPin, ArrowLeft, X } from 'lucide-react';
-=======
-import React, { useState, useEffect } from 'react';
 import { Search, Building2, MapPin, ArrowLeft } from 'lucide-react';
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 import { StarRating } from './components/StarRating';
 import ACSGauge from './components/ACSGauge';
 import CostRevise from './components/CostRevise';
@@ -15,11 +10,7 @@ import { TopDiagnoses } from './components/TopDiagnoses';
 import { ClaimsSummary } from './components/ClaimsSummary';
 import { API_ENDPOINTS, initializeAPI } from '@/config/api';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import ReportRequestForm from '@/components/ReportRequestForm';
-=======
-import RequestReportForm from '../hospital-profiling/components/RequestReportForm';
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 
 const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const navigate = useNavigate();
@@ -31,11 +22,7 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
   const [alternativeHospitals, setAlternativeHospitals] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [apiInitialized, setApiInitialized] = useState(false);
-<<<<<<< HEAD
-  const [showReportModal, setShowReportModal] = useState(false);
-=======
   const [showRequestForm, setShowRequestForm] = useState(false);
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 
   const fetchData = async () => {
     if (!apiInitialized) return;
@@ -146,51 +133,18 @@ const HospitalDashboard = ({ partnerId = 65458106 }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-<<<<<<< HEAD
-        ) : (
-          <div className="flex flex-col gap-4">
-            <button 
-              onClick={() => {
-                setCurrentPartnerId(partnerId);
-                setError(null);
-              }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Try Default Hospital
-            </button>
-            <button 
-              onClick={() => setShowSearch(true)}
-              className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-            >
-              Try Another ID
-            </button>
-            <button 
-              onClick={() => setShowReportModal(true)}
-              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-colors shadow-md"
-            >
-              Request Report
-            </button>
-=======
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="flex flex-col gap-2">
             <button onClick={() => setShowRequestForm(true)} className="px-4 py-2 bg-blue-600 text-white rounded">Request Report</button>
             <button onClick={() => { setCurrentPartnerId(65458106); setSearchInput('65458106'); }} className="px-4 py-2 bg-green-600 text-white rounded">Try Default ID</button>
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-      <ReportRequestForm 
-        isOpen={showReportModal}
-        onClose={() => setShowReportModal(false)}
-        hospitalId={currentPartnerId}
-      />
-    </div>
-=======
-      <RequestReportForm open={showRequestForm} onClose={() => setShowRequestForm(false)} />
+      {showRequestForm && (
+        <ReportRequestForm isOpen={showRequestForm} onClose={() => setShowRequestForm(false)} />
+      )}
     </>
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
   );
   
   if (!data) return null;

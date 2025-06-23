@@ -14,6 +14,9 @@ from authlib.integrations.starlette_client import OAuth
 from starlette.middleware.sessions import SessionMiddleware
 import secrets
 from dotenv import load_dotenv
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
+from fastapi import BackgroundTasks
+from pydantic import BaseModel, EmailStr
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,7 +33,7 @@ due_dil_handler = DueDiligenceDataHandler()
 # Initialize HospitalProfilingDataHandler
 hospital_profiling_handler = HospitalProfilingDataHandler("hospital_profiling_data.json")
 
-# --- SSO LOGIC REPLACEMENT START ---
+# --- SSO LOGIC  ---
 from fastapi import Depends
 import json
 
@@ -41,27 +44,16 @@ app.add_middleware(
     max_age=3600,
     same_site="lax",
     https_only=False
-<<<<<<< HEAD
-=======
-    
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 )
 
 # Configure OAuth
 oauth = OAuth()
 oauth.register(
-<<<<<<< HEAD
     name='microsoft',
     client_id=os.getenv("MICROSOFT_CLIENT_ID"),
     client_secret=os.getenv("MICROSOFT_CLIENT_SECRET"),
     # Use 'consumers' endpoint to support personal Microsoft accounts only
     server_metadata_url='https://login.microsoftonline.com/consumers/v2.0/.well-known/openid-configuration',
-=======
-    name='google',
-    client_id=os.getenv("GOOGLE_CLIENT_ID"),
-    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     client_kwargs={
         'scope': 'openid email profile',
     },
@@ -75,7 +67,6 @@ def get_current_user(request: Request):
 
 @app.get("/login")
 async def login(request: Request):
-<<<<<<< HEAD
     # Support redirect_uri param for frontend flexibility
     frontend_redirect = request.query_params.get('redirect_uri')
     redirect_uri = request.url_for("auth_microsoft")
@@ -103,42 +94,11 @@ async def auth_microsoft(request: Request):
             "authenticated": True
         }
         request.session['user'] = user_data
-=======
-    print("/login endpoint hit")
-    # Support redirect_uri param for frontend flexibility
-    frontend_redirect = request.query_params.get('redirect_uri')
-    redirect_uri = request.url_for("auth_google")
-    if frontend_redirect:
-        request.session['frontend_redirect'] = frontend_redirect
-    return await oauth.google.authorize_redirect(request, redirect_uri)
-
-@app.get("/auth/google")
-async def auth_google(request: Request):
-    print("/auth/google endpoint hit")
-    try:
-        token = await oauth.google.authorize_access_token(request)
-        if not token:
-            return RedirectResponse(url="http://localhost:5173/login?error=no_token")
-        user_info = token.get('userinfo')
-        if not user_info:
-            user_info = await oauth.google.parse_id_token(request, token)
-        if not user_info:
-            return RedirectResponse(url="http://localhost:5173/login?error=invalid_user")
-        user_data = {
-            "email": user_info.get("email"),
-            "name": user_info.get("name"),
-            "picture": user_info.get("picture"),
-            "authenticated": True
-        }
-        request.session['user'] = user_data
-        # Use frontend_redirect if present
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
         frontend_redirect = request.session.pop('frontend_redirect', None)
         if frontend_redirect:
             return RedirectResponse(url=frontend_redirect)
         return RedirectResponse(url="http://localhost:5173/home")
     except Exception as e:
-<<<<<<< HEAD
         import traceback
         print("OAuth callback exception:")
         print(traceback.format_exc())
@@ -147,25 +107,17 @@ async def auth_google(request: Request):
             print(f"OAuth error: {e.error}")
         if hasattr(e, 'description'):
             print(f"OAuth error description: {e.description}")
-=======
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
         return RedirectResponse(url=f"http://localhost:5173/login?error=oauth_error")
 
 @app.get("/logout")
 async def logout(request: Request):
-<<<<<<< HEAD
-=======
     print("/logout endpoint hit")
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     request.session.clear()
     return RedirectResponse(url="http://localhost:5173/login")
 
 @app.get("/user")
 async def get_user(request: Request):
-<<<<<<< HEAD
-=======
     print("/user endpoint hit")
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     try:
         user = request.session.get('user')
         if not user or not user.get('authenticated'):
@@ -176,10 +128,7 @@ async def get_user(request: Request):
 
 @app.get("/auth/status")
 async def auth_status(request: Request):
-<<<<<<< HEAD
-=======
     print("/auth/status endpoint hit")
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     try:
         user = request.session.get('user')
         if user and user.get('authenticated'):
@@ -191,10 +140,7 @@ async def auth_status(request: Request):
 
 @app.get("/protected-data")
 async def protected_data(request: Request):
-<<<<<<< HEAD
-=======
     print("/protected-data endpoint hit")
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     user = get_current_user(request)
     return {"message": f"Hello, {user['name']}! This is protected data."}
 # --- SSO LOGIC REPLACEMENT END ---
@@ -492,6 +438,53 @@ async def serve_app(full_path: str):
             status_code=500,
             content={"message": f"Error serving the application: {str(e)}"}
         )
+
+# Configure FastAPI Mail
+mail_conf = ConnectionConfig(
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "siddheshbhalerao4@gmail.com"),
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "xbtf nbku nyig jmuf"),
+    MAIL_FROM = os.getenv("MAIL_FROM", "siddheshbhalerao4@gmail.com"),
+    MAIL_PORT = 587,
+    MAIL_SERVER = "smtp.gmail.com",
+    MAIL_STARTTLS = True,
+    MAIL_SSL_TLS = False,
+    USE_CREDENTIALS = True,
+    VALIDATE_CERTS = True
+)
+
+fast_mail = FastMail(mail_conf)
+
+class ReportRequestSchema(BaseModel):
+    fullName: str
+    email: EmailStr
+    hospitalId: str
+    message: str
+
+@app.post("/api/report-request")
+async def send_report_request(request: ReportRequestSchema, background_tasks: BackgroundTasks):
+    html = f"""
+    <h3>New Hospital Report Request</h3>
+    <ul>
+      <li><b>Full Name:</b> {request.fullName}</li>
+      <li><b>Email:</b> {request.email}</li>
+      <li><b>Hospital ID:</b> {request.hospitalId}</li>
+      <li><b>Message:</b> {request.message}</li>
+    </ul>
+    """
+    message = MessageSchema(
+        subject="New Hospital Report Request",
+        recipients=["siddheshbhalerao4@gmail.com"],  # Change to your recipient(s)
+        body=html,
+        subtype=MessageType.html
+    )
+    try:
+        background_tasks.add_task(fast_mail.send_message, message)
+        return {"message": "Report request email sent successfully."}
+    except Exception as e:
+        import logging
+        logging.error(f"Error sending report request email: {e}")
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Failed to send email.")
 
 def handle_nan_values(obj):
     """Recursively handle NaN values in dictionaries and lists"""

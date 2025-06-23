@@ -16,7 +16,6 @@ import {
   Star,
   Clock,
   CreditCard,
-<<<<<<< HEAD
   ClipboardCheck,
   AlertTriangle,
   X
@@ -24,13 +23,6 @@ import {
 import 'leaflet/dist/leaflet.css';
 import { API_ENDPOINTS, initializeAPI, makeAPIRequest } from '@/config/api';
 import ReportRequestForm from '@/components/ReportRequestForm';
-=======
-  AlertTriangle
-} from 'lucide-react';
-import 'leaflet/dist/leaflet.css';
-import { makeAPIRequest } from '@/config/api';
-import RequestReportForm from './components/RequestReportForm';
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
 
 // Lazy load the map components
 const MapComponent = React.lazy(() => 
@@ -70,14 +62,10 @@ function HospitalProfiling() {
   const [hospitalData, setHospitalData] = useState(null);
   const [error, setError] = useState(null);
   const [hospitalsData, setHospitalsData] = useState([]);
-<<<<<<< HEAD
   const [showReportModal, setShowReportModal] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-=======
-  const [showRequestForm, setShowRequestForm] = useState(false);
   const [showNotFoundPopup, setShowNotFoundPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
+  const [showRequestForm, setShowRequestForm] = useState(false);
 
   useEffect(() => {
     const fetchHospitalData = async () => {
@@ -113,11 +101,7 @@ function HospitalProfiling() {
   }, [partnerId]);
 
   const handleBack = () => {
-<<<<<<< HEAD
     navigate('/home', { replace: true });
-=======
-    navigate('/home');
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
   };
 
   const handleSearch = () => {
@@ -133,7 +117,6 @@ function HospitalProfiling() {
     });
 
     if (hospital) {
-<<<<<<< HEAD
       setHospitalData({
         ...hospital,
         accreditationStatus: hospital?.accreditationStatus || [],
@@ -145,12 +128,6 @@ function HospitalProfiling() {
     } else {
       setError("Hospital not found. Please try again.");
       setShowReportModal(false);
-=======
-      navigate(`/hospital-profiling/${hospital.id}`);
-    } else {
-      setPopupMessage(`Hospital with Partner ID ${searchQuery} not found. Please check the ID and try again.`);
-      setShowNotFoundPopup(true);
->>>>>>> 9fc4227303c662db14472e8de2a3c50914ab62ce
     }
   };
 
@@ -285,20 +262,13 @@ function HospitalProfiling() {
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   className="w-full text-sm sm:text-base px-4 py-2.5 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-white/70"
                 />
-                <button
-                  type="button"
+                <button 
                   onClick={handleSearch}
-                  className="ml-2 px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                  className="p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
                 >
-                  Search
+                  <Search className="w-5 h-5 text-white" />
                 </button>
               </div>
-              <button 
-                onClick={handleSearch}
-                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-              >
-                <Search className="w-5 h-5 text-white" />
-              </button>
               <img src="/img/logo.png" alt="Logo" className="h-8 sm:h-12 w-auto" />
             </div>
           </div>
@@ -314,7 +284,7 @@ function HospitalProfiling() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Oops! Hospital Not Found</h3>
-            <p className="text-gray-600 mb-6">{popupMessage || `Hospital with Partner ID ${searchQuery} not found. Please check the ID and try again.`}</p>
+            <p className="text-gray-600 mb-6">{error}</p>
             <div className="flex flex-col gap-2">
               <button onClick={() => { setShowNotFoundPopup(false); setShowRequestForm(true); }} className="px-4 py-2 bg-blue-600 text-white rounded">Request Report</button>
               <button onClick={() => { setShowNotFoundPopup(false); setSearchQuery('65458106'); handleSearch('65458106'); }} className="px-4 py-2 bg-green-600 text-white rounded">Try Default ID</button>

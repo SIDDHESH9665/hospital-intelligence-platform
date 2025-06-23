@@ -9,10 +9,28 @@ const ReportRequestForm = ({ isOpen, onClose, hospitalId, title = "Request Hospi
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    onClose();
+    try {
+      const response = await fetch("/api/report-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          hospitalId: formData.hospitalId,
+          message: formData.message,
+        }),
+      });
+      if (response.ok) {
+        alert("Report request sent successfully!");
+        onClose();
+      } else {
+        alert("Failed to send report request.");
+      }
+    } catch (err) {
+      alert("Error sending report request.");
+    }
   };
 
   if (!isOpen) return null;
@@ -99,18 +117,12 @@ const ReportRequestForm = ({ isOpen, onClose, hospitalId, title = "Request Hospi
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-end gap-4 pt-6">
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-full sm:w-auto px-6 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-200 font-medium"
-            >
-              Cancel
-            </button>
+           
             <button
               type="submit"
               className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-xl hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-200"
             >
-              Submit Request
+              Submit Report
             </button>
           </div>
         </form>
